@@ -58,4 +58,6 @@ abstract class Routes {
   static const PasswordChangeSuccessfullyKEY = '/PasswordChangeSuccessfully';
   static const SelectTheBrandPageKey = '/SelectTheBrandPageKey';
   static const ADDCARPAGEKEY = '/ADDCARPAGEKEY';
+  static const CATEGRYPAGEKEY = '/CATEGRYPAGEKEY';
+  static const COMPANYkEY = '/COMPANYkEY';
 }

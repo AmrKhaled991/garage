@@ -21,6 +21,10 @@ import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_
 import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_page.dart';
 import 'package:garage/features/main/add_car/add_car_binding.dart';
 import 'package:garage/features/main/add_car/add_car_page.dart';
+import 'package:garage/features/main/category/category_Page.dart';
+import 'package:garage/features/main/category/category_binding.dart';
+import 'package:garage/features/main/company/company_binding.dart';
+import 'package:garage/features/main/company/company_page.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_page.dart';
 import 'package:garage/features/main/specifies_the_brand/select_the_brand_binding.dart';
@@ -160,14 +164,24 @@ class AppPages {
       name: Routes.SelectTheBrandPageKey,
       page: () => const SelectTheBrandPage(),
       binding: SelectTheBrandBinding(),
-
       transition: Transition.cupertino,
     ),
     GetPage(
       name: Routes.ADDCARPAGEKEY,
       page: () => const AddCarPage(),
       binding: AddCarBinding(),
-
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.CATEGRYPAGEKEY,
+      page: () => CategoryPage(),
+      binding: CategoryBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.COMPANYkEY,
+      page: () => const CompanyPage(),
+      binding: CompanyBinding(),
       transition: Transition.cupertino,
     ),
   ];

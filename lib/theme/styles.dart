@@ -41,6 +41,8 @@ const Color colorContainer = Color(0xFF242424);
 const Color colorContainerBorder = Color(0xFFD4E6F8);
 const Color colorPink = Color(0xFFE513FA);
 const Color colorDropShadow = Color(0xFFB3B3B3);
+const Color backgroundCustomChipTextColor = Color(0xffffcccac7);
+const Color backgroundCustomChipColor = Color(0xFF3D3D3D);
 
 const Color colorNavigationBackground = Color(0xFF283353);
 const Color colorNavigationSelected = Color(0xFF262A56);
@@ -58,6 +60,18 @@ const Gradient appGradient = LinearGradient(
   colors: [Color(0xFFDAA427), Color(0xFFDAA427)],
 );
 
+class MyshapesStyle {
+  static Decoration get PrimaryDecoration => ShapeDecoration(
+    color: colorContainer,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  );
+
+   static Decoration get SecondaryDecoration => ShapeDecoration(
+    color: colorContainer,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  );
+}
+
 class MyTextStyle {
   static ThemeData get _appTheme => Get.theme;
 
@@ -73,8 +87,11 @@ class MyTextStyle {
     color: colorTitle,
   );
 
-  static TextStyle get bottomNavigationStyle =>
-      const TextStyle(fontFamily: appFontFamily, fontSize: 16,color: colorPrimary);
+  static TextStyle get bottomNavigationStyle => const TextStyle(
+    fontFamily: appFontFamily,
+    fontSize: 16,
+    color: colorPrimary,
+  );
 
   static TextStyle get myWhiteLargeTitle =>
       _textTheme.titleMedium!.copyWith(color: Colors.white);

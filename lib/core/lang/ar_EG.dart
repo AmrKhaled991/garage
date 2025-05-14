@@ -400,5 +400,7 @@ const Map<String, String> ar_EG = {
   "messages": "الرسائل",
   "select_car_model_brand": "حدد الماركه / موديل السيارة",
   "add_car": "اضافه سياره",
-  "select_brand":"اختر الماركه"
+  "select_brand":"اختر الماركه",
+  "products": "المنتجات",
+  "bussiness_gallery": "معرض الأعمال",
 };

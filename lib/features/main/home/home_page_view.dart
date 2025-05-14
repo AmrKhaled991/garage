@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:garage/features/main/home/custom_category_card.dart';
+import 'package:garage/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 import 'package:garage/core/ui/my_image.dart';
@@ -80,9 +82,12 @@ class HomePagePage extends StatelessWidget {
                     mainAxisSpacing: 16,
                   ),
                   itemBuilder:
-                      (context, index) => const CustomCategoryCard(
+                      (context, index) =>  CustomCategoryCard(
                         image: "assets/images/ic_home.svg",
                         text: "الاثائة",
+                        onTab: () {
+                          Get.toNamed(Routes.CATEGRYPAGEKEY,parameters: {'title': "الاثائة"});
+                        },
                       ),
                   itemCount: 10,
                 ),
@@ -91,41 +96,6 @@ class HomePagePage extends StatelessWidget {
             const SizedBox(height: 24),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CustomCategoryCard extends StatelessWidget {
-  final String image;
-  final String text;
-  const CustomCategoryCard({Key? key, required this.image, required this.text})
-    : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-      decoration: ShapeDecoration(
-        color: colorContainer,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      child: Column(
-        children: [
-          MyImage(image: image, width: 40),
-          const SizedBox(height: 24),
-          Text(
-            text.tr,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontFamily: 'Zain',
-              fontWeight: FontWeight.w400,
-              height: 1.50,
-            ),
-          ),
-        ],
       ),
     );
   }

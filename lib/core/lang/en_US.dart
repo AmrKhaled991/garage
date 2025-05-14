@@ -403,4 +403,6 @@ const Map<String, String> en_US = {
   "select_car_model_brand": "Select the car brand/model",
   "add_car": "Add Car",
   "select_brand": "Select Brand",
+  "products": "Products",
+  "bussiness_gallery": "Business Gallery",
 };
