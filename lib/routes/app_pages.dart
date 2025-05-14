@@ -1,0 +1,156 @@
+import 'package:garage/core/ui/pages_page.dart';
+import 'package:garage/core/ui/webview_payment_page.dart';
+import 'package:garage/features/auth/change_password/change_password_binding.dart';
+import 'package:garage/features/auth/change_password/change_password_page.dart';
+import 'package:garage/features/auth/company_profile_edit/company_profile_edit_binding.dart';
+import 'package:garage/features/auth/company_profile_edit/company_profile_edit_page.dart';
+import 'package:garage/features/auth/forget_password/forget_password_binding.dart';
+import 'package:garage/features/auth/forget_password/forget_password_page.dart';
+import 'package:garage/features/auth/login/login_binding.dart';
+import 'package:garage/features/auth/login/login_page.dart';
+import 'package:garage/features/auth/otp_verify/otp_verify_binding.dart';
+import 'package:garage/features/auth/otp_verify/otp_verify_page.dart';
+import 'package:garage/features/auth/password_change_successfully/password_change_successfully_page.dart';
+import 'package:garage/features/auth/profile/profile_binding.dart';
+import 'package:garage/features/auth/profile/profile_page.dart';
+import 'package:garage/features/auth/profile_edit/profile_edit_binding.dart';
+import 'package:garage/features/auth/profile_edit/profile_edit_page.dart';
+import 'package:garage/features/auth/register/register_binding.dart';
+import 'package:garage/features/auth/register/register_page.dart';
+import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_binding.dart';
+import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_page.dart';
+import 'package:garage/features/main/main_navigation/main_navigation_binding.dart';
+import 'package:garage/features/main/main_navigation/main_navigation_page.dart';
+import 'package:garage/features/onBoard/intro/intro_binding.dart';
+import 'package:garage/features/onBoard/intro/intro_page.dart';
+import 'package:garage/features/onBoard/splash/splash_binding.dart';
+import 'package:garage/features/onBoard/splash/splash_page.dart';
+import 'package:garage/features/other/about/about_binding.dart';
+import 'package:garage/features/other/about/about_page.dart';
+import 'package:garage/features/other/contact_us/contact_us_binding.dart';
+import 'package:garage/features/other/contact_us/contact_us_page.dart';
+import 'package:garage/features/other/select_location/select_location_binding.dart';
+import 'package:garage/features/other/select_location/select_location_page.dart';
+import 'package:garage/features/other/setting/setting_page.dart';
+import 'package:garage/features/other/terms/terms_binding.dart';
+import 'package:garage/features/other/terms/terms_page.dart';
+import 'package:get/get.dart';
+part 'app_routes.dart';
+
+class AppPages {
+  static const INITIAL = Routes.SPLASH;
+
+  static final routes = [
+    GetPage(
+      name: Routes.SPLASH,
+      page: () => SplashPage(),
+      binding: SplashBinding(),
+    ),
+
+    GetPage(name: Routes.PROFILE, page: () => ProfilePage()),
+    GetPage(name: Routes.SETTING, page: () => SettingPage()),
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => const LoginPage(),
+      binding: LoginBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.SIGN_UP,
+      page: () => const RegisterPage(),
+      binding: RegisterBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.OTP_VERIFY,
+      page: () => OtpVerifyPage(),
+      binding: OtpVerifyBinding(),
+      transition: Transition.cupertino,
+    ),
+
+    GetPage(
+      name: Routes.CONTACT_US,
+      page: () => const ContactUsPage(),
+      binding: ContactUsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.PAGE,
+      page: () => PagesPage(),
+      transition: Transition.cupertino,
+    ),
+
+    GetPage(
+      name: Routes.PROFILE_EDIT,
+      page: () => ProfileEditPage(),
+      binding: ProfileEditBinding(),
+      transition: Transition.cupertino,
+    ),
+
+    GetPage(
+      name: Routes.SELECT_LOCATION,
+      page: () => SelectLocationPage(),
+      binding: SelectLocationBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.FORGET_PASSWORD,
+      page: () => const ForgetPasswordPage(),
+      binding: ForgetPasswordBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.RESET_PASSWORD_BY_MOBILE,
+      page: () => ResetPasswordByMobilePage(),
+      binding: ResetPasswordByMobileBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.CHANGE_PASSWORD,
+      page: () => ChangePasswordPage(),
+      binding: ChangePasswordBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.WEBVIEW_PAYMENT,
+      page: () => WebviewPaymentPage(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.INTRO,
+      page: () => IntroPage(),
+      binding: IntroBinding(),
+      transition: Transition.cupertino,
+    ),
+
+    GetPage(
+      name: Routes.COMPANY_PROFILE_EDIT,
+      page: () => const CompanyProfileEditPage(),
+      binding: CompanyProfileEditBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.ABOUT,
+      page: () => AboutPage(),
+      binding: AboutBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.TERMS,
+      page: () => TermsPage(),
+      binding: TermsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.PasswordChangeSuccessfullyKEY,
+      page: () => const PasswordChangeSuccessfullyPage(),
+      transition: Transition.cupertino,
+    ),
+
+    GetPage(
+      name: Routes.MAIN,
+      page: () => const MainNavigationPage(),
+      bindings: [ProfileBinding(), MainNavigationBinding()],
+    ),
+  ];
+}
