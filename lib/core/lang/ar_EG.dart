@@ -398,4 +398,7 @@ const Map<String, String> ar_EG = {
   "password_changed_successfully": "لقد تم تغيير كلمة المرور الخاصة بك بنجاح",
   "back_to_login": "العودة لتسجيل الدخول",
   "messages": "الرسائل",
+  "select_car_model_brand": "حدد الماركه / موديل السيارة",
+  "add_car": "اضافه سياره",
+  "select_brand":"اختر الماركه"
 };

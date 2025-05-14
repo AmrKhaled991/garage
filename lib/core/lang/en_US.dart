@@ -400,4 +400,7 @@ const Map<String, String> en_US = {
   "password_changed_successfully": "Your password changed successfully",
   "back_to_login": "Back to Login",
   "messages": "Messages",
+  "select_car_model_brand": "Select the car brand/model",
+  "add_car": "Add Car",
+  "select_brand": "Select Brand",
 };

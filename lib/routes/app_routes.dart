@@ -56,4 +56,6 @@ abstract class Routes {
   static const SELECT_DATE_TIME = '/SELECT_DATE_TIME';
   static const MEDICAL_CONDITION_DETAILS = '/MEDICAL_CONDITION_DETAILS';
   static const PasswordChangeSuccessfullyKEY = '/PasswordChangeSuccessfully';
+  static const SelectTheBrandPageKey = '/SelectTheBrandPageKey';
+  static const ADDCARPAGEKEY = '/ADDCARPAGEKEY';
 }

@@ -22,7 +22,7 @@ class HomePagePage extends StatelessWidget {
 
     return MyScaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -53,7 +53,7 @@ class HomePagePage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 33),
+            const SizedBox(height: 12),
             SliderView(
               items: const [
                 MyImage(image: "assets/images/bar_bg.png"),
@@ -67,24 +67,28 @@ class HomePagePage extends StatelessWidget {
               child: const AddContainer(title: 'أضف سيارة'),
             ),
             const SizedBox(height: 24),
-            //  Expanded(
-            //   child: TextHeaderWidget(
-            //     title: "الأقسام".tr,
-            //     child: GridView.builder(
-            //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //         crossAxisCount: 3,
-            //         crossAxisSpacing: 16,
-            //         mainAxisSpacing: 16,
-            //       ),
-            //       itemBuilder:
-            //           (context, index) => const CustomCategoryCard(
-            //             image: "assets/images/ic_home.svg",
-            //             text: "الاثائة",
-            //           ),
-            //       itemCount: 4,
-            //     ),
-            //   ),
-            // ),
+            TextHeaderWidget(
+              title: "الأقسام".tr,
+              child: SizedBox(
+                width: Get.width,
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                  ),
+                  itemBuilder:
+                      (context, index) => const CustomCategoryCard(
+                        image: "assets/images/ic_home.svg",
+                        text: "الاثائة",
+                      ),
+                  itemCount: 10,
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
           ],
         ),
       ),

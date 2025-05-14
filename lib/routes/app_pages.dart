@@ -19,8 +19,12 @@ import 'package:garage/features/auth/register/register_binding.dart';
 import 'package:garage/features/auth/register/register_page.dart';
 import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_binding.dart';
 import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_page.dart';
+import 'package:garage/features/main/add_car/add_car_binding.dart';
+import 'package:garage/features/main/add_car/add_car_page.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_page.dart';
+import 'package:garage/features/main/specifies_the_brand/select_the_brand_binding.dart';
+import 'package:garage/features/main/specifies_the_brand/select_the_brand_page.dart';
 import 'package:garage/features/onBoard/intro/intro_binding.dart';
 import 'package:garage/features/onBoard/intro/intro_page.dart';
 import 'package:garage/features/onBoard/splash/splash_binding.dart';
@@ -151,6 +155,20 @@ class AppPages {
       name: Routes.MAIN,
       page: () => const MainNavigationPage(),
       bindings: [ProfileBinding(), MainNavigationBinding()],
+    ),
+    GetPage(
+      name: Routes.SelectTheBrandPageKey,
+      page: () => const SelectTheBrandPage(),
+      binding: SelectTheBrandBinding(),
+
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.ADDCARPAGEKEY,
+      page: () => const AddCarPage(),
+      binding: AddCarBinding(),
+
+      transition: Transition.cupertino,
     ),
   ];
 }
