@@ -1,8 +1,9 @@
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/features/auth/profile/profile_page.dart';
-import 'package:garage/features/main/home/home_page_view.dart';
+import 'package:garage/features/main/home/home_page.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_state.dart';
+import 'package:garage/features/main/my_orders/my_orders_page.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,8 +18,8 @@ class MainNavigationPage extends StatefulWidget {
 
 class _MainNavigationPageState extends State<MainNavigationPage> {
   final List<Widget> _children = [
-    const HomePagePage(),
-    Container(),
+    const HomePage(),
+    const MyOrdersPage(),
     Container(),
     Container(),
     ProfilePage(),

@@ -5,15 +5,15 @@ import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
 
-class CategoryItemCard extends StatelessWidget {
+class CompanyItemCard extends StatelessWidget {
   final bool displayLocation;
-  const CategoryItemCard({super.key, this.displayLocation = true});
+  const CompanyItemCard({super.key, this.displayLocation = true});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        displayLocation ? Get.toNamed(Routes.COMPANYkEY) : null;
+        displayLocation ? Get.toNamed(Routes.OFFER_DETAILS) : null;
       },
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -70,12 +70,7 @@ class CategoryItemCard extends StatelessWidget {
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(8),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF3D3D3D),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
+                decoration: MyshapesStyle.lightGrayDecoration,
                 child: const Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   spacing: 5,

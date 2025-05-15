@@ -14,7 +14,9 @@ class CustomCompanyListTileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPress != null ? onPress!() : null,
+      onPressed: () {
+        onPress?.call();
+      },
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -22,10 +24,10 @@ class CustomCompanyListTileButton extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       ),
-      child:  Text(
+      child: Text(
         title.tr,
         textAlign: TextAlign.right,
-        style: TextStyle(
+        style: const TextStyle(
           color: Color(0xFFFFB727),
           fontSize: 12,
           fontFamily: 'Zain',

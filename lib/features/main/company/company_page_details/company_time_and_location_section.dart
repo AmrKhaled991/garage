@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/ui/sheet/normal_sheet.dart';
 import 'package:garage/features/main/company/company_page_details/custom_company_list_tile_button.dart';
+import 'package:garage/features/other/sheet/area_sheet.dart';
+import 'package:garage/features/other/sheet/work_time_sheet.dart';
 import 'package:garage/theme/styles.dart';
+import 'package:garage/utils/utlis.dart';
 import 'package:get/get.dart';
 
 class CompanyTimeAndLocationSection extends StatelessWidget {
@@ -52,7 +56,15 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
               ),
               trailing: CustomCompanyListTileButton(
                 title: 'details'.tr,
-                onPress: () => null,
+                onPress: () {
+                  Utils.showSheet(
+                    context,
+                    NormalSheet(
+                      title: "select_area".tr,
+                      child: const WorkTimeSheet(),
+                    ),
+                  );
+                },
               ),
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:garage/core/networking/models/product.dart';
 import 'package:garage/core/ui/pages_page.dart';
 import 'package:garage/core/ui/webview_payment_page.dart';
 import 'package:garage/features/auth/change_password/change_password_binding.dart';
@@ -27,6 +28,11 @@ import 'package:garage/features/main/company/company_binding.dart';
 import 'package:garage/features/main/company/company_page.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_page.dart';
+import 'package:garage/features/main/my_orders/my_orders_binding.dart';
+import 'package:garage/features/main/order_details/order_details_binding.dart';
+import 'package:garage/features/main/order_details/order_details_page.dart';
+import 'package:garage/features/main/product_details/product_details_PAGE.dart';
+import 'package:garage/features/main/product_details/product_details_binding.dart';
 import 'package:garage/features/main/specifies_the_brand/select_the_brand_binding.dart';
 import 'package:garage/features/main/specifies_the_brand/select_the_brand_page.dart';
 import 'package:garage/features/onBoard/intro/intro_binding.dart';
@@ -158,7 +164,7 @@ class AppPages {
     GetPage(
       name: Routes.MAIN,
       page: () => const MainNavigationPage(),
-      bindings: [ProfileBinding(), MainNavigationBinding()],
+      bindings: [ProfileBinding(), MainNavigationBinding(), MyOrdersBinding()],
     ),
     GetPage(
       name: Routes.SelectTheBrandPageKey,
@@ -182,6 +188,18 @@ class AppPages {
       name: Routes.COMPANYkEY,
       page: () => const CompanyPage(),
       binding: CompanyBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.PRODUCT_DETAILSKEY,
+      page: () => ProductDetailsPage(),
+      binding: ProductDetailsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.ORDER_DETAILSSKEY,
+      page: () => OrderDetailsPage(),
+      binding: OrderDetailsBinding(),
       transition: Transition.cupertino,
     ),
   ];

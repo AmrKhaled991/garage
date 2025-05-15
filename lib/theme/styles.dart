@@ -53,6 +53,8 @@ const Color textButtoNColor = Color(0xFF201F1D);
 
 const Color colorServiceBG = Color(0x0A142C43);
 const Color colorCategoryBG = Color(0x24142C43);
+const Color DarkGrayPriceColor = Color(0xffFF9E9B94);
+
 
 const Gradient appGradient = LinearGradient(
   begin: FractionalOffset.topCenter,
@@ -66,9 +68,17 @@ class MyshapesStyle {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   );
 
-   static Decoration get SecondaryDecoration => ShapeDecoration(
+  static Decoration get SecondaryDecoration => ShapeDecoration(
     color: colorContainer,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  );
+  static Decoration get lightGrayDecoration => ShapeDecoration(
+    color: backgroundCustomChipColor,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  );
+  static Decoration get darkGrayDecoration => ShapeDecoration(
+    color: const Color(0xFF242424),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   );
 }
 

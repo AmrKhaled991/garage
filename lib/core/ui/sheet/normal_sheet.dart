@@ -6,8 +6,7 @@ class NormalSheet extends StatelessWidget {
   final String? title;
   final Widget? child;
 
-  NormalSheet({Key? key, this.child, this.title})
-      : super(key: key);
+  const NormalSheet({Key? key, this.child, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,59 +19,40 @@ class NormalSheet extends StatelessWidget {
       builder: (BuildContext context, ScrollController scrollController) {
         return SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 60,
-                color: colorBG,
-                child: Stack(
-                  children: [
-                    // Positioned.directional(
-                    //   textDirection: TextDirection.ltr,
-                    //   end: 8,
-                    //   top: 8,
-                    //   child: GestureDetector(
-                    //     onTap: (){
-                    //       Get.back();
-                    //     },
-                    //     child: Container(
-                    //       padding: EdgeInsets.all(4),
-                    //       decoration: BoxDecoration(
-                    //         color: Colors.black.withOpacity(0.1),
-                    //         shape: BoxShape.circle,
-                    //       ),
-                    //       child: Icon(
-                    //         Icons.close,
-                    //         size: 24,
-                    //         color: Colors.black54,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    Center(child: Text(title??"", style: MyTextStyle.myBlackBoldTitle,)),
-                    Positioned(
-                      top: 8,
-                      left: 0,
-                      right: 0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: ShapeDecoration(
-                              shape: StadiumBorder(),
-                              color: Colors.grey.shade400,
-                            ),
-                            height: 5,
-                            width: 100,
-                          ),
-                        ],
+                color: colorBlack,
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Center(
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        shape: const StadiumBorder(),
+                        color: Colors.grey.shade400,
                       ),
-                    )
-                  ],
+                      height: 5,
+                      width: 100,
+                    ),
+                  ),
                 ),
               ),
-              Expanded(
-                child: child??Container(),
-              )
+
+              Container(
+                color: colorBlack,
+                width: double.infinity,
+                child: Text(
+                  title ?? "",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: 'Zain',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Expanded(child: child ?? Container()),
             ],
           ),
         );

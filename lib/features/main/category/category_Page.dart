@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/sliver_app_bar_delegate.dart';
-import 'package:garage/features/main/category/category_page_details/category_item_card.dart';
+import 'package:garage/features/main/category/category_page_details/company_item_card.dart';
 import 'package:garage/features/main/category/category_page_details/sub_category_item.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
@@ -47,7 +47,10 @@ class CategoryPage extends StatelessWidget {
                 Container(
                   height: 48,
                   color: colorBlack,
-                  padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 8,
+                  ),
                   child: ListView(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
@@ -104,7 +107,7 @@ class CategoryPage extends StatelessWidget {
                   vertical: 16.0,
                 ),
                 separatorBuilder: (context, index) => const SizedBox(height: 8),
-                itemBuilder: (context, index) => const CategoryItemCard(),
+                itemBuilder: (context, index) => const CompanyItemCard(),
                 itemCount: 10,
               ),
             ),

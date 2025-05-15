@@ -13,14 +13,14 @@ import 'package:garage/features/main/common/add_container.dart';
 import 'package:garage/features/main/common/text_header_widget.dart';
 import 'package:garage/theme/styles.dart';
 
-import 'home_page_logic.dart';
+import 'home_logic.dart';
 
-class HomePagePage extends StatelessWidget {
-  const HomePagePage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final HomePageLogic logic = Get.put(HomePageLogic());
+    final HomeController logic = Get.put(HomeController());
 
     return MyScaffold(
       body: SingleChildScrollView(
@@ -82,11 +82,14 @@ class HomePagePage extends StatelessWidget {
                     mainAxisSpacing: 16,
                   ),
                   itemBuilder:
-                      (context, index) =>  CustomCategoryCard(
+                      (context, index) => CustomCategoryCard(
                         image: "assets/images/ic_home.svg",
                         text: "الاثائة",
                         onTab: () {
-                          Get.toNamed(Routes.CATEGRYPAGEKEY,parameters: {'title': "الاثائة"});
+                          Get.toNamed(
+                            Routes.CATEGRYPAGEKEY,
+                            parameters: {'title': "الاثائة"},
+                          );
                         },
                       ),
                   itemCount: 10,

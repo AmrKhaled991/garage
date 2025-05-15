@@ -60,4 +60,6 @@ abstract class Routes {
   static const ADDCARPAGEKEY = '/ADDCARPAGEKEY';
   static const CATEGRYPAGEKEY = '/CATEGRYPAGEKEY';
   static const COMPANYkEY = '/COMPANYkEY';
+  static const PRODUCT_DETAILSKEY = '/PRODUCT_DETAILSKEY';
+  static const ORDER_DETAILSSKEY = '/ORDER_DETAILSSKEY';
 }
