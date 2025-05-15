@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
-import 'package:garage/features/main/category/category_page_details/company_item_card.dart';
-import 'package:garage/features/main/my_orders/my_orders_page.dart';
+import 'package:garage/features/main/order_details/order_details_widgets/order_details_item_card.dart';
+import 'package:garage/features/main/order_details/order_details_widgets/order_details_price_row.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 
@@ -46,113 +45,6 @@ class OrderDetailsPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class OrderDetailsPriceRow extends StatelessWidget {
-  final String? title;
-  final String? price;
-  final Color? color;
-  const OrderDetailsPriceRow({super.key, this.title, this.price, this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title ?? "",
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            color: color,
-            fontSize: 14,
-            fontFamily: 'Zain',
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        Text(
-          price ?? '',
-          style: TextStyle(
-            color: color,
-            fontSize: 14,
-            fontFamily: 'Zain',
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class OrderDetailsItemCard extends StatelessWidget {
-  const OrderDetailsItemCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: MyshapesStyle.PrimaryDecoration,
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.zero,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: const MyImage(
-                    image: "assets/images/bar_bg.png",
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                const Expanded(
-                  child: Column(
-                    spacing: 8,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'شركة جراج أونلاين للصيانه',
-
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Zain',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        'مركز تغيير زيوت و صيانه سيارات',
-
-                        style: TextStyle(
-                          color: Color(0xFFCCCAC7),
-                          fontSize: 12,
-                          fontFamily: 'Zain',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        '2 x 50 د.ك',
-
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontFamily: 'Almarai',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
