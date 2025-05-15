@@ -1,3 +1,4 @@
+import 'package:garage/core/networking/models/offer.dart';
 import 'package:garage/core/networking/models/product.dart';
 import 'package:garage/core/ui/pages_page.dart';
 import 'package:garage/core/ui/webview_payment_page.dart';
@@ -192,13 +193,19 @@ class AppPages {
     ),
     GetPage(
       name: Routes.PRODUCT_DETAILSKEY,
-      page: () => ProductDetailsPage(),
+      page: () => const ProductDetailsPage(),
       binding: ProductDetailsBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(
+      name: Routes.OFFER_DETAILS,
+      page: () => const OrderDetailsPage(),
+      binding: OrderDetailsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
       name: Routes.ORDER_DETAILSSKEY,
-      page: () => OrderDetailsPage(),
+      page: () => const OrderDetailsPage(),
       binding: OrderDetailsBinding(),
       transition: Transition.cupertino,
     ),
