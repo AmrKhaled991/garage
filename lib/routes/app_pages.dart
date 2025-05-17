@@ -2,6 +2,7 @@ import 'package:garage/core/networking/models/offer.dart';
 import 'package:garage/core/networking/models/product.dart';
 import 'package:garage/core/ui/pages_page.dart';
 import 'package:garage/core/ui/webview_payment_page.dart';
+import 'package:garage/features/all_chats/all_chats_binding.dart';
 import 'package:garage/features/auth/change_password/change_password_binding.dart';
 import 'package:garage/features/auth/change_password/change_password_page.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_binding.dart';
@@ -12,7 +13,7 @@ import 'package:garage/features/auth/login/login_binding.dart';
 import 'package:garage/features/auth/login/login_page.dart';
 import 'package:garage/features/auth/otp_verify/otp_verify_binding.dart';
 import 'package:garage/features/auth/otp_verify/otp_verify_page.dart';
-import 'package:garage/features/auth/password_change_successfully/password_change_successfully_page.dart';
+import 'package:garage/features/auth/success_dialog_screen/success_dialog_screen.dart';
 import 'package:garage/features/auth/profile/profile_binding.dart';
 import 'package:garage/features/auth/profile/profile_page.dart';
 import 'package:garage/features/auth/profile_edit/profile_edit_binding.dart';
@@ -23,10 +24,15 @@ import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_
 import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_page.dart';
 import 'package:garage/features/main/add_car/add_car_binding.dart';
 import 'package:garage/features/main/add_car/add_car_page.dart';
+import 'package:garage/features/main/cart/cart_binding.dart';
 import 'package:garage/features/main/category/category_Page.dart';
 import 'package:garage/features/main/category/category_binding.dart';
+import 'package:garage/features/main/chat/chat_binding.dart';
+import 'package:garage/features/main/chat/chat_page.dart';
 import 'package:garage/features/main/company/company_binding.dart';
 import 'package:garage/features/main/company/company_page.dart';
+import 'package:garage/features/main/complete_cart_order/complete_cart_order_binding.dart';
+import 'package:garage/features/main/complete_cart_order/complete_cart_order_page.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_page.dart';
 import 'package:garage/features/main/my_orders/my_orders_binding.dart';
@@ -34,6 +40,8 @@ import 'package:garage/features/main/order_details/order_details_binding.dart';
 import 'package:garage/features/main/order_details/order_details_page.dart';
 import 'package:garage/features/main/product_details/product_details_PAGE.dart';
 import 'package:garage/features/main/product_details/product_details_binding.dart';
+import 'package:garage/features/main/search/search_binding.dart';
+import 'package:garage/features/main/search/search_page.dart';
 import 'package:garage/features/main/specifies_the_brand/select_the_brand_binding.dart';
 import 'package:garage/features/main/specifies_the_brand/select_the_brand_page.dart';
 import 'package:garage/features/onBoard/intro/intro_binding.dart';
@@ -156,16 +164,17 @@ class AppPages {
       binding: TermsBinding(),
       transition: Transition.cupertino,
     ),
-    GetPage(
-      name: Routes.PasswordChangeSuccessfullyKEY,
-      page: () => const PasswordChangeSuccessfullyPage(),
-      transition: Transition.cupertino,
-    ),
 
     GetPage(
       name: Routes.MAIN,
       page: () => const MainNavigationPage(),
-      bindings: [ProfileBinding(), MainNavigationBinding(), MyOrdersBinding()],
+      bindings: [
+        ProfileBinding(),
+        MainNavigationBinding(),
+        MyOrdersBinding(),
+        CartBinding(),
+        AllChatsBinding(),
+      ],
     ),
     GetPage(
       name: Routes.SelectTheBrandPageKey,
@@ -207,6 +216,29 @@ class AppPages {
       name: Routes.ORDER_DETAILSSKEY,
       page: () => const OrderDetailsPage(),
       binding: OrderDetailsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.COMPLETE_CART_ORDER,
+      page: () => const CompleteCartOrderPage(),
+      binding: CompleteCartOrderBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.SuccessDialogScreen,
+      page: () => const SuccessDialogScreen(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.CHAT,
+      page: () => const ChatPage(),
+      binding: ChatBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.SEARCH,
+      page: () => const SearchPage(),
+      binding: SearchBinding(),
       transition: Transition.cupertino,
     ),
   ];

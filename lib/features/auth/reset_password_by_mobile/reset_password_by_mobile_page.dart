@@ -61,7 +61,7 @@ class ResetPasswordByMobilePage extends StatelessWidget {
             MyLoadingButton(
               title: "save".tr,
               onClick: (RoundedLoadingButtonController _controller) {
-                Get.toNamed(Routes.PasswordChangeSuccessfullyKEY);
+                Get.toNamed(Routes.SuccessDialogScreen);
                 return;
                 if (!controller.validations()) {
                   _controller.error();

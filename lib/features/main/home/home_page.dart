@@ -32,13 +32,28 @@ class HomePage extends StatelessWidget {
               spacing: 8,
               children: [
                 Expanded(
-                  child: MyTextForm(
-                    hasIconConstraints: false,
-                    hint: "what_you_looking_for".tr,
-                    icon: const Icon(Icons.search_rounded, color: Colors.white),
-                    onSubmitted: (v) {
-                      // Get.toNamed(Routes.SEARCH, arguments: {MyArguments.SEARCH: v});
-                    },
+                  child: GestureDetector(
+                    onTap: () => Get.toNamed(Routes.SEARCH),
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: MyshapesStyle.PrimaryDecoration,
+                      child: const Row(
+                        spacing: 8,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MyImage(image: "assets/images/ic_search.svg"),
+                          Text(
+                            'البحث عن مركز خدمة',
+                            style: TextStyle(
+                              color: Color(0xFF9E9B94),
+                              fontSize: 16,
+                              fontFamily: 'Zain',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
                 Container(

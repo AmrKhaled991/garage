@@ -11,7 +11,7 @@ class MyOrdersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MyOrdersLogic logic = Get.put(MyOrdersLogic());
+    final MyOrdersController logic = Get.put(MyOrdersController());
 
     return MyScaffold(
       title: "my_orders".tr,
