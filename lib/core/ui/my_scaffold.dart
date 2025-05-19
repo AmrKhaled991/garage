@@ -18,6 +18,7 @@ class MyScaffold extends StatelessWidget {
   Widget? bottomNavigationBar;
   Widget? fab;
   Color? backgroundColor;
+  final bool? resizeToAvoidBottomInset;
 
   // final MainDrawerPageController mainNavigationController = Get.find();
 
@@ -35,6 +36,7 @@ class MyScaffold extends StatelessWidget {
     this.withBar = true,
     this.withBG = false,
     this.backgroundColor = colorPrimary,
+    this.resizeToAvoidBottomInset,
   });
 
   @override
@@ -83,6 +85,8 @@ class MyScaffold extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colorBlack,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: fab,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -138,6 +142,7 @@ class MyScaffold extends StatelessWidget {
                         leading: _leading(),
                         border: const Border.fromBorderSide(BorderSide.none),
                         backgroundColor: colorBlack,
+
                         padding: const EdgeInsetsDirectional.only(
                           start: 0,
                           end: 0,

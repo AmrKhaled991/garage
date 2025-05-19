@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:garage/core/binding.dart';
 import 'package:garage/core/controllers/main_controller.dart';
-import 'package:garage/core/helpers/firebaseNotifications.dart';
 import 'package:garage/core/lang/translation_service.dart';
 import 'package:garage/core/storage/preference_manager.dart';
 import 'package:garage/routes/app_pages.dart';
@@ -26,25 +24,29 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
+
 Future<void> main() async {
   // VideoPlayerController.setCacheSize(100 * 1024 * 1024, 200 * 1024 * 1024);
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
 
-  runZonedGuarded<Future<void>>(() async {
-    // Pass all uncaught errors from the framework to Crashlytics.
-    // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-    // FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-    await GetStorage.init();
-    Binding().dependencies();
-    HttpOverrides.global = MyHttpOverrides();
-    // FirebaseNotifications().setUpFirebase();
+  runZonedGuarded<Future<void>>(
+    () async {
+      // Pass all uncaught errors from the framework to Crashlytics.
+      // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      // FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+      await GetStorage.init();
+      Binding().dependencies();
+      HttpOverrides.global = MyHttpOverrides();
+      // FirebaseNotifications().setUpFirebase();
 
-    runApp(const MyApp());
-    // The following lines are the same as previously explained in "Handling uncaught errors"
-  }, (error, stack) {
-    // FirebaseCrashlytics.instance.recordError(error, stack);
-  });
+      runApp(const MyApp());
+      // The following lines are the same as previously explained in "Handling uncaught errors"
+    },
+    (error, stack) {
+      // FirebaseCrashlytics.instance.recordError(error, stack);
+    },
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -75,48 +77,46 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => GetMaterialApp(
-        // for testing ui translations
-        builder: (context, child) {
-          final locale = Get.find<PreferenceManager>();
-          final change = Get.find<MainController>();
-          return Stack(
-            children: [
-              child!,
-              Positioned(
-                right: 16,
-                bottom: 100,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    final isAr = locale.getLocale == 'ar';
-                    if (isAr) {
-                      change.changeLanguage('en');
-                    } else {
-                      change.changeLanguage('ar');
-                    }
-                  },
-                  child: const Icon(
-                    Icons.language,
-                    color: Colors.white,
+      builder:
+          (context, child) => GetMaterialApp(
+            // for testing ui translations
+            builder: (context, child) {
+              final locale = Get.find<PreferenceManager>();
+              final change = Get.find<MainController>();
+              return Stack(
+                children: [
+                  child!,
+                  Positioned(
+                    right: 16,
+                    bottom: 100,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        final isAr = locale.getLocale == 'ar';
+                        if (isAr) {
+                          change.changeLanguage('en');
+                        } else {
+                          change.changeLanguage('ar');
+                        }
+                      },
+                      child: const Icon(Icons.language, color: Colors.white),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          );
-        },
-        key: key,
-        debugShowCheckedModeBanner: false,
-        enableLog: false,
-        logWriterCallback: Logger.write,
-        initialRoute: AppPages.INITIAL,
-        getPages: AppPages.routes,
-        locale: Locale(preferenceManager.getLocale),
-        fallbackLocale: TranslationService.fallbackLocale,
-        translations: TranslationService(),
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        themeMode: ThemeService().getThemeMode(),
-      ),
+                ],
+              );
+            },
+            key: key,
+            debugShowCheckedModeBanner: false,
+            enableLog: false,
+            logWriterCallback: Logger.write,
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
+            locale: Locale(preferenceManager.getLocale),
+            fallbackLocale: TranslationService.fallbackLocale,
+            translations: TranslationService(),
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: ThemeService().getThemeMode(),
+          ),
     );
   }
 }

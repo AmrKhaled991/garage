@@ -6,6 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_controller.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_state.dart';
+import 'package:garage/features/main/common/add_container.dart';
+import 'package:garage/features/main/common/text_header_widget.dart';
+import 'package:garage/features/main/home/custom_category_card.dart';
 import 'package:get/get.dart';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
@@ -95,7 +98,9 @@ class _CompanyProfileEditView2State extends State<CompanyProfileEditView2> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return const UploadCompanyAssetsScreen();
+
+    ListView(
       children: <Widget>[
         SizedBox(
           height: 160,
@@ -184,8 +189,6 @@ class _CompanyProfileEditView2State extends State<CompanyProfileEditView2> {
     key: const ValueKey<int>(0),
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      
-    
       const SizedBox(height: 16),
       Text("company_images".tr, style: MyTextStyle.myBlackBoldTitle),
       const SizedBox(height: 16),
@@ -210,4 +213,165 @@ class _CompanyProfileEditView2State extends State<CompanyProfileEditView2> {
       ),
     ],
   );
+}
+
+class UploadCompanyAssetsScreen extends StatelessWidget {
+  const UploadCompanyAssetsScreen({
+    super.key,
+    this.onPickLogo,
+    this.onRemoveLogo,
+    this.onPickImages,
+    this.onPickVideo,
+  });
+
+  /// Callback for picking a single logo image.
+  final VoidCallback? onPickLogo;
+
+  /// Callback for removing the selected logo.
+  final VoidCallback? onRemoveLogo;
+
+  /// Callback for picking multiple images (max 10, each ≤ 1 MB).
+  final VoidCallback? onPickImages;
+
+  /// Callback for picking a video file (≤ 20 MB).
+  final VoidCallback? onPickVideo;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SingleChildScrollView(
+      child: Column(
+        spacing: 24,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(
+            width: 343,
+            height: 48,
+            child: Text(
+              'رفع الشعار الخاص بالشركة',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+                fontFamily: 'Zain',
+                fontWeight: FontWeight.w700,
+                height: 1.50,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+              decoration: MyshapesStyle.PrimaryDecoration,
+              child: Column(
+                spacing: 24,
+                children: [
+                  Column(
+                    spacing: 8,
+                    children: [
+                      Container(
+                        width: 88,
+                        height: 44,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: MyshapesStyle.transparentDecoration,
+                      ),
+                      const Text(
+                        "حذف",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14,
+                          fontFamily: 'Zain',
+                          fontWeight: FontWeight.w400,
+                          height: 1.50,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          TextHeaderWidget(
+            title: "صور لبعض الأعمال أو الخدمات".tr,
+            child: const AddContainer(
+              title: "رفع الصور بحد أقصى 10 صور بحد أقصى ١ ميجا للصورة",
+            ),
+          ),
+
+          TextHeaderWidget(
+            title: "رفع فيديو".tr,
+            child: const AddContainer(title: "رفع فيديو - بحد أقصى ٢٠ ميجا"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Reusable section widget with title, content, optional footer and action.
+class _Section extends StatelessWidget {
+  const _Section({
+    required this.title,
+    required this.child,
+    this.footer,
+    this.action,
+  });
+
+  final String title;
+  final Widget child;
+  final Widget? footer;
+  final Widget? action;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            if (action != null) action!,
+          ],
+        ),
+        const SizedBox(height: 12),
+        child,
+        if (footer != null) ...[const SizedBox(height: 8), footer!],
+      ],
+    );
+  }
+}
+
+/// Dashed border box used for adding files.
+class _DashedBox extends StatelessWidget {
+  const _DashedBox({super.key, required this.child, this.onTap});
+
+  final Widget child;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 120,
+        decoration: BoxDecoration(
+          color: const Color(0xFF1E1E1E),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: Colors.white24,
+            width: 2,
+            style: BorderStyle.solid, // Use a package for real dashed border.
+          ),
+        ),
+        child: Center(child: child),
+      ),
+    );
+  }
 }

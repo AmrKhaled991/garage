@@ -55,5 +55,21 @@ abstract class Routes {
   static const DOCTOR_DETAILS = '/DOCTOR_DETAILS';
   static const SELECT_DATE_TIME = '/SELECT_DATE_TIME';
   static const MEDICAL_CONDITION_DETAILS = '/MEDICAL_CONDITION_DETAILS';
-  static const PasswordChangeSuccessfullyKEY = '/PasswordChangeSuccessfully';
+  static const SuccessDialogScreen = '/SuccessDialogScreen';
+  static const SelectTheBrandPageKey = '/SelectTheBrandPageKey';
+  static const ADDCARPAGEKEY = '/ADDCARPAGEKEY';
+  static const CATEGRYPAGEKEY = '/CATEGRYPAGEKEY';
+  static const COMPANYkEY = '/COMPANYkEY';
+  static const PRODUCT_DETAILSKEY = '/PRODUCT_DETAILSKEY';
+  static const ORDER_DETAILSSKEY = '/ORDER_DETAILSSKEY';
+  static const COMPLETE_CART_ORDER = '/COMPLETE_CART_ORDER';
+  static const CHAT = '/CHAT';
+  static const Search = '/Search';
+  static const PRICEEQUEST_PAGE = '/PRICEEQUEST_PAGE';
+  static const PriceRequestDetailsPageKEY = '/PriceRequestDetailsPageKEY';
+  static const AddPriceRequest = '/AddPriceRequest';
+  static const MaintenanceAppointmentReminder = '/MaintenanceAppointmentReminder';
+  static const AddressPage = '/AddressPage';
+  static const AddNewAddressPage = '/AddNewAddressPage';
+
 }

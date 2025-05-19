@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
             MyLoadingButton(
               title: "create_account".tr,
               onClick: (RoundedLoadingButtonController _controller) {
-                Get.toNamed(Routes.COMPANY_PROFILE_EDIT, );
+                Get.toNamed(Routes.COMPANY_PROFILE_EDIT);
                 return;
                 if (!controller.validations()) {
                   _controller.error();

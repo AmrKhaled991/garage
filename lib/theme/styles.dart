@@ -41,6 +41,8 @@ const Color colorContainer = Color(0xFF242424);
 const Color colorContainerBorder = Color(0xFFD4E6F8);
 const Color colorPink = Color(0xFFE513FA);
 const Color colorDropShadow = Color(0xFFB3B3B3);
+const Color backgroundCustomChipTextColor = Color(0xffffcccac7);
+const Color backgroundCustomChipColor = Color(0xFF3D3D3D);
 
 const Color colorNavigationBackground = Color(0xFF283353);
 const Color colorNavigationSelected = Color(0xFF262A56);
@@ -51,12 +53,39 @@ const Color textButtoNColor = Color(0xFF201F1D);
 
 const Color colorServiceBG = Color(0x0A142C43);
 const Color colorCategoryBG = Color(0x24142C43);
+const Color DarkGrayPriceColor = Color(0xffff9e9b94);
 
 const Gradient appGradient = LinearGradient(
   begin: FractionalOffset.topCenter,
   end: FractionalOffset.bottomCenter,
   colors: [Color(0xFFDAA427), Color(0xFFDAA427)],
 );
+
+class MyshapesStyle {
+  static Decoration get PrimaryDecoration => ShapeDecoration(
+    color: colorContainer,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  );
+
+  static Decoration get SecondaryDecoration => ShapeDecoration(
+    color: colorContainer,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  );
+  static Decoration get lightGrayDecoration => ShapeDecoration(
+    color: backgroundCustomChipColor,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  );
+  static Decoration get darkGrayDecoration => ShapeDecoration(
+    color: const Color(0xFF242424),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  );
+  static Decoration get transparentDecoration => ShapeDecoration(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+      side: const BorderSide(color: backgroundCustomChipColor, width: 1),
+    ),
+  );
+}
 
 class MyTextStyle {
   static ThemeData get _appTheme => Get.theme;
@@ -73,8 +102,11 @@ class MyTextStyle {
     color: colorTitle,
   );
 
-  static TextStyle get bottomNavigationStyle =>
-      const TextStyle(fontFamily: appFontFamily, fontSize: 16,color: colorPrimary);
+  static TextStyle get bottomNavigationStyle => const TextStyle(
+    fontFamily: appFontFamily,
+    fontSize: 16,
+    color: colorPrimary,
+  );
 
   static TextStyle get myWhiteLargeTitle =>
       _textTheme.titleMedium!.copyWith(color: Colors.white);

@@ -43,16 +43,22 @@ class MyButton extends StatelessWidget {
         width: width ?? (isFullWidth == true ? Get.width : null),
         height: height ?? 50,
         padding: EdgeInsets.symmetric(vertical: vPading, horizontal: 16),
-        decoration: BoxDecoration(
-          color:
-              withGradient == true || isOutline == true
-                  ? null
-                  : (color ?? colorPrimary),
-          borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 100)),
-          gradient: withGradient == true ? appGradient : null,
-          border:
-              isOutline == false ? null : Border.all(color: color ?? colorGrey),
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          color: color ?? colorPrimary,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
+        //
+        // BoxDecoration(
+        //   color:
+        //       withGradient == true || isOutline == true
+        //           ? null
+        //           : (color ?? colorPrimary),
+        //   borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 100)),
+        //   gradient: withGradient == true ? appGradient : null,
+        //   border:
+        //       isOutline == false ? null : Border.all(color: color ?? colorGrey),
+        // ),
         child:
             child ??
             Text(

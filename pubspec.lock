@@ -137,14 +137,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  dbus:
-    dependency: transitive
-    description:
-      name: dbus
-      sha256: "79e0c23480ff85dc68de79e2cd6334add97e48f7f4865d17686dd6ea81a47e8c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.11"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -374,38 +366,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  flutter_local_notifications:
-    dependency: "direct main"
-    description:
-      name: flutter_local_notifications
-      sha256: ebc86e2ff6a9ca5bc1943e675fef02b5ddaa1a99b4ef980cac576fcfc65959aa
-      url: "https://pub.dev"
-    source: hosted
-    version: "19.2.0"
-  flutter_local_notifications_linux:
-    dependency: transitive
-    description:
-      name: flutter_local_notifications_linux
-      sha256: e3c277b2daab8e36ac5a6820536668d07e83851aeeb79c446e525a70710770a5
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.0"
-  flutter_local_notifications_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_local_notifications_platform_interface
-      sha256: "2569b973fc9d1f63a37410a9f7c1c552081226c597190cb359ef5d5762d1631c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.0.0"
-  flutter_local_notifications_windows:
-    dependency: transitive
-    description:
-      name: flutter_local_notifications_windows
-      sha256: f8fc0652a601f83419d623c85723a3e82ad81f92b33eaa9bcc21ea1b94773e6e
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -540,10 +500,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_maps_flutter
-      sha256: "830d8f7b51b4a950bf0d7daa675324fed6c9beb57a7ecca2a59018270c96b4e0"
+      sha256: d7e4704e6b9f3452c7cd9eb6efc226e1f9e8273c28da47b0a1e7451916d71005
       url: "https://pub.dev"
     source: hosted
-    version: "2.12.1"
+    version: "2.12.2"
   google_maps_flutter_android:
     dependency: transitive
     description:
@@ -1149,14 +1109,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
-  timezone:
-    dependency: transitive
-    description:
-      name: timezone
-      sha256: dd14a3b83cfd7cb19e7888f1cbc20f258b8d71b54c06f79ac585f14093a287d1
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.10.1"
   typed_data:
     dependency: transitive
     description:
@@ -1169,10 +1121,10 @@ packages:
     dependency: "direct main"
     description:
       name: upgrader
-      sha256: "48b03378c605e84879328e5ed1ac44cfbdaf25607840c81e65e3a67973146735"
+      sha256: "60293b391f4146ce1e381ed6198b6374559a4aadf885d313e94e6c7d454d03ca"
       url: "https://pub.dev"
     source: hosted
-    version: "11.3.2"
+    version: "11.4.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1349,38 +1301,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  webview_flutter:
-    dependency: "direct main"
-    description:
-      name: webview_flutter
-      sha256: "85557bf0a4a7cee48566da129a8f7ab3d62b6b6e8c4b9e49be977b2fe8f66c60"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
-  webview_flutter_android:
-    dependency: transitive
-    description:
-      name: webview_flutter_android
-      sha256: "47a8da40d02befda5b151a26dba71f47df471cddd91dfdb7802d0a87c5442558"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.16.9"
-  webview_flutter_platform_interface:
-    dependency: transitive
-    description:
-      name: webview_flutter_platform_interface
-      sha256: "18b1640839cf6546784a524c72aded5b6e86b23e7167dc2311cc96f7658b64bd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.11.0"
-  webview_flutter_wkwebview:
-    dependency: transitive
-    description:
-      name: webview_flutter_wkwebview
-      sha256: c9f9be526fa0d3347374ceaa05c4b3acb85f4f112abd62f7d74b7d301fa515ff
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.20.0"
   wechat_assets_picker:
     dependency: "direct main"
     description:

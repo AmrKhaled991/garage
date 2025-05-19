@@ -84,13 +84,14 @@ class MyImage extends StatelessWidget {
           //   image: "assets/images/logo.svg",
           //   backgroundColor: colorMain,
           // ),
-          placeholder: (context, url) => Center(
-            child: CupertinoActivityIndicator(radius: 10),
-          ),
-          errorWidget: (context, url, error) => MyImage(
-            margin: EdgeInsets.all(8),
-            image: "assets/images/logo.svg",
-          ),
+          placeholder:
+              (context, url) =>
+                  const Center(child: CupertinoActivityIndicator(radius: 10)),
+          errorWidget:
+              (context, url, error) => const MyImage(
+                margin: EdgeInsets.all(8),
+                image: "assets/images/logo2.svg",
+              ),
           matchTextDirection: matchTextDirection,
           width: width,
           height: height,

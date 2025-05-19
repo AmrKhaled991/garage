@@ -13,132 +13,143 @@ import 'intro_controller.dart';
 
 class IntroPage extends StatelessWidget {
   final controller = Get.find<IntroController>();
-  final state = Get
-      .find<IntroController>()
-      .state;
+  final state = Get.find<IntroController>().state;
   MainController mainController = Get.find();
 
   var sliderController = CarouselSliderController();
 
   var isLastPage = false;
 
+  IntroPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Obx(() {
-          return LoadingWidget(
-            loadingState: state.intros.value,
-            loadingOnly: true,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                SliderView(
-                  sliderHeight: 0.8.sh,
-                  autoPlay: false,
-                  controller: sliderController,
-                  indicatorColor: colorPrimary,
-                  onPageChanged: (index) {
-                    isLastPage = index == 1;
-                  },
-                  items: state.intros.value?.data?.map((e) {
+      backgroundColor: colorBlack,
+      body: Obx(() {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            SliderView(
+              sliderHeight: 0.8.sh,
+              autoPlay: false,
+              controller: sliderController,
+              indicatorColor: colorPrimary,
+              onPageChanged: (index) {
+                isLastPage = index == 1;
+              },
+              items:
+                  state.intros.value?.data?.map((e) {
                     return _introItem(
-                        image: e.image,
-                        title: e.title,
-                        description: e.description
+                      image: e.image,
+                      title: e.title,
+                      description: e.description,
                     );
-                  },).toList()
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: Container(
-                      height: 0.2.sh,
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
-                              color: colorSecondary,
-                              alignment: Alignment.bottomCenter,
-                              margin: EdgeInsets.only(top: 8),
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                    icon: MyImage(image: "assets/images/ic_next.svg"),
-                                    onPressed: () {
-                                      if (isLastPage) {
-                                        Get.offAllNamed(Routes.MAIN);
-                                      } else {
-                                        sliderController.nextPage();
-                                      }
-                                    },
-                                  ),
-                                  SizedBox(width: 0.3.sw,),
-                                  Expanded(
-                                    child: MyButton(
-                                      title: "skip".tr,
-                                      isOutline: true,
-                                      color: Colors.white,
-                                      textColor: Colors.white,
-                                      onClick: () {
-                                        Get.offAllNamed(Routes.MAIN);
-                                      },
+                  }).toList(),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: SizedBox(
+                  height: 0.2.sh,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            spacing: 8,
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      side: const BorderSide(
+                                        color: Colors.white,
+                                        strokeAlign: 1,
+                                      ),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4,
+                                      vertical: 10,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(20),
-                                    bottomLeft: Radius.circular(20),
+                                  child: const Text(
+                                    'التالي',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontFamily: 'Zain',
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.50,
+                                    ),
                                   ),
-                                  color: Colors.white
+                                  onPressed: () {
+                                    sliderController.nextPage();
+                                  },
+                                ),
                               ),
-                              height: 40,
-                            ),
+                              Expanded(
+                                child: MyButton(
+                                  title: "login".tr,
+                                  isOutline: true,
+                                  textColor: colorBlack,
+                                  onClick: () {
+                                    Get.offAllNamed(Routes.LOGIN);
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          );
-        })
+          ],
+        );
+      }),
     );
   }
 
-  Widget _introItem({String? image, String? title, String? description,}) {
+  Widget _introItem({String? image, String? title, String? description}) {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          MyImage(
-            image: image,
-            fit: BoxFit.contain,
-            width: Get.width * 0.7,
-          ),
+          MyImage(image: image, fit: BoxFit.contain, width: Get.width * 0.7),
           30.verticalSpace,
-          Text(title ?? "",
+          Text(
+            title ?? "",
             textAlign: TextAlign.center,
-            style: MyTextStyle.myBlackBoldLargeTitle,).paddingSymmetric(horizontal: 16),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontFamily: 'Zain',
+              fontWeight: FontWeight.w800,
+              height: 1.20,
+            ),
+          ).paddingSymmetric(horizontal: 16),
           8.verticalSpace,
-          Text(description ?? "",
+          Text(
+            description ?? "",
             textAlign: TextAlign.center,
-            style: MyTextStyle.myGreyTitle,).paddingSymmetric(horizontal: 16),
+            style: const TextStyle(
+              color: Color(0xFFCCCAC7),
+              fontSize: 18,
+              fontFamily: 'Zain',
+              fontWeight: FontWeight.w400,
+              height: 1.50,
+            ),
+          ).paddingSymmetric(horizontal: 16),
         ],
       ),
     );
