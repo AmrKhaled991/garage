@@ -9,28 +9,32 @@ import 'splash_controller.dart';
 import 'splash_state.dart';
 
 class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
+
   @override
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver , TickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   final SplashController controller = Get.find<SplashController>();
   final SplashState state = Get.find<SplashController>().state;
 
-
-   late AnimationController _controller ;
-   late Animation<double> _animation ;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness:
-          GetPlatform.isAndroid ? Brightness.dark : Brightness.light,
-      statusBarIconBrightness:
-          GetPlatform.isAndroid ? Brightness.dark : Brightness.light,
-    ));
-    SystemChrome.setPreferredOrientations([ 
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness:
+            GetPlatform.isAndroid ? Brightness.dark : Brightness.light,
+        statusBarIconBrightness:
+            GetPlatform.isAndroid ? Brightness.dark : Brightness.light,
+      ),
+    );
+    SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);
@@ -39,10 +43,7 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver , T
       vsync: this,
     );
 
-    _animation =CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
     _controller.forward().whenComplete(() => controller.navigate());
     super.initState();
@@ -70,7 +71,7 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver , T
           child: Align(
             alignment: Alignment.center,
             child: MyImage(
-              image: "assets/images/logo.svg",
+              image: "assets/images/logo.png",
               width: Get.width * 0.5,
               height: Get.width * 0.5,
             ),

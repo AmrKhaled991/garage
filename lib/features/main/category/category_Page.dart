@@ -3,6 +3,7 @@ import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/sliver_app_bar_delegate.dart';
 import 'package:garage/features/main/category/category_page_details/company_item_card.dart';
 import 'package:garage/features/main/category/category_page_details/sub_category_item.dart';
+import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -29,7 +30,12 @@ class CategoryPage extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                 ),
               ),
-              actions: const [MyImage(image: "assets/images/ic_search.svg")],
+              actions: [
+                GestureDetector(
+                  onTap: () => Get.toNamed(Routes.SEARCH),
+                  child: const MyImage(image: "assets/images/ic_search.svg"),
+                ),
+              ],
               title: const Text(
                 'طاقة والوقود',
                 textAlign: TextAlign.center,

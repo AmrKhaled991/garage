@@ -13,7 +13,7 @@ class CompanyItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        displayLocation ? Get.toNamed(Routes.OFFER_DETAILS) : null;
+        displayLocation ? Get.toNamed(Routes.COMPANYkEY) : null;
       },
       child: Container(
         padding: const EdgeInsets.all(16),

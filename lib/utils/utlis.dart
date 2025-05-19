@@ -22,7 +22,7 @@ class HexColor extends Color {
 class Utils {
   static String getErrorFromJson(Map<String, dynamic>? json) {
     print("getErrorFromJson: $json");
-    var buffer = new StringBuffer();
+    var buffer = StringBuffer();
     if (json == null) {
       buffer.write("Unknown error");
       return buffer.toString();
@@ -30,9 +30,9 @@ class Utils {
     if (json["errors"] != null) {
       Map<String, dynamic> errors = json["errors"];
       errors.forEach((key, value) {
-        (value as List).forEach((element) {
+        for (var element in (value as List)) {
           buffer.write(element + "\n");
-        });
+        }
       });
     }
 
@@ -47,39 +47,41 @@ class Utils {
     return buffer.toString();
   }
 
+  static showSnackBar(String message) {
+    Get.showSnackbar(
+      GetSnackBar(
+        message: message,
+        backgroundColor: colorBlack,
+        borderRadius: 10,
+        isDismissible: true,
 
-
-  static showSnackBar(String message){
-    Get.showSnackbar(GetSnackBar(message: message,
-      backgroundColor: colorBlack,
-      borderRadius: 10,
-      isDismissible: true,
-
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      snackPosition: SnackPosition.TOP,
-      duration: Duration(seconds: 2),));
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        snackPosition: SnackPosition.TOP,
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
-  static showCartSnackBar({String? message}){
-    Get.showSnackbar(GetSnackBar(message: message ?? "item_added_to_cart".tr,
-      backgroundColor: colorBlack,
-      borderRadius: 10,
-      isDismissible: true,
+  static showCartSnackBar({String? message}) {
+    Get.showSnackbar(
+      GetSnackBar(
+        message: message ?? "item_added_to_cart".tr,
+        backgroundColor: colorBlack,
+        borderRadius: 10,
+        isDismissible: true,
 
-      padding: EdgeInsets.all(24),
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 5),
+        padding: const EdgeInsets.all(24),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 5),
         mainButton: TextButton(
           onPressed: () {
             Get.toNamed(Routes.CART);
           },
-          child: Text("show_cart".tr,
-              style: MyTextStyle.myBlackTitle),
-        )
-    )
+          child: Text("show_cart".tr, style: MyTextStyle.myBlackTitle),
+        ),
+      ),
     );
-
   }
 
   // static Future<dynamic> navigate(
@@ -107,24 +109,32 @@ class Utils {
   //   );
   // }
 
-  static void showSheet(BuildContext context, Widget widget,{bool isScrollable = false, double height = 0.5}) {
+  static void showSheet(
+    BuildContext context,
+    Widget widget, {
+    bool isScrollable = false,
+    double height = 0.5,
+  }) {
     showModalBottomSheet(
-        context: context,
-        clipBehavior: Clip.antiAlias,
-        // showDragHandle: true,
-        backgroundColor: colorBG,
-        isScrollControlled: isScrollable,
-        useSafeArea: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(
+      context: context,
+      clipBehavior: Clip.antiAlias,
+      // showDragHandle: true,
+      backgroundColor: colorBlack,
+      isScrollControlled: isScrollable,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
           topRight: Radius.circular(16),
           topLeft: Radius.circular(16),
-        )),
-        builder: (context){
-          return Container(
-            height: Get.height * height,
-              padding: MediaQuery.of(context).viewInsets,
-              child: widget);
-        }
+        ),
+      ),
+      builder: (context) {
+        return Container(
+          height: Get.height * height,
+          padding: MediaQuery.of(context).viewInsets,
+          child: widget,
+        );
+      },
     );
 
     // if(isScrollable){
@@ -160,11 +170,12 @@ class Utils {
       if (progress != null && progress.expectedTotalBytes != null) {
         value = progress.cumulativeBytesLoaded / progress.expectedTotalBytes!;
       }
-      return Center(child: Lottie.asset('assets/lottie/loading.json',width: 100));
+      return Center(
+        child: Lottie.asset('assets/lottie/loading.json', width: 100),
+      );
     };
   }
 }
-
 
 extension FirstItemOrNullExtension<E> on Iterable<E> {
   E? firstItemOrNull(bool Function(E) test) {
@@ -178,7 +189,7 @@ extension FirstItemOrNullExtension<E> on Iterable<E> {
 extension EmailValidator on String? {
   bool isValidEmail() {
     return RegExp(
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(this??"");
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
+    ).hasMatch(this ?? "");
   }
 }

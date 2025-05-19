@@ -24,6 +24,12 @@ import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_
 import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_page.dart';
 import 'package:garage/features/main/add_car/add_car_binding.dart';
 import 'package:garage/features/main/add_car/add_car_page.dart';
+import 'package:garage/features/main/add_new_address/add_new_address_binding.dart';
+import 'package:garage/features/main/add_new_address/add_new_address_page.dart';
+import 'package:garage/features/main/add_price_request/add_price_request_binding.dart';
+import 'package:garage/features/main/add_price_request/add_price_request_page.dart';
+import 'package:garage/features/main/adress/address_binding.dart';
+import 'package:garage/features/main/adress/address_page.dart';
 import 'package:garage/features/main/cart/cart_binding.dart';
 import 'package:garage/features/main/category/category_Page.dart';
 import 'package:garage/features/main/category/category_binding.dart';
@@ -35,9 +41,15 @@ import 'package:garage/features/main/complete_cart_order/complete_cart_order_bin
 import 'package:garage/features/main/complete_cart_order/complete_cart_order_page.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_page.dart';
+import 'package:garage/features/main/maintenance_appointment_reminder/maintenance_appointment_reminder_binding.dart';
+import 'package:garage/features/main/maintenance_appointment_reminder/maintenance_appointment_reminder_page.dart';
 import 'package:garage/features/main/my_orders/my_orders_binding.dart';
 import 'package:garage/features/main/order_details/order_details_binding.dart';
 import 'package:garage/features/main/order_details/order_details_page.dart';
+import 'package:garage/features/main/price_request/price_request_binding.dart';
+import 'package:garage/features/main/price_request/price_request_page.dart';
+import 'package:garage/features/main/price_requst_details/price_requst_details_binding.dart';
+import 'package:garage/features/main/price_requst_details/price_requst_details_page.dart';
 import 'package:garage/features/main/product_details/product_details_PAGE.dart';
 import 'package:garage/features/main/product_details/product_details_binding.dart';
 import 'package:garage/features/main/search/search_binding.dart';
@@ -70,7 +82,7 @@ class AppPages {
       binding: SplashBinding(),
     ),
 
-    GetPage(name: Routes.PROFILE, page: () => ProfilePage()),
+    GetPage(name: Routes.PROFILE, page: () => const ProfilePage()),
     GetPage(name: Routes.SETTING, page: () => SettingPage()),
     GetPage(
       name: Routes.LOGIN,
@@ -134,11 +146,11 @@ class AppPages {
       binding: ChangePasswordBinding(),
       transition: Transition.cupertino,
     ),
-    GetPage(
-      name: Routes.WEBVIEW_PAYMENT,
-      page: () => WebviewPaymentPage(),
-      transition: Transition.cupertino,
-    ),
+    // GetPage(
+    //   name: Routes.WEBVIEW_PAYMENT,
+    //   page: () => WebviewPaymentPage(),
+    //   transition: Transition.cupertino,
+    // ),
     GetPage(
       name: Routes.INTRO,
       page: () => IntroPage(),
@@ -206,12 +218,7 @@ class AppPages {
       binding: ProductDetailsBinding(),
       transition: Transition.cupertino,
     ),
-    GetPage(
-      name: Routes.OFFER_DETAILS,
-      page: () => const OrderDetailsPage(),
-      binding: OrderDetailsBinding(),
-      transition: Transition.cupertino,
-    ),
+
     GetPage(
       name: Routes.ORDER_DETAILSSKEY,
       page: () => const OrderDetailsPage(),
@@ -239,6 +246,42 @@ class AppPages {
       name: Routes.SEARCH,
       page: () => const SearchPage(),
       binding: SearchBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.PRICEEQUEST_PAGE,
+      page: () => const PriceRequestPage(),
+      binding: PriceRequestBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.PriceRequestDetailsPageKEY,
+      page: () => const PriceRequestDetailsPage(),
+      binding: PriceRequestDetailsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.AddPriceRequest,
+      page: () => const AddPriceRequestPage(),
+      binding: AddPriceRequestBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.MaintenanceAppointmentReminder,
+      page: () => const MaintenanceAppointmentReminderPage(),
+      binding: MaintenanceAppointmentReminderBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.AddNewAddressPage,
+      page: () => AddNewAddressPage(),
+      binding: AddNewAddressBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.AddressPage,
+      page: () => AddressPage(),
+      binding: AddressBinding(),
       transition: Transition.cupertino,
     ),
   ];

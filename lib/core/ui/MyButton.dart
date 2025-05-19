@@ -45,7 +45,7 @@ class MyButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: vPading, horizontal: 16),
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
-          color: const Color(0xFFE9A01C),
+          color: color ?? colorPrimary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         //

@@ -65,5 +65,11 @@ abstract class Routes {
   static const COMPLETE_CART_ORDER = '/COMPLETE_CART_ORDER';
   static const CHAT = '/CHAT';
   static const Search = '/Search';
+  static const PRICEEQUEST_PAGE = '/PRICEEQUEST_PAGE';
+  static const PriceRequestDetailsPageKEY = '/PriceRequestDetailsPageKEY';
+  static const AddPriceRequest = '/AddPriceRequest';
+  static const MaintenanceAppointmentReminder = '/MaintenanceAppointmentReminder';
+  static const AddressPage = '/AddressPage';
+  static const AddNewAddressPage = '/AddNewAddressPage';
 
 }
