@@ -8,11 +8,8 @@ class SocialButton extends StatelessWidget {
   final SocialButtonType type;
   final String? link;
 
-  const SocialButton({
-    Key? key,
-    required this.type,
-    this.link,
-  }) : super(key: key);
+  const SocialButton({Key? key, required this.type, this.link})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +49,7 @@ class SocialButton extends StatelessWidget {
         return const LinearGradient(
           begin: FractionalOffset.topCenter,
           end: FractionalOffset.bottomCenter,
-          colors: [
-            Color(0xFF33BEF0),
-            Color(0xFF0A85D9),
-          ],
+          colors: [Color(0xFF33BEF0), Color(0xFF0A85D9)],
         );
       case SocialButtonType.FACEBOOK:
         return const LinearGradient(
@@ -73,10 +67,7 @@ class SocialButton extends StatelessWidget {
         return const LinearGradient(
           begin: FractionalOffset.topRight,
           end: FractionalOffset.bottomLeft,
-          colors: [
-            Color(0xFF60FC7C),
-            Color(0xFF4AB161),
-          ],
+          colors: [Color(0xFF60FC7C), Color(0xFF4AB161)],
         );
       case SocialButtonType.INSTAGRAM:
         return const LinearGradient(
@@ -95,10 +86,7 @@ class SocialButton extends StatelessWidget {
         return const LinearGradient(
           begin: FractionalOffset.topLeft,
           end: FractionalOffset.bottomRight,
-          colors: [
-            Color(0xFF2aa4f4),
-            Color(0xFF007ad9),
-          ],
+          colors: [Color(0xFF2aa4f4), Color(0xFF007ad9)],
         );
       case SocialButtonType.YOUTUBE:
         return const LinearGradient(
@@ -117,19 +105,13 @@ class SocialButton extends StatelessWidget {
         return const LinearGradient(
           begin: FractionalOffset.topCenter,
           end: FractionalOffset.bottomCenter,
-          colors: [
-            Color(0xFFfede00),
-            Color(0xFFffd000),
-          ],
+          colors: [Color(0xFFfede00), Color(0xFFffd000)],
         );
       case SocialButtonType.TIKTOK:
         return const LinearGradient(
           begin: FractionalOffset.topCenter,
           end: FractionalOffset.bottomCenter,
-          colors: [
-            Color(0xFF4c4c4c),
-            Color(0xFF343434),
-          ],
+          colors: [Color(0xFF4c4c4c), Color(0xFF343434)],
         );
       default:
         return null;
@@ -160,7 +142,7 @@ class SocialButton extends StatelessWidget {
       case SocialButtonType.LINKEDIN:
         return "assets/images/ic_linkedin.svg";
       case SocialButtonType.YOUTUBE:
-        return "assets/images/ic_youtube.svg";
+        return "assets/images/youtube.png";
       case SocialButtonType.SNAPCHAT:
         return "assets/images/ic_snapchat.svg";
       case SocialButtonType.TIKTOK:
