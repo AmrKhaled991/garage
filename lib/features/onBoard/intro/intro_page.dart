@@ -26,85 +26,87 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colorBlack,
-      body: Obx(() {
-        return Column(
-          children: [
-            const Spacer(),
+      body: SafeArea(
+        child: Obx(() {
+          return Column(
+            children: [
+              const Spacer(),
 
-            SliderView(
-              sliderHeight: 0.5.sh,
-              autoPlay: false,
-              controller: sliderController,
-              indicatorColor: colorPrimary,
-              onPageChanged: (index) {
-                isLastPage = index == 1;
-              },
-              items:
-                  state.intros.value?.data?.map((e) {
-                    return _introItem(
-                      image: e.image,
-                      title: e.title,
-                      description: e.description,
-                    );
-                  }).toList(),
-            ),
-            const Spacer(flex: 1),
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  spacing: 8,
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            side: const BorderSide(
-                              color: Colors.white,
-                              strokeAlign: 1,
+              SliderView(
+                sliderHeight: 0.5.sh,
+                autoPlay: false,
+                controller: sliderController,
+                indicatorColor: colorPrimary,
+                onPageChanged: (index) {
+                  isLastPage = index == 1;
+                },
+                items:
+                    state.intros.value?.data?.map((e) {
+                      return _introItem(
+                        image: e.image,
+                        title: e.title,
+                        description: e.description,
+                      );
+                    }).toList(),
+              ),
+              const Spacer(flex: 1),
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    spacing: 8,
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              side: const BorderSide(
+                                color: Colors.white,
+                                strokeAlign: 1,
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 10,
                             ),
                           ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4,
-                            vertical: 10,
+                          child: Text(
+                            'next'.tr,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: 'Zain',
+                              fontWeight: FontWeight.w700,
+                              height: 1.50,
+                            ),
                           ),
+                          onPressed: () {
+                            sliderController.nextPage();
+                          },
                         ),
-                        child: Text(
-                          'next'.tr,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontFamily: 'Zain',
-                            fontWeight: FontWeight.w700,
-                            height: 1.50,
-                          ),
+                      ),
+                      Expanded(
+                        child: MyButton(
+                          title: "login".tr,
+                          isOutline: true,
+                          textColor: colorBlack,
+                          onClick: () {
+                            Get.offAllNamed(Routes.LOGIN);
+                          },
                         ),
-                        onPressed: () {
-                          sliderController.nextPage();
-                        },
                       ),
-                    ),
-                    Expanded(
-                      child: MyButton(
-                        title: "login".tr,
-                        isOutline: true,
-                        textColor: colorBlack,
-                        onClick: () {
-                          Get.offAllNamed(Routes.LOGIN);
-                        },
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-          ],
-        );
-      }),
+              const SizedBox(height: 16),
+            ],
+          );
+        }),
+      ),
     );
   }
 
