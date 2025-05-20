@@ -80,30 +80,6 @@ class _MyAppState extends State<MyApp> {
       builder:
           (context, child) => GetMaterialApp(
             // for testing ui translations
-            builder: (context, child) {
-              final locale = Get.find<PreferenceManager>();
-              final change = Get.find<MainController>();
-              return Stack(
-                children: [
-                  child!,
-                  Positioned(
-                    right: 16,
-                    bottom: 100,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        final isAr = locale.getLocale == 'ar';
-                        if (isAr) {
-                          change.changeLanguage('en');
-                        } else {
-                          change.changeLanguage('ar');
-                        }
-                      },
-                      child: const Icon(Icons.language, color: Colors.white),
-                    ),
-                  ),
-                ],
-              );
-            },
             key: key,
             debugShowCheckedModeBanner: false,
             enableLog: false,

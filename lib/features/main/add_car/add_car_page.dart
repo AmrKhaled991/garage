@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
+import 'package:garage/core/ui/select_drop_list%20.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
@@ -22,30 +23,7 @@ class AddCarPage extends StatelessWidget {
         child: Column(
           spacing: 16,
           children: [
-            Container(
-              height: 54,
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              clipBehavior: Clip.antiAlias,
-              decoration: ShapeDecoration(
-                color: colorContainer,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 0.50, color: Color(0xFF46433F)),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: Center(
-                child: Row(
-                  children: [
-                    Text(
-                      textAlign: TextAlign.start,
-                      "select_brand".tr,
-                      style: MyTextStyle.myWhiteSubTitle,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            const BrandDropDown(),
 
             MyTextForm(hint: "model".tr, textInputType: TextInputType.text),
             MyTextForm(
@@ -94,6 +72,38 @@ class AddCarPage extends StatelessWidget {
             const SizedBox(height: 16),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BrandDropDown extends StatefulWidget {
+  const BrandDropDown({super.key});
+
+  @override
+  State<BrandDropDown> createState() => _WorkCategoriesDropDownState();
+}
+
+class _WorkCategoriesDropDownState extends State<BrandDropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return SelectDropList(
+      selectedItem: OptionItem(id: "3", title: "select_brand".tr),
+      dropListModel: DropListModel([
+        OptionItem(id: "1", title: "toyota"),
+        OptionItem(id: "2", title: "mercedes"),
+        OptionItem(id: "3", title: "bmw"),
+      ]),
+      onOptionSelected: (item) {
+        setState(() {});
+      },
+      selectedTextStyle: const TextStyle(color: colorWhite, fontSize: 18),
+      dropDownDecoration: const BoxDecoration(color: colorContainer),
+      itemTextStyle: const TextStyle(color: colorWhite),
+      iconColor: colorWhite,
+      boxDecoration: BoxDecoration(
+        color: colorContainer,
+        borderRadius: BorderRadius.circular(16),
       ),
     );
   }

@@ -1,20 +1,27 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:garage/routes/app_pages.dart';
-import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
+
+import 'package:garage/theme/styles.dart';
 
 class AddContainer extends StatelessWidget {
   final String title;
-  const AddContainer({super.key, required this.title});
+  final EdgeInsetsGeometry? padding;
+  Function? onTap;
+   AddContainer({
+    Key? key,
+    required this.title,
+    this.padding,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
 
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding: padding??const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         color: colorContainer,
@@ -24,7 +31,7 @@ class AddContainer extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              Get.toNamed(Routes.SelectTheBrandPageKey);
+              onTap?.call();
             },
             child: const Icon(
               Icons.add_circle_sharp,

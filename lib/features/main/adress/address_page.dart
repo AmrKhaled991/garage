@@ -28,15 +28,15 @@ class AddressPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
               ),
               onPressed: () => Get.toNamed(Routes.AddNewAddressPage),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 8,
                 children: [
-                  Icon(Icons.add, size: 25, color: Colors.white),
+                  const Icon(Icons.add, size: 25, color: Colors.white),
                   Text(
-                    'إضافة عنوان جديد',
+                    "add_new_address".tr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontFamily: 'Zain',

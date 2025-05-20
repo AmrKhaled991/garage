@@ -13,11 +13,11 @@ class ChatPage extends StatelessWidget {
 
     return MyScaffold(
       title: "chat".tr,
-      body: const Center(
+      body: Center(
         child: Text(
-          "Chat",
+          "chat".tr,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 24,
             fontFamily: 'Zain',

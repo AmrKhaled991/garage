@@ -65,10 +65,10 @@ class OrderStatusCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    'مكتمله',
+                  child: Text(
+                    'complete'.tr,
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                       fontFamily: 'Zain',

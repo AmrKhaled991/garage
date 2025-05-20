@@ -15,7 +15,9 @@ class OrderDetailsPage extends StatelessWidget {
       title: "order_details".tr,
       body: ListView.separated(
         padding: const EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 150),
-        itemBuilder: (context, index) => const OrderDetailsItemCard(),
+        itemBuilder:
+            (context, index) =>
+                GestureDetector(child: const OrderDetailsItemCard()),
         separatorBuilder: (context, index) => const SizedBox(height: 8),
         itemCount: 10,
       ),

@@ -127,7 +127,13 @@ class MyScaffold extends StatelessWidget {
                             middleWidget ??
                             Text(
                               title,
-                              style: MyTextStyle.myWhiteBoldTitle,
+                              style: const TextStyle(
+                                color: Color(0xFFF7F8F9),
+                                fontSize: 20,
+                                fontFamily: 'Zain',
+                                fontWeight: FontWeight.w700,
+                                height: 1.20,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),

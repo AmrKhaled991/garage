@@ -28,7 +28,7 @@ class PriceRequestPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
         color: colorBlack,
         child: MyButton(
-          title: "اطلب عرض السعر جديد".tr,
+          title: "price_request".tr,
           onClick: () => {Get.toNamed(Routes.AddPriceRequest)},
         ),
       ),
@@ -75,10 +75,10 @@ class RequestPriceItemCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    'مكتمله',
+                  child: Text(
+                    'complete'.tr,
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                       fontFamily: 'Zain',

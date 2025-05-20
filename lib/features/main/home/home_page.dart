@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:garage/features/main/home/custom_category_card.dart';
@@ -70,22 +71,23 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 30),
+
+            const HomeSlider(),
             const SizedBox(height: 12),
-            SliderView(
-              items: const [
-                MyImage(image: "assets/images/bar_bg.png"),
-                MyImage(image: "assets/images/bar_bg.png"),
-                MyImage(image: "assets/images/bar_bg.png"),
-                MyImage(image: "assets/images/bar_bg.png"),
-              ],
-            ),
+
             TextHeaderWidget(
               title: "recently_viewed".tr,
-              child: const AddContainer(title: 'أضف سيارة'),
+              child: AddContainer(
+                title: 'أضف سيارة',
+                onTap: () {
+                  Get.toNamed(Routes.SelectTheBrandPageKey);
+                },
+              ),
             ),
             const SizedBox(height: 24),
             TextHeaderWidget(
-              title: "الأقسام".tr,
+              title: "categories".tr,
               child: SizedBox(
                 width: Get.width,
                 child: GridView.builder(
@@ -114,6 +116,49 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 24),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class HomeSlider extends StatefulWidget {
+  const HomeSlider({super.key});
+
+  @override
+  State<HomeSlider> createState() => _HomeSliderState();
+}
+
+class _HomeSliderState extends State<HomeSlider> {
+  final List<String> imageList = [
+    "assets/images/test_image.png",
+    "assets/images/test_image.png",
+    "assets/images/test_image.png",
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider.builder(
+      itemCount: imageList.length,
+      itemBuilder: (context, index, realIndex) {
+        return InkWell(
+          onTap: () {},
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              image: DecorationImage(
+                image: AssetImage(imageList[index]),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
+      },
+      options: CarouselOptions(
+        autoPlay: true,
+        autoPlayAnimationDuration: const Duration(seconds: 1),
+        height: 164,
+        enlargeCenterPage: true,
+        viewportFraction: 0.83,
+        onPageChanged: (index, reason) {},
       ),
     );
   }

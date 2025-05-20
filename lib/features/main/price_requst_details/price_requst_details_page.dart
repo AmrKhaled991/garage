@@ -45,7 +45,7 @@ class PriceRequestDetailsPage extends StatelessWidget {
                         ),
                         child: const Text(
                           'مكتمله',
-                          textAlign: TextAlign.right,
+
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -55,8 +55,8 @@ class PriceRequestDetailsPage extends StatelessWidget {
                         ),
                       ),
                       const Text(
-                        'طقم سماعات سيارة',       
-                        textAlign: TextAlign.right,
+                        'طقم سماعات سيارة',
+
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -66,7 +66,7 @@ class PriceRequestDetailsPage extends StatelessWidget {
                       ),
                       const Text(
                         'شركة المجد للاكسسوارت',
-                        textAlign: TextAlign.right,
+
                         style: TextStyle(
                           color: Color(0xFFCCCAC7),
                           fontSize: 16,
@@ -76,10 +76,24 @@ class PriceRequestDetailsPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const MyImage(
-                    image: "assets/images/ic_call.svg",
-                    height: 48,
-                    width: 48,
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          width: 2,
+                          color: Color(0xFF10B981),
+                        ),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+
+                    child: const MyImage(
+                      image: "assets/images/ic_call.svg",
+                      height: 30,
+                      width: 30,
+                    ),
                   ),
                 ],
               ),
@@ -139,7 +153,7 @@ class PriceRequestDetailsSection extends StatelessWidget {
         children: [
           Text(
             header.tr,
-            textAlign: TextAlign.right,
+
             style: const TextStyle(
               color: Color(0xFFCCCAC7),
               fontSize: 14,
@@ -150,7 +164,7 @@ class PriceRequestDetailsSection extends StatelessWidget {
           ),
           Text(
             text.tr,
-            textAlign: TextAlign.right,
+
             style: const TextStyle(
               color: colorWhite,
               fontSize: 18,
@@ -162,7 +176,7 @@ class PriceRequestDetailsSection extends StatelessWidget {
           if (subtext != null) ...[
             Text(
               subtext?.tr ?? "",
-              textAlign: TextAlign.right,
+
               style: const TextStyle(
                 color: Color(0xFF9E9B94),
                 fontSize: 18,

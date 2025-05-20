@@ -68,8 +68,10 @@ abstract class Routes {
   static const PRICEEQUEST_PAGE = '/PRICEEQUEST_PAGE';
   static const PriceRequestDetailsPageKEY = '/PriceRequestDetailsPageKEY';
   static const AddPriceRequest = '/AddPriceRequest';
-  static const MaintenanceAppointmentReminder = '/MaintenanceAppointmentReminder';
+  static const MaintenanceAppointmentReminder =
+      '/MaintenanceAppointmentReminder';
   static const AddressPage = '/AddressPage';
   static const AddNewAddressPage = '/AddNewAddressPage';
-
+  static const AccountSetting = '/AccountSetting';
+  static const WELCOME_PAGE = '/WelcomPage';
 }

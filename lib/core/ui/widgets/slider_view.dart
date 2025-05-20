@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:garage/core/networking/loading_state.dart';
@@ -185,8 +186,6 @@ class _SliderViewState extends State<SliderView> {
                               }
                             },
                             child: Container(
-                              width: 4000,
-                              height: 4000,
                               margin: EdgeInsets.all(widget.margin),
                               alignment: Alignment.center,
                               child: ClipRRect(
@@ -221,25 +220,20 @@ class _SliderViewState extends State<SliderView> {
                                   (widget.urls ?? widget.items)?.indexOf(entry)
                               ? 24.0
                               : 8.0,
-                      height: 5.0,
+                      height: 8.0,
                       margin: const EdgeInsets.symmetric(
                         vertical: 8.0,
                         horizontal: 4.0,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: (widget.indicatorColor ??
-                                (Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.black
-                                    : Colors.white))
-                            .withOpacity(
-                              _current ==
-                                      (widget.urls ?? widget.items)?.indexOf(
-                                        entry,
-                                      )
-                                  ? 0.9
-                                  : 0.4,
-                            ),
+                        color:
+                            _current ==
+                                    (widget.urls ?? widget.items)?.indexOf(
+                                      entry,
+                                    )
+                                ? colorPrimary
+                                : colorGrey,
                       ),
                     );
                   });

@@ -112,13 +112,13 @@ class ProductDetailsPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Column(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'الكمية',
+                    'quantity'.tr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                       fontFamily: 'Zain',
@@ -126,7 +126,7 @@ class ProductDetailsPage extends StatelessWidget {
                       height: 1.50,
                     ),
                   ),
-                  Text(
+                  const Text(
                     '1',
                     textAlign: TextAlign.center,
                     style: TextStyle(

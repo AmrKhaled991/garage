@@ -22,6 +22,8 @@ import 'package:garage/features/auth/register/register_binding.dart';
 import 'package:garage/features/auth/register/register_page.dart';
 import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_binding.dart';
 import 'package:garage/features/auth/reset_password_by_mobile/reset_password_by_mobile_page.dart';
+import 'package:garage/features/main/account_settings/account_settings_binding.dart';
+import 'package:garage/features/main/account_settings/account_settings_page.dart';
 import 'package:garage/features/main/add_car/add_car_binding.dart';
 import 'package:garage/features/main/add_car/add_car_page.dart';
 import 'package:garage/features/main/add_new_address/add_new_address_binding.dart';
@@ -60,6 +62,8 @@ import 'package:garage/features/onBoard/intro/intro_binding.dart';
 import 'package:garage/features/onBoard/intro/intro_page.dart';
 import 'package:garage/features/onBoard/splash/splash_binding.dart';
 import 'package:garage/features/onBoard/splash/splash_page.dart';
+import 'package:garage/features/onBoard/welcom/welcome_bindings.dart';
+import 'package:garage/features/onBoard/welcom/welcome_page.dart';
 import 'package:garage/features/other/about/about_binding.dart';
 import 'package:garage/features/other/about/about_page.dart';
 import 'package:garage/features/other/contact_us/contact_us_binding.dart';
@@ -78,7 +82,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: Routes.SPLASH,
-      page: () => SplashPage(),
+      page: () => const SplashPage(),
       binding: SplashBinding(),
     ),
 
@@ -117,7 +121,7 @@ class AppPages {
 
     GetPage(
       name: Routes.PROFILE_EDIT,
-      page: () => ProfileEditPage(),
+      page: () => const ProfileEditPage(),
       binding: ProfileEditBinding(),
       transition: Transition.cupertino,
     ),
@@ -142,7 +146,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.CHANGE_PASSWORD,
-      page: () => ChangePasswordPage(),
+      page: () => const ChangePasswordPage(),
       binding: ChangePasswordBinding(),
       transition: Transition.cupertino,
     ),
@@ -274,14 +278,26 @@ class AppPages {
     ),
     GetPage(
       name: Routes.AddNewAddressPage,
-      page: () => AddNewAddressPage(),
+      page: () => const AddNewAddressPage(),
       binding: AddNewAddressBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(
       name: Routes.AddressPage,
-      page: () => AddressPage(),
+      page: () => const AddressPage(),
       binding: AddressBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.AccountSetting,
+      page: () => const AccountSettingsPage(),
+      binding: AccountSettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.WELCOME_PAGE,
+      page: () => const WelcomePage(),
+      binding: WelcomeBinding(),
       transition: Transition.cupertino,
     ),
   ];

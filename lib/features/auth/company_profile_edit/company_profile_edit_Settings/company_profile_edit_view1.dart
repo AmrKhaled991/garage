@@ -26,10 +26,9 @@ class CompanyProfileEditView1 extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'اهلاََ MB Parts,   لنقم بإدخال معلومات العمل.',
-            textAlign: TextAlign.right,
-            style: TextStyle(
+          Text(
+            "welcome_mp_part".tr,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 32,
               fontFamily: 'Zain',
@@ -38,10 +37,10 @@ class CompanyProfileEditView1 extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'أملأ معلومات عملك الأساسية',
+          Text(
+            "company_info".tr,
             textAlign: TextAlign.right,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFFCCCAC7),
               fontSize: 18,
               fontFamily: 'Zain',
@@ -66,15 +65,14 @@ class CompanyProfileEditView1 extends StatelessWidget {
               borderRadius: BorderRadiusDirectional.circular(8),
             ),
 
-            child: const ListTile(
-              trailing: MyImage(
+            child: ListTile(
+              trailing: const MyImage(
                 image: "assets/images/ic_location.svg",
                 width: 24,
               ),
               title: Text(
-                'العنوان',
-                textAlign: TextAlign.right,
-                style: TextStyle(
+                "address".tr,
+                style: const TextStyle(
                   color: Color(0xFF9E9B94),
                   fontSize: 14,
                   fontFamily: 'Zain',
@@ -82,9 +80,8 @@ class CompanyProfileEditView1 extends StatelessWidget {
                   height: 1.50,
                 ),
               ),
-              subtitle: Text(
+              subtitle: const Text(
                 '44 طريق شارع الفهيدي, العاصمة, الكويت',
-                textAlign: TextAlign.right,
                 style: TextStyle(
                   color: Color(0xFFF7F8F9),
                   fontSize: 18,
@@ -107,7 +104,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           MyTextForm(
-            icon: const TextFormFieldIcon(assets: "assets/images/ic_phone.svg"),
+            icon: const TextFormFieldIcon(assets: "assets/images/ic_call.svg"),
 
             controller: state.phoneNumber,
             hint: "phone_number".tr,
@@ -132,18 +129,19 @@ class CompanyProfileEditView1 extends StatelessWidget {
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 24),
-          const Text(
-            'التواصل الاجتماعي',
+          Text(
+            "social_links".tr,
             textAlign: TextAlign.right,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontFamily: 'Zain',
               fontWeight: FontWeight.w700,
             ),
           ),
+          const SizedBox(height: 8),
           MyTextForm(
-            icon: const TextFormFieldIcon(assets: "assets/images/ic_xapp.svg"),
+            icon: const TextFormFieldIcon(assets: "assets/images/twitter.svg"),
             controller: state.address,
             textInputType: TextInputType.text,
           ),
@@ -159,7 +157,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
           const SizedBox(height: 8),
           MyTextForm(
             icon: const TextFormFieldIcon(
-              assets: "assets/images/ic_instagram.svg",
+              assets: "assets/images/instagram.svg",
             ),
             controller: state.location,
             textInputType: TextInputType.text,
@@ -179,10 +177,10 @@ class CompanyProfileEditView1 extends StatelessWidget {
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 24),
-          const Text(
-            'مواعيد العمل',
+          Text(
+            "work_time".tr,
             textAlign: TextAlign.right,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontFamily: 'Zain',
@@ -225,9 +223,7 @@ class WeeklyTimeSelector extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CheckboxTheme(
-                
                   data: CheckboxThemeData(
-
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                         6,
@@ -244,8 +240,7 @@ class WeeklyTimeSelector extends StatelessWidget {
                       return Colors.transparent;
                     }),
                   ),
-                  child: Checkbox(value: true, onChanged: (val) {}
-                  ),
+                  child: Checkbox(value: true, onChanged: (val) {}),
                 ),
 
                 Text(
@@ -262,7 +257,7 @@ class WeeklyTimeSelector extends StatelessWidget {
           // End time
           Expanded(child: _buildTimeBox("09:00")),
           const SizedBox(width: 10),
-          
+
           // Day name
 
           // Active check icon
