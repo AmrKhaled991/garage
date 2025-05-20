@@ -113,7 +113,7 @@ class Utils {
     BuildContext context,
     Widget widget, {
     bool isScrollable = false,
-    double height = 0.5,
+    double? height,
   }) {
     showModalBottomSheet(
       context: context,
@@ -130,7 +130,7 @@ class Utils {
       ),
       builder: (context) {
         return Container(
-          height: Get.height * height,
+          height: height ?? Get.height * .5,
           padding: MediaQuery.of(context).viewInsets,
           child: widget,
         );

@@ -47,13 +47,13 @@ class SuccessDialogScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    subtitle?.tr ?? "success_message".tr,
+                    subtitle?.tr ?? "success_done".tr,
                     textAlign: TextAlign.center,
                     style: MyTextStyle.myBlackBoldLargeTitle.copyWith(),
                   ),
                   const SizedBox(height: 16),
                   MyButton(
-                    title: buttonText?.tr ?? "go to home ",
+                    title: buttonText?.tr ?? "home".tr,
                     onClick: () {
                       Get.offAllNamed(Routes.MAIN);
 

@@ -22,9 +22,11 @@ class LoginPage extends StatelessWidget {
               const Center(
                 child: MyImage(image: "assets/images/logo2.png", height: 100),
               ),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
+                  spacing: 5,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(height: 60),

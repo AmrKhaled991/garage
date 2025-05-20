@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/features/main/adress/address_page.dart';
 import 'package:garage/theme/styles.dart';
+import 'package:get/get.dart';
 
 class AddressItem extends StatefulWidget {
   const AddressItem({super.key});
@@ -33,9 +35,9 @@ class _AddressItemState extends State<AddressItem> {
                 ),
               ),
               const Spacer(),
-              const Text(
-                'الفرع يعمل',
-                style: TextStyle(
+              Text(
+                "branch_working".tr,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontFamily: 'Zain',
@@ -43,27 +45,30 @@ class _AddressItemState extends State<AddressItem> {
                 ),
               ),
               const SizedBox(width: 10),
-              Switch(
-                value: isActive,
-                activeColor: colorWhite,
-                activeTrackColor: colorPrimary,
-                inactiveTrackColor: colorGrey,
-                inactiveThumbColor: colorWhite,
-                onChanged: (value) {
-                  setState(() => isActive = value);
-                },
+              Transform.scale(
+                scale: 0.9,
+                child: Switch(
+                  value: isActive,
+                  activeColor: colorWhite,
+                  activeTrackColor: colorPrimary,
+                  inactiveTrackColor: colorGrey,
+                  inactiveThumbColor: colorWhite,
+                  onChanged: (value) {
+                    setState(() => isActive = value);
+                  },
+                ),
               ),
             ],
           ),
           const SizedBox(height: 8),
           const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.location_on, color: Colors.white),
+              MyImage(image: 'assets/images/location.svg', height: 20),
               SizedBox(width: 4),
               Expanded(
                 child: Text(
                   '44 طريق شارع الفهيدي',
-                  textAlign: TextAlign.right,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -81,15 +86,24 @@ class _AddressItemState extends State<AddressItem> {
             children: [
               TextButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.delete, color: Colors.red),
-                label: const Text('حذف', style: TextStyle(color: Colors.red)),
+                icon: const MyImage(
+                  image: 'assets/images/trash.svg',
+                  height: 20,
+                ),
+                label: Text(
+                  "delete".tr,
+                  style: const TextStyle(color: Color(0xFFF87171)),
+                ),
               ),
               TextButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.edit, color: Colors.white),
-                label: const Text(
-                  'تعديل',
-                  style: TextStyle(color: Colors.white),
+                icon: const MyImage(
+                  image: 'assets/images/edit.svg',
+                  height: 20,
+                ),
+                label: Text(
+                  'edit'.tr,
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
             ],

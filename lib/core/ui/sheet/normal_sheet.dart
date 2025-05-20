@@ -40,6 +40,7 @@ class NormalSheet extends StatelessWidget {
               ),
 
               Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 color: colorBlack,
                 width: double.infinity,
                 child: Text(

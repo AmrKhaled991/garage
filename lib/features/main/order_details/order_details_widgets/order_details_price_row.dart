@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/export.dart';
 
 class OrderDetailsPriceRow extends StatelessWidget {
   final String? title;
@@ -12,7 +13,7 @@ class OrderDetailsPriceRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          title ?? "",
+          title?.tr ?? "",
           textAlign: TextAlign.right,
           style: TextStyle(
             color: color,

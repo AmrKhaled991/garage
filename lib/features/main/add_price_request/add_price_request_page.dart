@@ -20,7 +20,7 @@ class AddPriceRequestPage extends StatelessWidget {
     );
 
     return MyScaffold(
-      title: "إضافه طلب سعر".tr,
+      title: "add_price_request".tr,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Column(
@@ -29,7 +29,7 @@ class AddPriceRequestPage extends StatelessWidget {
             const SelectCompanyAndService(),
             MyTextForm(
               // controller: state.phoneNumber,
-              hint: "order_description".tr,
+              hint: "order_details".tr,
               textInputType: TextInputType.phone,
               lines: 5,
             ),
@@ -65,7 +65,7 @@ class AddAttachment extends StatelessWidget {
     return Container(
       decoration: MyshapesStyle.PrimaryDecoration,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -73,9 +73,9 @@ class AddAttachment extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'إرفاق مستند صورة اوفيديو  ',
+                "add_attachment".tr,
                 textAlign: TextAlign.right,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontFamily: 'Zain',
@@ -84,9 +84,9 @@ class AddAttachment extends StatelessWidget {
                 ),
               ),
               Text(
-                'حجم الملف بالطلب لا يزيد عن 5 ميجا بايت',
+                "file_size".tr,
                 textAlign: TextAlign.right,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFFCCCAC7),
                   fontSize: 14,
                   fontFamily: 'Zain',
@@ -96,7 +96,7 @@ class AddAttachment extends StatelessWidget {
               ),
             ],
           ),
-          Icon(Icons.attach_file_rounded, color: Colors.white),
+          const Icon(Icons.attach_file_rounded, color: Colors.white),
         ],
       ),
     );

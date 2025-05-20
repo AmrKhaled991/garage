@@ -6,7 +6,6 @@ import 'package:garage/features/main/add_new_address/add_new_address_logic.dart'
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 
-
 class AddNewAddressPage extends StatefulWidget {
   const AddNewAddressPage({Key? key}) : super(key: key);
 
@@ -34,12 +33,12 @@ class _AddNewAddressPageState extends State<AddNewAddressPage> {
             ),
             MyTextForm(
               // controller: state.textNumber,
-              hint: "العنوان بالتفصيل".tr,
+              hint: "address_details".tr,
               textInputType: TextInputType.text,
             ),
             MyTextForm(
               // controller: state.textNumber,
-              hint: "تفاصيل العنوان (أختياري)".tr,
+              hint: "address_details_optional".tr,
               textInputType: TextInputType.text,
               lines: 5,
             ),
@@ -56,10 +55,10 @@ class _AddNewAddressPageState extends State<AddNewAddressPage> {
                   },
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'تعيين كموقع أفتراضي',
+                Text(
+                  "set_default_location".tr,
                   textAlign: TextAlign.right,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                     fontFamily: 'Zain',

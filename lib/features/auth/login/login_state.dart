@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 class LoginState {
 
 
-  var phoneOrEmail = TextEditingController();
-  var password = TextEditingController();
+  var phoneOrEmail = TextEditingController().obs;
+  var password = TextEditingController().obs;
 
 
   LoginState() {

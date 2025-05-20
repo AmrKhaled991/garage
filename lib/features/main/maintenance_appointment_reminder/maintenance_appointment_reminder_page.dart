@@ -52,13 +52,13 @@ class MaintenanceAppointmentReminderPage extends StatelessWidget {
                     ),
                     MyTextForm(
                       // controller: state.phoneNumber,
-                      hint: "notes".tr,
+                      hint: "add_notes".tr,
                       textInputType: TextInputType.text,
                       lines: 5,
                     ),
                     MyTextForm(
                       // controller: state.phoneNumber,
-                      hint: "قراءة العداد بالكيلو متر".tr,
+                      hint: "read_kilometer".tr,
                       textInputType: TextInputType.text,
                     ),
                     Container(
@@ -67,10 +67,10 @@ class MaintenanceAppointmentReminderPage extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
-                            'الموعد',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
+                           Text(
+                            "appointment".tr,
+
+                            style:const TextStyle(
                               color: Color(0xFFF7F8F9),
                               fontSize: 18,
                               fontFamily: 'Zain',
@@ -92,7 +92,7 @@ class MaintenanceAppointmentReminderPage extends StatelessWidget {
                               children: [
                                 Text(
                                   '2022-12-12',
-                                  textAlign: TextAlign.right,
+
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -118,7 +118,7 @@ class MaintenanceAppointmentReminderPage extends StatelessWidget {
                             decoration: MyshapesStyle.lightGrayDecoration,
                             child: const Text(
                               '08:00PM',
-                              textAlign: TextAlign.right,
+
                               style: TextStyle(
                                 color: Color(0xFFF7F8F9),
                                 fontSize: 18,
@@ -175,7 +175,7 @@ class MaintenanceAppointmentReminderItem extends StatelessWidget {
           ),
           const Text(
             "وريم إيبسوم هو نص مؤقت يستخدم في التصميم والنشر لإظهار شكل الوثيقة أو الخط دون الاعتماد على محتوى معنوي. قد يستخدم لوريم إيبسوم كنص بديل قبل وضع النص",
-            textAlign: TextAlign.right,
+
             style: TextStyle(
               color: Color(0xFFCCCAC7),
               fontSize: 14,
@@ -192,7 +192,7 @@ class MaintenanceAppointmentReminderItem extends StatelessWidget {
             decoration: MyshapesStyle.lightGrayDecoration,
             child: const Text(
               "تاريخ الطلب: 15 مارس, 2025 - 08:30 م",
-              textAlign: TextAlign.right,
+
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,

@@ -66,12 +66,12 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
               margin: const EdgeInsets.all(8),
               decoration: MyshapesStyle.PrimaryDecoration,
-              child: const Column(
+              child: Column(
                 children: [
                   Text(
-                    'اختر المنطقة',
+                    "select_area".tr,
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xFF9E9B94),
                       fontSize: 14,
                       fontFamily: 'Zain',
@@ -79,7 +79,7 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
                       height: 1.50,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'القيروان',
                     textAlign: TextAlign.right,
                     style: TextStyle(

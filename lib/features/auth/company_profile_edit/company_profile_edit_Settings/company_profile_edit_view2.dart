@@ -245,13 +245,12 @@ class UploadCompanyAssetsScreen extends StatelessWidget {
         spacing: 24,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(
+          SizedBox(
             width: 343,
             height: 48,
             child: Text(
-              'رفع الشعار الخاص بالشركة',
-              textAlign: TextAlign.right,
-              style: TextStyle(
+              "upload_company_logo".tr,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 32,
                 fontFamily: 'Zain',
@@ -277,10 +276,10 @@ class UploadCompanyAssetsScreen extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         decoration: MyshapesStyle.transparentDecoration,
                       ),
-                      const Text(
-                        "حذف",
+                      Text(
+                        "delete".tr,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.red,
                           fontSize: 14,
                           fontFamily: 'Zain',
@@ -295,15 +294,19 @@ class UploadCompanyAssetsScreen extends StatelessWidget {
             ),
           ),
           TextHeaderWidget(
-            title: "صور لبعض الأعمال أو الخدمات".tr,
-            child: const AddContainer(
-              title: "رفع الصور بحد أقصى 10 صور بحد أقصى ١ ميجا للصورة",
+            title: "company_gallery".tr,
+            child: AddContainer(
+              title: "company_gallery_hint".tr,
+              padding: const EdgeInsets.symmetric(vertical: 24),
             ),
           ),
 
           TextHeaderWidget(
-            title: "رفع فيديو".tr,
-            child: const AddContainer(title: "رفع فيديو - بحد أقصى ٢٠ ميجا"),
+            title: "upload_video".tr,
+            child:  AddContainer(
+              title: "upload_video_hint",
+              padding: EdgeInsets.symmetric(vertical: 24),
+            ),
           ),
         ],
       ),

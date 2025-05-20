@@ -24,7 +24,6 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
               leading: const Icon(Icons.location_on, color: Colors.white),
               title: const Text(
                 '44 طريق شارع الفهيدي, العاصمة, الكويت',
-                textAlign: TextAlign.right,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -46,7 +45,6 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
               ),
               title: Text(
                 'work_time'.tr,
-                textAlign: TextAlign.right,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,

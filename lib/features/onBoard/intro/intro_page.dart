@@ -27,11 +27,12 @@ class IntroPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: colorBlack,
       body: Obx(() {
-        return Stack(
-          fit: StackFit.expand,
+        return Column(
           children: [
+            const Spacer(),
+
             SliderView(
-              sliderHeight: 0.8.sh,
+              sliderHeight: 0.5.sh,
               autoPlay: false,
               controller: sliderController,
               indicatorColor: colorPrimary,
@@ -47,72 +48,60 @@ class IntroPage extends StatelessWidget {
                     );
                   }).toList(),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Directionality(
-                textDirection: TextDirection.ltr,
-                child: SizedBox(
-                  height: 0.2.sh,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            spacing: 8,
-                            children: [
-                              Expanded(
-                                child: TextButton(
-                                  style: TextButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      side: const BorderSide(
-                                        color: Colors.white,
-                                        strokeAlign: 1,
-                                      ),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 4,
-                                      vertical: 10,
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'التالي',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontFamily: 'Zain',
-                                      fontWeight: FontWeight.w700,
-                                      height: 1.50,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    sliderController.nextPage();
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: MyButton(
-                                  title: "login".tr,
-                                  isOutline: true,
-                                  textColor: colorBlack,
-                                  onClick: () {
-                                    Get.offAllNamed(Routes.LOGIN);
-                                  },
-                                ),
-                              ),
-                            ],
+            const Spacer(flex: 1),
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  spacing: 8,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(
+                              color: Colors.white,
+                              strokeAlign: 1,
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 10,
                           ),
                         ),
+                        child: Text(
+                          'next'.tr,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontFamily: 'Zain',
+                            fontWeight: FontWeight.w700,
+                            height: 1.50,
+                          ),
+                        ),
+                        onPressed: () {
+                          sliderController.nextPage();
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      child: MyButton(
+                        title: "login".tr,
+                        isOutline: true,
+                        textColor: colorBlack,
+                        onClick: () {
+                          Get.offAllNamed(Routes.LOGIN);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
+            const SizedBox(height: 16),
           ],
         );
       }),
@@ -123,6 +112,7 @@ class IntroPage extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MyImage(image: image, fit: BoxFit.contain, width: Get.width * 0.7),

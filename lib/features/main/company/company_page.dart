@@ -114,7 +114,7 @@ class _CompanyPageState extends State<CompanyPage>
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const SizedBox(
+                      child: SizedBox(
                         width: double.infinity,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,9 +122,9 @@ class _CompanyPageState extends State<CompanyPage>
                           children: [
                             SizedBox(
                               child: Text(
-                                'عن الشركة',
+                                "about_company".tr,
                                 textAlign: TextAlign.right,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFFCCCAC7),
                                   fontSize: 14,
                                   fontFamily: 'Zain',
@@ -132,7 +132,7 @@ class _CompanyPageState extends State<CompanyPage>
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               child: Text(
                                 'وريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه.',
                                 style: TextStyle(

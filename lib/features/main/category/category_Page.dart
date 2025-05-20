@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/sliver_app_bar_delegate.dart';
+import 'package:garage/features/main/category/category_comtroller.dart';
 import 'package:garage/features/main/category/category_page_details/company_item_card.dart';
 import 'package:garage/features/main/category/category_page_details/sub_category_item.dart';
 import 'package:garage/routes/app_pages.dart';
@@ -13,6 +14,8 @@ class CategoryPage extends StatelessWidget {
   String? title;
   @override
   Widget build(BuildContext context) {
+    final CategoryController controller = Get.find<CategoryController>();
+    final state = Get.find<CategoryController>().state;
     return Scaffold(
       backgroundColor: colorBlack,
       body: SafeArea(
@@ -36,10 +39,10 @@ class CategoryPage extends StatelessWidget {
                   child: const MyImage(image: "assets/images/ic_search.svg"),
                 ),
               ],
-              title: const Text(
-                'طاقة والوقود',
+              title: Text(
+                "oil_and_fuel".tr,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFFF7F8F9),
                   fontSize: 20,
                   fontFamily: 'Zain',
@@ -57,50 +60,56 @@ class CategoryPage extends StatelessWidget {
                     horizontal: 8,
                     vertical: 8,
                   ),
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      SubCategoryItem(
-                        // categoryData: OffersCategory(id: 0, name: "all".tr),
-                        isSelected: true,
-                        // state.selectedSubcategories.value == null,
-                        onClick: () {
-                          // if (state.selectedSubcategories.value == null)
-                          //   return;
-                          // state.selectedSubcategories.value = null;
-                          // controller.fetchOffers(forceRefresh: true);
-                        },
-                      ),
-                      const SizedBox(width: 8),
-                      ListView.separated(
-                        separatorBuilder:
-                            (context, index) => const SizedBox(width: 8),
-                        itemBuilder: (context, index) {
-                          // var item = state.categories.value.data?.elementAt(
-                          //   index,
-                          // );
-                          return SubCategoryItem(
-                            isSelected: false,
-                            // state.selectedSubcategories.value ==
-                            // item?.id,
-                            // categoryData: item,
-                            onClick: () {
-                              // if (state.selectedSubcategories.value ==
-                              //     item?.id)
-                              //   return;
-                              // state.selectedSubcategories.value = item?.id;
-                              // controller.fetchOffers(forceRefresh: true);
-                            },
-                          );
-                        },
-                        itemCount: 8,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                      ),
-                    ],
-                  ),
+                  child: Obx(() {
+                      final selectedIndex = state.selectedIndex.value; // 👈 use directly
+
+                    return ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        // SubCategoryItem(
+                        //   // categoryData: OffersCategory(id: 0, name: "all".tr),
+                        //   isSelected: true,
+                        //   // state.selectedSubcategories.value == null,
+                        //   onClick: () {
+                        //     // if (state.selectedSubcategories.value == null)
+                        //     //   return;
+                        //     // state.selectedSubcategories.value = null;
+                        //     // controller.fetchOffers(forceRefresh: true);
+                        //   },
+                        // ),
+                        const SizedBox(width: 8),
+                        ListView.separated(
+                          separatorBuilder:
+                              (context, index) => const SizedBox(width: 8),
+                          itemBuilder: (context, index) {
+                            // var item = state.categories.value.data?.elementAt(
+                            //   index,
+                            // );
+                            return SubCategoryItem(
+                              isSelected: selectedIndex == index,
+                              // state.selectedSubcategories.value ==
+                              // item?.id,
+                              // categoryData: item,
+                              onClick: () {
+                                if (state.selectedIndex.value == index) return;
+                               controller.selectCategory(index);
+                                // if (state.selectedSubcategories.value ==
+                                //     item?.id)
+                                //   return;
+                                // state.selectedSubcategories.value = item?.id;
+                                // controller.fetchOffers(forceRefresh: true);
+                              },
+                            );
+                          },
+                          itemCount: 8,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                        ),
+                      ],
+                    );
+                  }),
                 ),
               ),
             ),
