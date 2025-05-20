@@ -304,7 +304,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   height: 32,
                                 ),
                                 MyImage(
-                                  image: "assets/images/ic_youtube.svg",
+                                  image: "assets/images/youtube.png",
                                   width: 32,
                                   height: 32,
                                 ),

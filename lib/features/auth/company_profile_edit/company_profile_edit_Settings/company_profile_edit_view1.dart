@@ -170,9 +170,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           MyTextForm(
-            icon: const TextFormFieldIcon(
-              assets: "assets/images/ic_youtube.svg",
-            ),
+            icon: const TextFormFieldIcon(assets: "assets/images/youtube.png"),
             controller: state.location,
             textInputType: TextInputType.text,
           ),
