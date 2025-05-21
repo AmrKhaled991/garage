@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/ui/my_image.dart';
@@ -7,7 +10,10 @@ import 'package:garage/features/auth/company_profile_edit/company_profile_edit_S
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_controller.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_state.dart';
 import 'package:garage/theme/styles.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class CompanyProfileEditView1 extends StatelessWidget {
   CompanyProfileEditController controller = Get.put(
@@ -92,6 +98,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
               ),
             ),
           ),
+         // CurrentLocationMap()
           const SizedBox(height: 16),
 
           MyTextForm(
@@ -282,3 +289,4 @@ class WeeklyTimeSelector extends StatelessWidget {
     );
   }
 }
+
