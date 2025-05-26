@@ -1,0 +1,9 @@
+
+flutter_native_splash:
+  ios: true
+  android: true
+  web: false
+
+  
+  background_image : "assets/images/welcome.jpg"
+

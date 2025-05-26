@@ -33,12 +33,4 @@ class LoginController extends GetxController {
         state.phoneOrEmail.value.text.trim().isNotEmpty &&
         state.password.value.text.isNotEmpty;
   }
-
-  @override
-  void onClose() {
-    // Always dispose
-    state.phoneOrEmail.value.dispose();
-    state.password.value.dispose();
-    super.onClose();
-  }
 }

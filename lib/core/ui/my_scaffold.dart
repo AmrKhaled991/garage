@@ -92,7 +92,6 @@ class MyScaffold extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
         top: true,
-        bottom: false,
         child: Container(
           color: colorBlack,
           child: Column(
