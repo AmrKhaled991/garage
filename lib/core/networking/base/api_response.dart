@@ -46,8 +46,10 @@ class ResponseWrapper<T> extends GenericObject<T> {
 
   ResponseWrapper({required Create<Decodable> create}) : super(create: create);
 
-  factory ResponseWrapper.init(
-      {required Create<Decodable> create, required dynamic data}) {
+  factory ResponseWrapper.init({
+    required Create<Decodable> create,
+    required dynamic data,
+  }) {
     final wrapper = ResponseWrapper<T>(create: create);
     wrapper.response = wrapper.genericObject(data);
     return wrapper;
@@ -77,7 +79,8 @@ class APIDynamicResponse<T> extends GenericObject<T>
   String? message;
   dynamic data;
 
-  APIDynamicResponse({required Create<Decodable> create}) : super(create: create);
+  APIDynamicResponse({required Create<Decodable> create})
+    : super(create: create);
 
   @override
   APIDynamicResponse<T> decode(dynamic json) {
@@ -105,7 +108,10 @@ class APIListResponse<T> extends GenericObject<T>
     json['data'].forEach((item) {
       data?.add(genericObject(item));
     });
-    pagination = json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
+    pagination =
+        json['pagination'] != null
+            ? Pagination.fromJson(json['pagination'])
+            : null;
     return this;
   }
 }
@@ -116,7 +122,7 @@ class ErrorResponse implements Exception {
   ErrorResponse({this.message});
 
   factory ErrorResponse.fromJson(Map<String, dynamic> json) {
-    return ErrorResponse(message: json['message'] ??  "error_try_again".tr);
+    return ErrorResponse(message: json['message'] ?? "error_try_again".tr);
   }
 
   @override

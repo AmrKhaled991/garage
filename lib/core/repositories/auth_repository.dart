@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:garage/core/networking/base/api_response.dart';
 import 'package:garage/core/networking/base/dynamic_model.dart';
@@ -13,45 +12,37 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'base_repository.dart';
 import 'package:path/path.dart';
 
-class AuthRepository extends BaseRepository{
-
-
-  Future<LoadingState<User>> login(Map<String,String> body,{bool withPhone = false}) async{
-    body["device_type"] = Platform.isAndroid? "android" : "ios";
-    body["device_id"] = Platform.isAndroid? "android" : "ios";
+class AuthRepository extends BaseRepository {
+  Future<LoadingState<User>> login(
+    Map<String, String> body, {
+    bool withPhone = false,
+  }) async {
+    body["device_type"] = Platform.isAndroid ? "android" : "ios";
+    body["device_id"] = Platform.isAndroid ? "android" : "ios";
     return networkHandler.postRequest(
-        endpoint: "sign-in",
-        create: ()=> APIResponse<User>(create: ()=> User()),
-        body: body
+      endpoint: "sign-in",
+      create: () => APIResponse<User>(create: () => User()),
+      body: body,
     );
   }
 
-  Future<LoadingState<User?>> register(Map<String,dynamic> body) async{
-    Map<String,dynamic> b = {};
-    if(body["image"] != null && body["image"] is AssetEntity){
-      File? file =  await body["image"].file;
-      MultipartFile multipartFile = MultipartFile(
-        file,
-        filename: "image",
-      );
+  Future<LoadingState<User?>> register(Map<String, dynamic> body) async {
+    Map<String, dynamic> b = {};
+    if (body["image"] != null && body["image"] is AssetEntity) {
+      File? file = await body["image"].file;
+      MultipartFile multipartFile = MultipartFile(file, filename: "image");
       b["image"] = multipartFile;
       body.remove("image");
     }
-    if(body["cover"] != null && body["cover"] is AssetEntity){
-      File? file =  await body["cover"].file;
-      MultipartFile multipartFile = MultipartFile(
-        file,
-        filename: "cover",
-      );
+    if (body["cover"] != null && body["cover"] is AssetEntity) {
+      File? file = await body["cover"].file;
+      MultipartFile multipartFile = MultipartFile(file, filename: "cover");
       b["cover"] = multipartFile;
       body.remove("cover");
     }
-    if(body["document"] != null && body["document"] is AssetEntity){
-      File? file =  await body["document"].file;
-      MultipartFile multipartFile = MultipartFile(
-        file,
-        filename: "document",
-      );
+    if (body["document"] != null && body["document"] is AssetEntity) {
+      File? file = await body["document"].file;
+      MultipartFile multipartFile = MultipartFile(file, filename: "document");
       b["document"] = multipartFile;
       body.remove("document");
     }
@@ -61,37 +52,37 @@ class AuthRepository extends BaseRepository{
     });
 
     return networkHandler.postRequest(
-        endpoint: "sign-up",
-        create: ()=> APIResponse<User>(create: ()=> User()),
-        body: FormData(b)
+      endpoint: "sign-up",
+      create: () => APIResponse<User>(create: () => User()),
+      body: FormData(b),
     );
   }
 
-  Future<LoadingState<User?>> updateProfile(Map<String,dynamic> body) async{
-    Map<String,dynamic> b = {};
-    if(body["image"] != null && body["image"] is AssetEntity){
-      File? file =  await (body["image"] as AssetEntity).file;
+  Future<LoadingState<User?>> updateProfile(Map<String, dynamic> body) async {
+    Map<String, dynamic> b = {};
+    if (body["image"] != null && body["image"] is AssetEntity) {
+      File? file = await (body["image"] as AssetEntity).file;
       MultipartFile multipartFile = MultipartFile(
         file,
-        filename: basename(file?.path??""),
+        filename: basename(file?.path ?? ""),
       );
       b["image"] = multipartFile;
       body.remove("image");
     }
-    if(body["cover"] != null && body["cover"] is AssetEntity){
-      File? file =  await body["cover"].file;
+    if (body["cover"] != null && body["cover"] is AssetEntity) {
+      File? file = await body["cover"].file;
       MultipartFile multipartFile = MultipartFile(
         file,
-        filename: basename(file?.path??""),
+        filename: basename(file?.path ?? ""),
       );
       b["cover"] = multipartFile;
       body.remove("cover");
     }
-    if(body["document"] != null && body["document"] is AssetEntity){
-      File? file =  await body["document"].file;
+    if (body["document"] != null && body["document"] is AssetEntity) {
+      File? file = await body["document"].file;
       MultipartFile multipartFile = MultipartFile(
         file,
-        filename: basename(file?.path??""),
+        filename: basename(file?.path ?? ""),
       );
       b["document"] = multipartFile;
       body.remove("document");
@@ -102,142 +93,162 @@ class AuthRepository extends BaseRepository{
     });
 
     return networkHandler.putRequest(
-        endpoint: "update-profile",
-        create: ()=> APIResponse<User>(create: ()=> User()),
-        body: FormData(b)
+      endpoint: "update-profile",
+      create: () => APIResponse<User>(create: () => User()),
+      body: FormData(b),
     );
   }
 
-  Future<LoadingState<User?>> getProfile() async{
+  Future<LoadingState<User?>> getProfile() async {
     return networkHandler.getRequest(
-        endpoint: "profile",
-        create: ()=> APIResponse<User>(create: ()=> User()),
+      endpoint: "profile",
+      create: () => APIResponse<User>(create: () => User()),
     );
   }
 
-  Future<LoadingState> changePassword(Map<String,String> body) async{
+  Future<LoadingState> changePassword(Map<String, String> body) async {
     return networkHandler.postRequest(
-        endpoint: "update-passward?_method=patch",
-        create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-        body: body
+      endpoint: "update-passward?_method=patch",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+      body: body,
     );
   }
 
-  Future<LoadingState> forgetPassword(String email) async{
+  Future<LoadingState> forgetPassword(String email) async {
     return networkHandler.postRequest(
-        endpoint: "forget-password-send-code",
-        create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-        body: {"email": email},
+      endpoint: "forget-password-send-code",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+      body: {"email": email},
     );
   }
 
-
-  Future<LoadingState> forgetPasswordByMobile(String phoneCode, String phone) async{
+  Future<LoadingState> forgetPasswordByMobile(
+    String phoneCode,
+    String phone,
+  ) async {
     return networkHandler.postRequest(
-        endpoint: "auth/forget-password-for-mobile",
-        create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-        body: {
-          "phone_code": phoneCode,"mobile": phone
-        },
+      endpoint: "auth/forget-password-for-mobile",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+      body: {"phone_code": phoneCode, "mobile": phone},
     );
   }
-  
 
-  Future<LoadingState> resetPasswordByMobile(String phoneCode,String phone,String code,String password) async{
+  Future<LoadingState> resetPasswordByMobile(
+    String phoneCode,
+    String phone,
+    String code,
+    String password,
+  ) async {
     return networkHandler.putRequest(
-        endpoint:  "auth/change-password-for-mobile",
-        create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-        body: {
-          "calling_code": phoneCode,
-          "mobile": phone,
-          "code": code,
-          "password": password,
-          "password_confirmation": password,
-        },
+      endpoint: "auth/change-password-for-mobile",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+      body: {
+        "calling_code": phoneCode,
+        "mobile": phone,
+        "code": code,
+        "password": password,
+        "password_confirmation": password,
+      },
     );
   }
 
-  Future<LoadingState> resetPasswordByEmail(String email,String code,String password) async{
+  Future<LoadingState> resetPasswordByEmail(
+    String email,
+    String code,
+    String password,
+  ) async {
     return networkHandler.postRequest(
-        endpoint:  "reset-password",
-        create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-        body: {
-          "email": email,
-          "code": code,
-          "password": password,
-          "password_confirmation": password,
-        },
+      endpoint: "reset-password",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+      body: {
+        "email": email,
+        "code": code,
+        "password": password,
+        "password_confirmation": password,
+      },
     );
   }
 
-
-  Future<LoadingState> resendCode({String phoneCode = "965", String? phone, String? email}) async{
+  Future<LoadingState> resendCode({
+    String phoneCode = "965",
+    String? phone,
+    String? email,
+  }) async {
     return networkHandler.getRequest(
-        endpoint:  "resend-code",
-        create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-        query: email!=null? {"email":email} : {"country_code": phoneCode, "phone": phone}
+      endpoint: "resend-code",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+      query:
+          email != null
+              ? {"email": email}
+              : {"country_code": phoneCode, "phone": phone},
     );
   }
 
-  Future<LoadingState<User?>> verifyCode({String phoneCode = "965", String? phone, String? code}) async{
+  Future<LoadingState<User?>> verifyCode({
+    String phoneCode = "965",
+    String? phone,
+    String? code,
+  }) async {
     return networkHandler.postRequest(
-        endpoint:  "auth/verified",
-        create: ()=> APIResponse<User>(create: ()=> User()),
-        body: {"calling_code": phoneCode, "mobile": phone, "code": code}
+      endpoint: "auth/verified",
+      create: () => APIResponse<User>(create: () => User()),
+      body: {"calling_code": phoneCode, "mobile": phone, "code": code},
     );
   }
 
-  Future<LoadingState<User?>> active({String phoneCode = "965", String? phone,String? email, String? code}) async{
+  Future<LoadingState<User?>> active({
+    String phoneCode = "965",
+    String? phone,
+    String? email,
+    String? code,
+  }) async {
     return networkHandler.postRequest(
-        endpoint:  "activate",
-        create: ()=> APIResponse<User>(create: ()=> User()),
-        body: {
-          "country_code": phoneCode,
-          "phone": phone,
-          "email": email,
-          "code": code,
-          "device_type": Platform.isAndroid? "android": "ios",
-          "device_id": Platform.isAndroid? "android": "ios",
-        }
+      endpoint: "activate",
+      create: () => APIResponse<User>(create: () => User()),
+      body: {
+        "country_code": phoneCode,
+        "phone": phone,
+        "email": email,
+        "code": code,
+        "device_type": Platform.isAndroid ? "android" : "ios",
+        "device_id": Platform.isAndroid ? "android" : "ios",
+      },
     );
   }
 
-  Future<LoadingState> sendFcmToken(String fcmToken) async{
+  Future<LoadingState> sendFcmToken(String fcmToken) async {
     int? userId = Get.find<PreferenceManager>().getUser?.id?.toInt();
     return networkHandler.postRequest(
-        endpoint:  "update-devices",
-        create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-        body: {"device_id": fcmToken,
-          if(userId!=null)
-            "user_id": userId,
-          "lang": Get.find<PreferenceManager>().getLocale,
-          "device_type": Platform.isAndroid? "android": "ios"
-        }
-      );
-  }
-
-  Future<LoadingState> removeAccount() async{
-    return networkHandler.deleteRequest(
-        endpoint:"user/delete-account",
-      create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-    );
-  }
-
-  Future<LoadingState<Wallet>> getWallet() async{
-    return networkHandler.getRequest(
-        endpoint:"user/wallet",
-      create: ()=> APIResponse<Wallet>(create: ()=> Wallet()),
-    );
-  }
-
-  Future<LoadingState> refundWallet(String amount) async{
-    return networkHandler.postRequest(
-        endpoint:"user/wallet/refund",
+      endpoint: "update-devices",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
       body: {
-          "amount": amount
+        "device_id": fcmToken,
+        if (userId != null) "user_id": userId,
+        "lang": Get.find<PreferenceManager>().getLocale,
+        "device_type": Platform.isAndroid ? "android" : "ios",
       },
-      create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
     );
   }
 
+  Future<LoadingState> removeAccount() async {
+    return networkHandler.deleteRequest(
+      endpoint: "user/delete-account",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+    );
+  }
+
+  Future<LoadingState<Wallet>> getWallet() async {
+    return networkHandler.getRequest(
+      endpoint: "user/wallet",
+      create: () => APIResponse<Wallet>(create: () => Wallet()),
+    );
+  }
+
+  Future<LoadingState> refundWallet(String amount) async {
+    return networkHandler.postRequest(
+      endpoint: "user/wallet/refund",
+      body: {"amount": amount},
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+    );
+  }
 }

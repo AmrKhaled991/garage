@@ -2,14 +2,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:garage/features/main/home/custom_category_card.dart';
+import 'package:garage/core/networking/loading_state.dart';
+import 'package:garage/core/ui/LoadingWidget.dart';
+import 'package:garage/features/main/home/widgets/custom_category_card.dart';
+import 'package:garage/features/main/home/widgets/home_slider.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
-import 'package:garage/core/ui/widgets/my_text_form.dart';
-import 'package:garage/core/ui/widgets/slider_view.dart';
 import 'package:garage/features/main/common/add_container.dart';
 import 'package:garage/features/main/common/text_header_widget.dart';
 import 'package:garage/theme/styles.dart';
@@ -21,7 +22,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeController logic = Get.put(HomeController());
+    final HomeController controller = Get.put(HomeController());
+    final state = Get.put(HomeController()).state;
 
     return MyScaffold(
       body: SingleChildScrollView(
@@ -88,77 +90,45 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 24),
             TextHeaderWidget(
               title: "categories".tr,
-              child: SizedBox(
-                width: Get.width,
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
+              child: Obx(() {
+                return LoadingWidget(
+                  loadingState: state.categoriesList.value,
+                  isEmpty: state.categoriesList.value.data?.isEmpty == true,
+                  onRetryCall:
+                      () => controller.getCategories(forceRefresh: true),
+                  child: SizedBox(
+                    width: Get.width,
+                    child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
+                      itemBuilder: (context, index) {
+                        var item = state.categoriesList.value.data?[index];
+                        return CustomCategoryCard(
+                          image: item?.image ?? '',
+                          text: item?.name ?? '',
+                          onTab: () {
+                            Get.toNamed(
+                              Routes.CATEGRYPAGEKEY,
+                              parameters: {'title': "الاثائة"},
+                            );
+                          },
+                        );
+                      },
+                      itemCount: state.categoriesList.value.data?.length ?? 0,
+                    ),
                   ),
-                  itemBuilder:
-                      (context, index) => CustomCategoryCard(
-                        image: "assets/images/ic_home.svg",
-                        text: "الاثائة",
-                        onTab: () {
-                          Get.toNamed(
-                            Routes.CATEGRYPAGEKEY,
-                            parameters: {'title': "الاثائة"},
-                          );
-                        },
-                      ),
-                  itemCount: 10,
-                ),
-              ),
+                );
+              }),
             ),
             const SizedBox(height: 24),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class HomeSlider extends StatefulWidget {
-  const HomeSlider({super.key});
-
-  @override
-  State<HomeSlider> createState() => _HomeSliderState();
-}
-
-class _HomeSliderState extends State<HomeSlider> {
-  final List<String> imageList = [
-    "assets/images/test_image.png",
-    "assets/images/test_image.png",
-    "assets/images/test_image.png",
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider.builder(
-      itemCount: imageList.length,
-      itemBuilder: (context, index, realIndex) {
-        return InkWell(
-          onTap: () {},
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                image: AssetImage(imageList[index]),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        );
-      },
-      options: CarouselOptions(
-        autoPlay: true,
-        autoPlayAnimationDuration: const Duration(seconds: 1),
-        height: 164,
-        enlargeCenterPage: true,
-        viewportFraction: 0.83,
-        onPageChanged: (index, reason) {},
       ),
     );
   }

@@ -67,9 +67,12 @@ class loginFormSection extends StatelessWidget {
                   emailOrPhone: state.phoneOrEmail.value.text,
                   password: state.password.value.text,
                   onFinish: (success) async {
-                    _controller.success();
+                    // for test
                     Get.offAllNamed(Routes.MAIN);
+
+                    _controller.success();
                     if (success) {
+                      Get.offAllNamed(Routes.MAIN);
                     } else {
                       _controller.error();
                     }

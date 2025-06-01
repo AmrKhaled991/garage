@@ -14,8 +14,7 @@ import 'package:get/get_connect.dart';
 class NetworkHandler extends GetConnect{
   PreferenceManager preferenceManager = Get.find();
 
-  // static String BASE_URL = "https://garage.tocaan.net/api/";
-  String BASE_URL = "https://garage.tocaan.net/api/";
+  String BASE_URL = "http://garage.tocaan.net/api/";
 
   @override
   void onInit() {

@@ -8,7 +8,7 @@ import 'package:garage/features/auth/company_profile_edit/company_profile_edit_c
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_state.dart';
 import 'package:garage/features/main/common/add_container.dart';
 import 'package:garage/features/main/common/text_header_widget.dart';
-import 'package:garage/features/main/home/custom_category_card.dart';
+import 'package:garage/features/main/home/widgets/custom_category_card.dart';
 import 'package:get/get.dart';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';

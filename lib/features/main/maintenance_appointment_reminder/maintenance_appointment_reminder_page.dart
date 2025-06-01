@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:garage/core/ui/MyButton.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
-import 'package:garage/core/ui/sheet/normal_sheet.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
-import 'package:garage/features/main/common/empty_widget.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:garage/utils/utlis.dart';
 import 'package:get/get.dart';
 
 import 'maintenance_appointment_reminder_controller.dart';
-import 'maintenance_appointment_reminder_state.dart';
 
 class MaintenanceAppointmentReminderPage extends StatelessWidget {
   const MaintenanceAppointmentReminderPage({Key? key}) : super(key: key);
@@ -192,7 +189,6 @@ class MaintenanceAppointmentReminderItem extends StatelessWidget {
             decoration: MyshapesStyle.lightGrayDecoration,
             child: const Text(
               "تاريخ الطلب: 15 مارس, 2025 - 08:30 م",
-
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,

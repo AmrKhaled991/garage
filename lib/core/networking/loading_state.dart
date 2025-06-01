@@ -21,4 +21,6 @@ class LoadingState<T>{
   T? data;
   Pagination? pagination;
 
+  LoadingState.obx();
+
 }

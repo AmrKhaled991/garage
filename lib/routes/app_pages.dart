@@ -41,6 +41,7 @@ import 'package:garage/features/main/company/company_binding.dart';
 import 'package:garage/features/main/company/company_page.dart';
 import 'package:garage/features/main/complete_cart_order/complete_cart_order_binding.dart';
 import 'package:garage/features/main/complete_cart_order/complete_cart_order_page.dart';
+import 'package:garage/features/main/home/home_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_page.dart';
 import 'package:garage/features/main/maintenance_appointment_reminder/maintenance_appointment_reminder_binding.dart';
@@ -186,6 +187,7 @@ class AppPages {
       page: () => const MainNavigationPage(),
       bindings: [
         ProfileBinding(),
+        HomePageBinding(),
         MainNavigationBinding(),
         MyOrdersBinding(),
         CartBinding(),
