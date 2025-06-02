@@ -66,7 +66,6 @@ class ForgetPasswordPage extends StatelessWidget {
           MyLoadingButton(
             title: "send_code".tr,
             onClick: (RoundedLoadingButtonController _controller) {
-              Get.toNamed(Routes.OTP_VERIFY ,arguments: {MyArguments.PHONE: "01557043883", MyArguments.PHONE_CODE: "966"});
               if (!controller.validations()) {
                 _controller.error();
                 Timer(const Duration(seconds: 1), () {
@@ -75,27 +74,38 @@ class ForgetPasswordPage extends StatelessWidget {
                 return;
               }
 
-              userController.forgetPassword(state.phoneNumber.text, (success) {
-                if (success) {
-                  _controller.success();
-                  Get.toNamed(
-                    Routes.RESET_PASSWORD_BY_MOBILE,
-                    arguments: {MyArguments.PHONE: state.phoneNumber.text},
-                  );
-                  Utils.showSnackBar(
-                    userController.forgetPasswordLoading.value.data?.message ??
-                        "Code Sent",
-                  );
-                } else {
-                  _controller.error();
-                  Utils.showSnackBar(
-                    userController.forgetPasswordLoading.value.message,
-                  );
-                }
-                Timer(const Duration(seconds: 1), () {
-                  _controller.reset();
-                });
-              });
+              userController.forgetPasswordByMobile(
+                state.phoneNumber.text,
+                "965",
+                (success) {
+                  if (success) {
+                    _controller.success();
+                    Get.toNamed(
+                      Routes.RESET_PASSWORD_BY_MOBILE,
+                      arguments: {
+                        MyArguments.PHONE: state.phoneNumber.text,
+                        MyArguments.PHONE_CODE: "965",
+                      },
+                    );
+                    Utils.showSnackBar(
+                      userController
+                              .forgetPasswordLoading
+                              .value
+                              .data
+                              ?.message ??
+                          "Code Sent",
+                    );
+                  } else {
+                    _controller.error();
+                    Utils.showSnackBar(
+                      userController.forgetPasswordLoading.value.message,
+                    );
+                  }
+                  Timer(const Duration(seconds: 1), () {
+                    _controller.reset();
+                  });
+                },
+              );
             },
           ),
           const SizedBox(height: 30),

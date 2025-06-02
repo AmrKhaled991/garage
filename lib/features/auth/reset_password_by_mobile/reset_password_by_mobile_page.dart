@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
+import 'package:garage/features/auth/success_dialog_screen/success_dialog_screen.dart';
 import 'package:garage/routes/arguments.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:garage/utils/utlis.dart';
@@ -37,11 +38,11 @@ class ResetPasswordByMobilePage extends StatelessWidget {
               textAlign: TextAlign.start,
               style: MyTextStyle.myGreySubTitle.copyWith(),
             ),
-            // MyTextForm(
-            //   controller: state.code,
-            //   hint: "code".tr,
-            //   textInputType: TextInputType.number,
-            // ),
+            MyTextForm(
+              controller: state.code,
+              hint: "code".tr,
+              textInputType: TextInputType.number,
+            ),
             const SizedBox(height: 16),
 
             MyTextForm(
@@ -61,8 +62,6 @@ class ResetPasswordByMobilePage extends StatelessWidget {
             MyLoadingButton(
               title: "save".tr,
               onClick: (RoundedLoadingButtonController _controller) {
-                Get.toNamed(Routes.SuccessDialogScreen);
-                return;
                 if (!controller.validations()) {
                   _controller.error();
                   Timer(const Duration(seconds: 1), () {
@@ -72,14 +71,26 @@ class ResetPasswordByMobilePage extends StatelessWidget {
                 }
 
                 userController.resetPasswordByMobile(
-                  Get.arguments != null ? Get.arguments[MyArguments.PHONE] : "",
                   /*Get.arguments!=null? Get.arguments[MyArguments.PHONE_CODE]:*/ "965",
+                  Get.arguments != null ? Get.arguments[MyArguments.PHONE] : "",
                   state.code.text,
                   state.password.text,
                   (success) async {
                     if (success) {
                       _controller.success();
-                      Get.offAllNamed(Routes.MAIN);
+                      showDialog(
+                        context: context,
+                        builder:
+                            (_) => AlertDialog(
+                              contentPadding: const EdgeInsets.all(0),
+                              content: SuccessDialogScreen(
+                                title: "password_changed".tr,
+                                subtitle: "password_changed_successfully".tr,
+                                buttonText: "login".tr,
+                                onTap: () => Get.offAllNamed(Routes.LOGIN),
+                              ),
+                            ),
+                      );
                     } else {
                       _controller.error();
                       Utils.showSnackBar(

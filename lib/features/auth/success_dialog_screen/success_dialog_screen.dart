@@ -21,12 +21,8 @@ class SuccessDialogScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: colorBlack,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16),
-          child: Container(
+    return 
+          Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
             decoration: MyshapesStyle.PrimaryDecoration,
             child: IntrinsicHeight(
@@ -63,9 +59,6 @@ class SuccessDialogScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

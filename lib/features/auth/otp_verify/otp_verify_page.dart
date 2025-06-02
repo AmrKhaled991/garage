@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:garage/core/ui/LoadingWidget.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
-import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/routes/arguments.dart';
@@ -10,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:win32/win32.dart';
 
 import 'otp_verify_controller.dart';
 
@@ -17,10 +17,7 @@ class OtpVerifyPage extends StatefulWidget {
   String? phone;
   String? phoneCode;
 
-  OtpVerifyPage({super.key}) {
-    phoneCode = Get.arguments[MyArguments.PHONE_CODE] ?? "";
-    phone = Get.arguments[MyArguments.PHONE] ?? "";
-  }
+  OtpVerifyPage({super.key});
 
   @override
   State<OtpVerifyPage> createState() => _OtpVerifyPageState();
@@ -43,6 +40,9 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
 
   @override
   Widget build(BuildContext context) {
+    widget.phoneCode = Get.arguments[MyArguments.PHONE_CODE] ?? "";
+    widget.phone = Get.arguments[MyArguments.PHONE] ?? "";
+    var otpTrack = Get.arguments[MyArguments.OTP_TRACK] ?? "";
     return MyScaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -102,22 +102,17 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
             ),
 
             Obx(() {
-              return LoadingWidget(
-                loadingState: controller.resendLoading.value,
-                loadingOnly: true,
-                child: Obx(() {
-                  return TextButton(
-                    onPressed: () {
-                      if (controller.enableResend.value) {
-                        controller.resendCode();
-                      }
-                    },
-                    child: Text(
-                      "resend_code".tr,
-                      style: MyTextStyle.myWhiteBoldLargeTitle.copyWith(),
-                    ),
-                  );
-                }),
+              var enable = controller.enableResend.value;
+              return TextButton(
+                onPressed: () {
+                  if (enable) {
+                    controller.resendCode();
+                  }
+                },
+                child: Text(
+                  "resend_code".tr,
+                  style: MyTextStyle.myWhiteBoldLargeTitle.copyWith(),
+                ),
               );
             }),
             Obx(() {
@@ -148,10 +143,6 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
               title: "continue".tr,
               onClick: (RoundedLoadingButtonController _controller) {
                 if (codeController.text.toString().isEmpty) {
-                  Get.toNamed(
-                    Routes.RESET_PASSWORD_BY_MOBILE,
-                    arguments: [widget.phone, widget.phoneCode],
-                  );
                   _controller.error();
                   Timer(const Duration(seconds: 1), () {
                     _controller.reset();
@@ -159,16 +150,14 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                   return;
                 }
 
-                controller.active(codeController.text.toString(), (success) {
+                controller.verifyCode(codeController.text.toString(), (
+                  success,
+                ) {
                   if (success) {
                     _controller.success();
                     Get.offAllNamed(Routes.MAIN);
                   } else {
                     _controller.error();
-                    Get.toNamed(
-                      Routes.RESET_PASSWORD_BY_MOBILE,
-                      arguments: [widget.phone, widget.phoneCode],
-                    );
                   }
                   Timer(const Duration(seconds: 1), () {
                     _controller.reset();

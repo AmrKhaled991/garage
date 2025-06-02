@@ -6,32 +6,29 @@ import 'package:garage/routes/arguments.dart';
 import 'package:get/get.dart';
 import 'package:garage/utils/utlis.dart';
 
-
 class OtpVerifyController extends GetxController {
   // final OtpVerifyState state = OtpVerifyState();
   AuthRepository authRepository = Get.find();
   UserController userController = Get.find();
-
 
   var resendLoading = Rx<LoadingState>(LoadingState.success(true));
   var verifyLoading = LoadingState<User?>().obs;
   var enableResend = true.obs;
   var timerCount = 60.obs;
 
-
-  void resendCode() async{
+  void resendCode() async {
     resendLoading.value = LoadingState.loading();
     resendLoading.value = await authRepository.resendCode(
-        // email: Get.arguments[MyArguments.EMAIL]??"",
-        phoneCode: Get.arguments[MyArguments.PHONE_CODE]??"",
-        phone: Get.arguments[MyArguments.PHONE]??"",
+      // email: Get.arguments[MyArguments.EMAIL]??"",
+      phoneCode: Get.arguments[MyArguments.PHONE_CODE] ?? "",
+      phone: Get.arguments[MyArguments.PHONE] ?? "",
     );
-    if(resendLoading.value.success){
-      Utils.showSnackBar("code_number_hint".tr,);
+    if (resendLoading.value.success) {
+      Utils.showSnackBar("code_number_hint".tr);
       enableResend.value = false;
       countDownTimer();
-    }else{
-      Utils.showSnackBar( resendLoading.value.message,);
+    } else {
+      Utils.showSnackBar(resendLoading.value.message);
       enableResend.value = true;
     }
   }
@@ -46,17 +43,18 @@ class OtpVerifyController extends GetxController {
     enableResend.value = true;
   }
 
-  void active(String code, Function(bool) onFinish) async{
+  void verifyCode(String code, Function(bool) onFinish) async {
     verifyLoading.value = LoadingState.loading();
     verifyLoading.value = await authRepository.active(
-        phone: Get.arguments[MyArguments.PHONE]??"",
-        phoneCode: Get.arguments[MyArguments.PHONE_CODE]??"",
-        email: Get.arguments[MyArguments.EMAIL]??"",
-        code: code);
+      phone: Get.arguments[MyArguments.PHONE] ?? "",
+      phoneCode: Get.arguments[MyArguments.PHONE_CODE] ?? "",
+      email: Get.arguments[MyArguments.EMAIL] ?? "",
+      code: code,
+    );
     onFinish.call(verifyLoading.value.success);
-    if(verifyLoading.value.success){
+    if (verifyLoading.value.success) {
       userController.setLoggedUser(verifyLoading.value.data);
-    }else{
+    } else {
       Utils.showSnackBar(verifyLoading.value.message);
     }
   }

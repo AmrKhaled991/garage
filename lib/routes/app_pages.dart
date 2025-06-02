@@ -302,5 +302,7 @@ class AppPages {
       binding: WelcomeBinding(),
       transition: Transition.cupertino,
     ),
+
+    
   ];
 }

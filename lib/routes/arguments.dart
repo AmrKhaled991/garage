@@ -31,4 +31,6 @@ class MyArguments{
   static String DOCTOR = "DOCTOR";
   static String CLINIC = "CLINIC";
   static String TITLE = "TITLE";
+  static String OTP_TRACK = "OTP_TRACK";
+  
 }

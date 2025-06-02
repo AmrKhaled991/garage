@@ -62,11 +62,6 @@ class UserController extends GetxController {
     super.onReady();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   var isLogged = false.obs;
   var user = Rx<User?>(null);
   var login = LoadingState<User?>().obs;
@@ -187,8 +182,9 @@ class UserController extends GetxController {
   ) async {
     forgetPasswordLoading.value = LoadingState.loading();
     forgetPasswordLoading.value = await authRepository.forgetPasswordByMobile(
-      phoneCode,
       phone,
+
+      phoneCode,
     );
     onFinish.call(forgetPasswordLoading.value.success);
   }
@@ -208,7 +204,6 @@ class UserController extends GetxController {
       password,
     );
     onFinish.call(forgetPasswordLoading.value.success);
-    Utils.showSnackBar(forgetPasswordLoading.value.message);
   }
 
   void resetPasswordByEmail(
@@ -245,20 +240,20 @@ class UserController extends GetxController {
   }
 
   Future<String> getUserUniqueKey() async {
-    var USER_TOKEN = "simulator";
+    var userToken = "simulator";
     DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       AndroidDeviceInfo deviceData = await deviceInfoPlugin.androidInfo;
-      USER_TOKEN = "${deviceData.id}_${deviceData.brand}";
+      userToken = "${deviceData.id}_${deviceData.brand}";
     } else if (Platform.isIOS) {
       try {
         IosDeviceInfo deviceData = await deviceInfoPlugin.iosInfo;
-        USER_TOKEN = "${deviceData.model}_${deviceData.identifierForVendor}";
+        userToken = "${deviceData.model}_${deviceData.identifierForVendor}";
       } on PlatformException {
-        USER_TOKEN = "ios_simulator";
+        userToken = "ios_simulator";
       }
     }
-    return USER_TOKEN;
+    return userToken;
   }
 
   void removeAccount({Function? success}) async {

@@ -126,10 +126,11 @@ class AuthRepository extends BaseRepository {
     String phoneCode,
     String phone,
   ) async {
+    print("phoneCode: $phoneCode, phone: $phone");
     return networkHandler.postRequest(
-      endpoint: "auth/forget-password-for-mobile",
+      endpoint: "forget-password-send-code",
       create: () => APIDynamicResponse(create: () => DynamicModel()),
-      body: {"phone_code": phoneCode, "mobile": phone},
+      body: {"country_code": phoneCode, "phone": phone},
     );
   }
 
@@ -139,15 +140,14 @@ class AuthRepository extends BaseRepository {
     String code,
     String password,
   ) async {
-    return networkHandler.putRequest(
-      endpoint: "auth/change-password-for-mobile",
+    return networkHandler.postRequest(
+      endpoint: "reset-password",
       create: () => APIDynamicResponse(create: () => DynamicModel()),
       body: {
-        "calling_code": phoneCode,
-        "mobile": phone,
+        "country_code": phoneCode,
+        "phone": phone,
         "code": code,
         "password": password,
-        "password_confirmation": password,
       },
     );
   }
@@ -202,6 +202,7 @@ class AuthRepository extends BaseRepository {
     String? email,
     String? code,
   }) async {
+    print("code: $code");
     return networkHandler.postRequest(
       endpoint: "activate",
       create: () => APIResponse<User>(create: () => User()),
@@ -212,6 +213,7 @@ class AuthRepository extends BaseRepository {
         "code": code,
         "device_type": Platform.isAndroid ? "android" : "ios",
         "device_id": Platform.isAndroid ? "android" : "ios",
+        "_method": "patch",
       },
     );
   }
