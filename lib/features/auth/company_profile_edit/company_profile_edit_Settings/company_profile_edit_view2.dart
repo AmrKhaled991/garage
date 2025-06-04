@@ -94,7 +94,7 @@ class _CompanyProfileEditView2State extends State<CompanyProfileEditView2> {
       state.email.text = user.email ?? "";
     }
     super.initState();
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {

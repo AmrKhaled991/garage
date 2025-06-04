@@ -155,7 +155,11 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                 ) {
                   if (success) {
                     _controller.success();
-                    Get.offAllNamed(Routes.MAIN);
+                    if (otpTrack.isNotEmpty || otpTrack != null) {
+                      Get.offAllNamed(Routes.COMPANY_PROFILE_EDIT);
+                    } else {
+                      Get.offAllNamed(Routes.MAIN);
+                    }
                   } else {
                     _controller.error();
                   }

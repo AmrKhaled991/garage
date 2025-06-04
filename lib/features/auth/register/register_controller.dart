@@ -18,9 +18,6 @@ class RegisterController extends GetxController {
     }else if(state.password.text != state.passwordConfirm.text){
       Utils.showSnackBar("error_not_match".tr);
       return false;
-    }else if(!state.agreeTerms.value){
-      Utils.showSnackBar("accept_terms".tr);
-      return false;
     }
     return true;
   }

@@ -136,7 +136,15 @@ class UserController extends GetxController {
         );
       } else {
         setLoggedUser(login.value.data);
-        Get.offAllNamed(Routes.MAIN);
+        Get.offAllNamed(
+          Routes.OTP_VERIFY,
+          arguments: {
+            MyArguments.PHONE_CODE: login.value.data?.countryCode,
+            MyArguments.PHONE: login.value.data?.phone,
+            //to goto edit profile for company
+            MyArguments.OTP_TRACK: "editProfile",
+          },
+        );
       }
     } else {
       Utils.showSnackBar(login.value.message);
