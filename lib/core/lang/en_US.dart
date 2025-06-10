@@ -450,4 +450,5 @@ const Map<String, String> en_US = {
   "service_welcom_hint":
       'Request the service that suits you, where your car will be inspected, the problem identified, and a price quote will be provided',
   "start_now_hint": 'Start explore more about our services',
+  "update_profile": "Update Profile",
 };

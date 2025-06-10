@@ -446,4 +446,5 @@ const Map<String, String> ar_EG = {
   "service_welcom_hint":
       'أطلب الخدمة المناسبة لك حيث يتم الفحص السيارة وتحديد المشكله مع عرض السعر',
   "start_now_hint": 'ابدأ بالتعرف أكثر علي خدماتنا',
+  "update_profile": "تحديث الملف الشخصي",
 };

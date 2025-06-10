@@ -2,6 +2,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/networking/loading_state.dart';
 import 'package:garage/core/ui/LoadingWidget.dart';
 import 'package:garage/features/main/home/widgets/custom_category_card.dart';
@@ -23,6 +24,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
+    final UserController userController = Get.put(UserController());
     final state = Get.put(HomeController()).state;
 
     return MyScaffold(
@@ -83,6 +85,10 @@ class HomePage extends StatelessWidget {
               child: AddContainer(
                 title: 'أضف سيارة',
                 onTap: () {
+                  if (!userController.isLogged.value) {
+                    Get.toNamed(Routes.LOGIN);
+                    return;
+                  }
                   Get.toNamed(Routes.SelectTheBrandPageKey);
                 },
               ),

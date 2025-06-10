@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/ui/MyButton.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
@@ -11,6 +10,7 @@ import 'package:garage/routes/app_pages.dart';
 import 'package:garage/routes/arguments.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:garage/utils/utlis.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -40,24 +40,13 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
     if (assets != null && assets.isNotEmpty) {
       if (type == "avatar") {
-        state.selectedAvatarImage.value = assets.first;
+        controller.updateUserProfileImage(assets.first);
       } else if (type == "cover") {
         state.selectedCoverImage.value = assets.first;
       } else {
         state.selectedDocumentImage.value = assets.first;
       }
     }
-  }
-
-  @override
-  void initState() {
-    var user = userController.user.value;
-    if (user != null) {
-      state.name.text = user.name ?? "";
-      state.phoneNumber.text = user.phone ?? "";
-      state.email.text = user.email ?? "";
-    }
-    super.initState();
   }
 
   @override
@@ -133,61 +122,39 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           ),
           userRegisterView(),
           const SizedBox(height: 16),
-          // MyButton(
-          //   title: "change_password".tr,
-          //   isOutline: true,
-          //   textColor: Colors.black,
-          //   onClick: () {
-          //     Get.toNamed(Routes.CHANGE_PASSWORD);
-          //   },
-          // ).marginAll(16),
-          // MyLoadingButton(
-          //   title: "save".tr,
-          //   onClick: (RoundedLoadingButtonController _controller) async {
-          //     if (!controller.validations()) {
-          //       _controller.error();
-          //       Timer(const Duration(seconds: 1), () {
-          //         _controller.reset();
-          //       });
-          //       return;
-          //     }
 
-          //     if (isPhoneChanged()) {
-          //       _controller.reset();
-          //       bool result = await Get.toNamed(
-          //         Routes.OTP_VERIFY,
-          //         arguments: {MyArguments.PHONE: state.phoneNumber.text},
-          //       );
-          //       if (result) {
-          //         userController.updateProfile(controller.requestData(), (
-          //           success,
-          //         ) {
-          //           if (success) {
-          //             _controller.success();
-          //           } else {
-          //             _controller.error();
-          //           }
-          //           Timer(const Duration(seconds: 1), () {
-          //             _controller.reset();
-          //           });
-          //         });
-          //       }
-          //     } else {
-          //       userController.updateProfile(controller.requestData(), (
-          //         success,
-          //       ) {
-          //         if (success) {
-          //           _controller.success();
-          //         } else {
-          //           _controller.error();
-          //         }
-          //         Timer(const Duration(seconds: 1), () {
-          //           _controller.reset();
-          //         });
-          //       });
-          //     }
-          //   },
-          // ).marginAll(16),
+          Obx(() {
+            return Visibility(
+              visible: controller.isChanging.value,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: MyLoadingButton(
+                  title: "update_profile".tr,
+                  onClick: (RoundedLoadingButtonController _controller) {
+                    if (!controller.validations()) {
+                      _controller.error();
+                      Timer(const Duration(seconds: 1), () {
+                        _controller.reset();
+                      });
+                      return;
+                    }
+                    controller.updateProfile(
+                      onFinish: (success) async {
+                        if (success) {
+                          _controller.success();
+                        } else {
+                          _controller.error();
+                        }
+                        Timer(const Duration(seconds: 1), () {
+                          _controller.reset();
+                        });
+                      },
+                    );
+                  },
+                ),
+              ),
+            );
+          }),
           const SizedBox(height: 16),
         ],
       ),
@@ -198,25 +165,22 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     key: const ValueKey<int>(0),
     children: [
       MyTextForm(
-        controller: state.name,
+        controller: state.name.value,
         hint: "name".tr,
         textInputType: TextInputType.text,
       ),
       const SizedBox(height: 16),
       MyTextForm(
-        controller: state.email,
+        controller: state.email.value,
         hint: "email".tr,
         textInputType: TextInputType.emailAddress,
       ),
       const SizedBox(height: 16),
       MyTextForm(
-        controller: state.phoneNumber,
+        controller: state.phoneNumber.value,
         hint: "phone_number".tr,
         textInputType: TextInputType.phone,
       ),
     ],
   ).paddingAll(16);
-
-  bool isPhoneChanged() =>
-      userController.user.value?.phone != state.phoneNumber.text;
 }

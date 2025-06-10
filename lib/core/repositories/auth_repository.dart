@@ -87,12 +87,13 @@ class AuthRepository extends BaseRepository {
       b["document"] = multipartFile;
       body.remove("document");
     }
+    body["_method"] = 'PUT';
 
     body.forEach((key, value) {
       b[key] = value;
     });
 
-    return networkHandler.putRequest(
+    return networkHandler.postRequest(
       endpoint: "update-profile",
       create: () => APIResponse<User>(create: () => User()),
       body: FormData(b),
@@ -108,7 +109,7 @@ class AuthRepository extends BaseRepository {
 
   Future<LoadingState> changePassword(Map<String, String> body) async {
     return networkHandler.postRequest(
-      endpoint: "update-passward?_method=patch",
+      endpoint: "update-passward?_method=PATCH",
       create: () => APIDynamicResponse(create: () => DynamicModel()),
       body: body,
     );
@@ -233,8 +234,11 @@ class AuthRepository extends BaseRepository {
   }
 
   Future<LoadingState> removeAccount() async {
+    print(
+      "Removing account for user: ${Get.find<PreferenceManager>().getUser?.id}",
+    );
     return networkHandler.deleteRequest(
-      endpoint: "user/delete-account",
+      endpoint: "delete-account",
       create: () => APIDynamicResponse(create: () => DynamicModel()),
     );
   }

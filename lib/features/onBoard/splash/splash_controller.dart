@@ -12,7 +12,7 @@ class SplashController extends GetxController {
       preferenceManager.setIntroShown();
       Get.offAllNamed(Routes.INTRO);
     } else {
-      Get.offAllNamed(Routes.LOGIN);
+      Get.offAllNamed(Routes.MAIN);
     }
   }
 

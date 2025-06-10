@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TextHeaderWidget extends StatelessWidget {
-  final String title;
+  final String? title;
   final Widget child;
-  const TextHeaderWidget({Key? key, required this.child, required this.title})
+  const TextHeaderWidget({Key? key, required this.child, this.title})
     : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class TextHeaderWidget extends StatelessWidget {
 
       children: [
         Text(
-          title.tr,
+          title?.tr ?? '',
           textAlign: TextAlign.right,
           style: const TextStyle(
             color: Colors.white,

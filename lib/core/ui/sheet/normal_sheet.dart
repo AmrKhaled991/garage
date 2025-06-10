@@ -19,6 +19,7 @@ class NormalSheet extends StatelessWidget {
       builder: (BuildContext context, ScrollController scrollController) {
         return SafeArea(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(

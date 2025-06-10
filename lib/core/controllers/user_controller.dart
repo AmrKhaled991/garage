@@ -265,6 +265,7 @@ class UserController extends GetxController {
   }
 
   void removeAccount({Function? success}) async {
+    print("Removing account for user: ${user.value?.id}");
     var response = await authRepository.removeAccount();
     if (response.success) {
       logout();
