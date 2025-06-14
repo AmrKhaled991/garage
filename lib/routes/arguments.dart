@@ -1,5 +1,4 @@
-class MyArguments{
-
+class MyArguments {
   static String CATEGORY = "category";
   static String CATEGORY_ID = "category_id";
   static String PARENT_CATEGORY_ID = "parent_category_id";
@@ -32,5 +31,4 @@ class MyArguments{
   static String CLINIC = "CLINIC";
   static String TITLE = "TITLE";
   static String OTP_TRACK = "OTP_TRACK";
-  
 }

@@ -1,10 +1,7 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class DeliveryDate extends Decodable<DeliveryDate>{
-  DeliveryDate({
-      this.fullDate, 
-      this.date, 
-      this.intervals,});
+class DeliveryDate extends Decodable<DeliveryDate> {
+  DeliveryDate({this.fullDate, this.date, this.intervals});
 
   DeliveryDate.fromJson(dynamic json) {
     fullDate = json['full_date'];
@@ -34,14 +31,10 @@ class DeliveryDate extends Decodable<DeliveryDate>{
   DeliveryDate decode(json) {
     return DeliveryDate.fromJson(json);
   }
-
 }
 
 class IntervalData {
-  IntervalData({
-      this.intervalId, 
-      this.from, 
-      this.to,});
+  IntervalData({this.intervalId, this.from, this.to});
 
   IntervalData.fromJson(dynamic json) {
     intervalId = json['interval_id'];
@@ -59,5 +52,4 @@ class IntervalData {
     map['to'] = to;
     return map;
   }
-
 }

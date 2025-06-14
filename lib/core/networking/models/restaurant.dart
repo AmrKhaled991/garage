@@ -1,24 +1,25 @@
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/category.dart';
 
-class Restaurant extends Decodable<Restaurant>{
+class Restaurant extends Decodable<Restaurant> {
   Restaurant({
-      this.id, 
-      this.categoryName, 
-      this.categoryId, 
-      this.images, 
-      this.image, 
-      this.coverImage, 
-      this.name, 
-      this.subcategories, 
-      this.desc, 
-      this.address, 
-      this.lat, 
-      this.lng, 
-      this.rate, 
-      this.rateCount, 
-      this.socials, 
-      this.branches,});
+    this.id,
+    this.categoryName,
+    this.categoryId,
+    this.images,
+    this.image,
+    this.coverImage,
+    this.name,
+    this.subcategories,
+    this.desc,
+    this.address,
+    this.lat,
+    this.lng,
+    this.rate,
+    this.rateCount,
+    this.socials,
+    this.branches,
+  });
 
   Restaurant.fromJson(dynamic json) {
     id = json['id'];
@@ -114,18 +115,18 @@ class Restaurant extends Decodable<Restaurant>{
   Restaurant decode(json) {
     return Restaurant.fromJson(json);
   }
-
 }
 
 class Branch {
   Branch({
-      this.id, 
-      this.image, 
-      this.name, 
-      this.notes, 
-      this.showPrice, 
-      this.services, 
-      this.rate,});
+    this.id,
+    this.image,
+    this.name,
+    this.notes,
+    this.showPrice,
+    this.services,
+    this.rate,
+  });
 
   Branch.fromJson(dynamic json) {
     id = json['id'];
@@ -172,14 +173,10 @@ class Branch {
     map['rate'] = rate;
     return map;
   }
-
 }
 
 class Hours {
-  Hours({
-      this.day,
-      this.startTime,
-      this.endTime,});
+  Hours({this.day, this.startTime, this.endTime});
 
   Hours.fromJson(dynamic json) {
     day = json['day'];
@@ -197,14 +194,10 @@ class Hours {
     map['end_time'] = endTime;
     return map;
   }
-
 }
 
 class Services {
-  Services({
-      this.id,
-      this.name,
-      this.price,});
+  Services({this.id, this.name, this.price});
 
   Services.fromJson(dynamic json) {
     id = json['id'];
@@ -222,14 +215,10 @@ class Services {
     map['price'] = price;
     return map;
   }
-
 }
 
 class Socials {
-  Socials({
-      this.name, 
-      this.icon, 
-      this.link,});
+  Socials({this.name, this.icon, this.link});
 
   Socials.fromJson(dynamic json) {
     name = json['name'];
@@ -247,15 +236,10 @@ class Socials {
     map['link'] = link;
     return map;
   }
-
 }
 
 class Images {
-  Images({
-      this.id, 
-      this.path, 
-      this.extension, 
-      this.description,});
+  Images({this.id, this.path, this.extension, this.description});
 
   Images.fromJson(dynamic json) {
     id = json['id'];
@@ -276,5 +260,4 @@ class Images {
     map['description'] = description;
     return map;
   }
-
 }

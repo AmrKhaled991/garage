@@ -14,7 +14,7 @@ class HomeController extends GetxController {
     // getCurrencies();
     // getSlider();
     getCategories();
-    // getVendors();
+    getHomeData();
   }
 
   getCategories({bool forceRefresh = false}) async {
@@ -23,5 +23,13 @@ class HomeController extends GetxController {
     }
     state.categoriesList.value = LoadingState.loading();
     state.categoriesList.value = await _homeRepository.getCategories();
+  }
+
+  getHomeData({bool forceRefresh = false}) async {
+    if (state.homeData.value.data != null && !forceRefresh) {
+      return;
+    }
+    state.homeData.value = LoadingState.loading();
+    state.homeData.value = await _homeRepository.getHomeData();
   }
 }

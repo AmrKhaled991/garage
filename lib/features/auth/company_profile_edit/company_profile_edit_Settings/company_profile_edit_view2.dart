@@ -94,7 +94,7 @@ class _CompanyProfileEditView2State extends State<CompanyProfileEditView2> {
       state.email.text = user.email ?? "";
     }
     super.initState();
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +303,7 @@ class UploadCompanyAssetsScreen extends StatelessWidget {
 
           TextHeaderWidget(
             title: "upload_video".tr,
-            child:  AddContainer(
+            child: AddContainer(
               title: "upload_video_hint",
               padding: EdgeInsets.symmetric(vertical: 24),
             ),

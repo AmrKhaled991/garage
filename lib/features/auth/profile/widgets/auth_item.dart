@@ -6,24 +6,24 @@ import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/theme/styles.dart';
 
 class AuthItem extends StatelessWidget {
-    String? title;
-    VoidCallback? onClick;
-    String? icon;
-    Color? iconColor;
-    Color? bgColor;
-    bool? hasIcon = true;
-    bool? borderRadius = false;
-   AuthItem({
+  String? title;
+  VoidCallback? onClick;
+  String? icon;
+  Color? iconColor;
+  Color? bgColor;
+  bool? hasIcon = true;
+  bool? borderRadius = false;
+  AuthItem({
     Key? key,
     this.title,
     this.onClick,
     this.icon,
     this.iconColor,
     this.bgColor,
-     this.hasIcon,
-     this.borderRadius,
+    this.hasIcon,
+    this.borderRadius,
   }) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

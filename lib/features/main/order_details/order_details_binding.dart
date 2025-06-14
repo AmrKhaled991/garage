@@ -7,5 +7,4 @@ class OrderDetailsBinding extends Bindings {
   void dependencies() {
     // TODO: implement dependencies
   }
- 
 }

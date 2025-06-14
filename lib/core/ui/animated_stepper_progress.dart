@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 class AnimatedStepperProgress extends StatefulWidget {
   final int currentStep;
   final int totalSteps;
-   final int stepper;
+  final int stepper;
 
   const AnimatedStepperProgress({
     Key? key,
     required this.currentStep,
-    required this.totalSteps, required this.stepper,
+    required this.totalSteps,
+    required this.stepper,
   }) : super(key: key);
 
   @override
-   State<AnimatedStepperProgress> createState() =>
+  State<AnimatedStepperProgress> createState() =>
       _AnimatedStepperProgressState();
 }
 
-class _AnimatedStepperProgressState
-    extends State<AnimatedStepperProgress> {
+class _AnimatedStepperProgressState extends State<AnimatedStepperProgress> {
   @override
   Widget build(BuildContext context) {
     double progress = widget.currentStep / widget.totalSteps;
@@ -25,7 +25,6 @@ class _AnimatedStepperProgressState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      
         const SizedBox(height: 5),
         TweenAnimationBuilder<double>(
           tween: Tween<double>(
@@ -46,7 +45,6 @@ class _AnimatedStepperProgressState
           },
         ),
         const SizedBox(height: 5),
-        
       ],
     );
   }

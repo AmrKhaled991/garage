@@ -14,7 +14,7 @@ class AboutController extends GetxController {
     super.onInit();
   }
 
-  void fetchTerms() async{
+  void fetchTerms() async {
     state.about.value = LoadingState.loading();
     state.about.value = await mainRepository.getAbout();
   }

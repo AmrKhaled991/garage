@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            const HomeSlider(),
+            HomeSlider(controller: controller, state: state),
             const SizedBox(height: 12),
 
             TextHeaderWidget(

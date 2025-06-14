@@ -1,8 +1,7 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class ChangeCurrency extends Decodable<ChangeCurrency>{
-  ChangeCurrency({
-      this.equalAmount,});
+class ChangeCurrency extends Decodable<ChangeCurrency> {
+  ChangeCurrency({this.equalAmount});
 
   ChangeCurrency.fromJson(dynamic json) {
     equalAmount = json['equal_amount'];
@@ -19,5 +18,4 @@ class ChangeCurrency extends Decodable<ChangeCurrency>{
   ChangeCurrency decode(json) {
     return ChangeCurrency.fromJson(json);
   }
-
 }

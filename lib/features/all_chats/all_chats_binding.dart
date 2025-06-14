@@ -7,5 +7,4 @@ class AllChatsBinding extends Bindings {
   void dependencies() {
     // TODO: implement dependencies
   }
-
 }

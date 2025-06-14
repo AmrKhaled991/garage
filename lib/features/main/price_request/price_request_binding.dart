@@ -7,5 +7,4 @@ class PriceRequestBinding extends Bindings {
   void dependencies() {
     // TODO: implement dependencies
   }
-
 }

@@ -2,24 +2,25 @@ import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/category.dart';
 import 'package:garage/core/networking/models/doctor.dart';
 
-class Clinic extends Decodable<Clinic>{
+class Clinic extends Decodable<Clinic> {
   Clinic({
-      this.id, 
-      this.categoryName, 
-      this.categoryId, 
-      this.images, 
-      this.coverImage, 
-      this.name, 
-      this.subcategories, 
-      this.desc, 
-      this.address, 
-      this.lat, 
-      this.lng, 
-      this.supportServices, 
-      this.rate, 
-      this.rateCount, 
-      this.files, 
-      this.doctors,});
+    this.id,
+    this.categoryName,
+    this.categoryId,
+    this.images,
+    this.coverImage,
+    this.name,
+    this.subcategories,
+    this.desc,
+    this.address,
+    this.lat,
+    this.lng,
+    this.supportServices,
+    this.rate,
+    this.rateCount,
+    this.files,
+    this.doctors,
+  });
 
   Clinic.fromJson(dynamic json) {
     id = json['id'];
@@ -117,16 +118,10 @@ class Clinic extends Decodable<Clinic>{
   Clinic decode(json) {
     return Clinic.fromJson(json);
   }
-
 }
 
-
 class Times {
-  Times({
-    this.saturday,
-    this.sunday,
-    this.monday,
-    this.tuesday,});
+  Times({this.saturday, this.sunday, this.monday, this.tuesday});
 
   Times.fromJson(dynamic json) {
     if (json['saturday'] != null) {
@@ -196,14 +191,10 @@ class Times {
     }
     return map;
   }
-
 }
 
-
 class WeekDay {
-  WeekDay({
-    this.from,
-    this.to,});
+  WeekDay({this.from, this.to});
 
   WeekDay.fromJson(dynamic json) {
     from = json['from'];
@@ -218,15 +209,10 @@ class WeekDay {
     map['to'] = to;
     return map;
   }
-
 }
 
 class Images {
-  Images({
-      this.id, 
-      this.path, 
-      this.extension, 
-      this.description,});
+  Images({this.id, this.path, this.extension, this.description});
 
   Images.fromJson(dynamic json) {
     id = json['id'];
@@ -247,5 +233,4 @@ class Images {
     map['description'] = description;
     return map;
   }
-
 }

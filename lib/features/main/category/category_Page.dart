@@ -61,7 +61,8 @@ class CategoryPage extends StatelessWidget {
                     vertical: 8,
                   ),
                   child: Obx(() {
-                      final selectedIndex = state.selectedIndex.value; // 👈 use directly
+                    final selectedIndex =
+                        state.selectedIndex.value; // 👈 use directly
 
                     return ListView(
                       shrinkWrap: true,
@@ -93,7 +94,7 @@ class CategoryPage extends StatelessWidget {
                               // categoryData: item,
                               onClick: () {
                                 if (state.selectedIndex.value == index) return;
-                               controller.selectCategory(index);
+                                controller.selectCategory(index);
                                 // if (state.selectedSubcategories.value ==
                                 //     item?.id)
                                 //   return;

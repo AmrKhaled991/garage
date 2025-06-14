@@ -1,12 +1,7 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class VendorWorkingTimes extends Decodable<VendorWorkingTimes>{
-  VendorWorkingTimes({
-    this.date,
-    this.dayCode,
-    this.dayName,
-    this.times,});
+class VendorWorkingTimes extends Decodable<VendorWorkingTimes> {
+  VendorWorkingTimes({this.date, this.dayCode, this.dayName, this.times});
 
   VendorWorkingTimes.fromJson(dynamic json) {
     date = json['date'];
@@ -39,13 +34,10 @@ class VendorWorkingTimes extends Decodable<VendorWorkingTimes>{
   VendorWorkingTimes decode(data) {
     return VendorWorkingTimes.fromJson(data);
   }
-
 }
 
 class Times {
-  Times({
-    this.timeFrom,
-    this.timeTo,});
+  Times({this.timeFrom, this.timeTo});
 
   Times.fromJson(dynamic json) {
     timeFrom = json['time_from'];
@@ -60,5 +52,4 @@ class Times {
     map['time_to'] = timeTo;
     return map;
   }
-
 }

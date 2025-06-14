@@ -7,5 +7,4 @@ class MyOrdersBinding extends Bindings {
   void dependencies() {
     // TODO: implement dependencies
   }
- 
 }

@@ -15,9 +15,11 @@ class AllChatsPage extends StatelessWidget {
       title: "all_chats".tr,
       body: ListView.separated(
         padding: const EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 100),
-        itemBuilder: (context, index) => InkWell(
-           onTap: () => Get.toNamed(Routes.CHAT),
-          child: const AllChatsItemCard()),
+        itemBuilder:
+            (context, index) => InkWell(
+              onTap: () => Get.toNamed(Routes.CHAT),
+              child: const AllChatsItemCard(),
+            ),
         separatorBuilder: (context, index) => const SizedBox(height: 8),
         itemCount: 10,
       ),

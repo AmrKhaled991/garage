@@ -1,14 +1,14 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class Addation extends Decodable<Addation>{
+class Addation extends Decodable<Addation> {
   Addation({
     this.id,
     this.name,
     this.icon,
     this.price,
     this.type,
-    this.description});
+    this.description,
+  });
 
   Addation.fromJson(dynamic json) {
     id = json['id'];
@@ -40,5 +40,4 @@ class Addation extends Decodable<Addation>{
   Addation decode(data) {
     return Addation.fromJson(data);
   }
-
 }

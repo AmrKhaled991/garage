@@ -7,5 +7,4 @@ class MaintenanceAppointmentReminderBinding extends Bindings {
   void dependencies() {
     // TODO: implement dependencies
   }
-
 }

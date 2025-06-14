@@ -1,16 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:garage/core/controllers/user_controller.dart';
-import 'package:garage/core/ui/MyButton.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
-import 'package:garage/routes/app_pages.dart';
-import 'package:garage/routes/arguments.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:garage/utils/utlis.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';

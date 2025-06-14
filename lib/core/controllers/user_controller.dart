@@ -141,8 +141,8 @@ class UserController extends GetxController {
           arguments: {
             MyArguments.PHONE_CODE: login.value.data?.countryCode,
             MyArguments.PHONE: login.value.data?.phone,
-            //to goto edit profile for company
-            MyArguments.OTP_TRACK: "editProfile",
+            // //to goto edit profile for company
+            // MyArguments.OTP_TRACK: "editProfile",
           },
         );
       }

@@ -1,4 +1,3 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
 import 'addations.dart';
@@ -6,7 +5,7 @@ import 'category.dart';
 import 'city.dart';
 import 'company.dart';
 
-class AdData extends Decodable<AdData>{
+class AdData extends Decodable<AdData> {
   AdData({
     this.id,
     this.title,
@@ -38,7 +37,8 @@ class AdData extends Decodable<AdData>{
     this.address,
     this.seen,
     this.favoritesCount,
-    this.size});
+    this.size,
+  });
 
   AdData.fromJson(dynamic json) {
     id = json['id'];
@@ -66,7 +66,8 @@ class AdData extends Decodable<AdData>{
     favoritesCount = json['favorites_count'];
     size = json['size'];
     user = json['user'] != null ? CompanyData.fromJson(json['user']) : null;
-    category = json['category'] != null ? Category.fromJson(json['category']) : null;
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
     if (json['addations'] != null) {
       addations = [];
       json['addations'].forEach((v) {
@@ -181,20 +182,18 @@ class AdData extends Decodable<AdData>{
   AdData decode(data) {
     return AdData.fromJson(data);
   }
-
 }
 
 class Attributes {
-  Attributes({
-    this.id,
-    this.attribute,
-    this.option,
-    this.value,});
+  Attributes({this.id, this.attribute, this.option, this.value});
 
   Attributes.fromJson(dynamic json) {
     id = json['id'];
-    attribute = json['attribute'] != null ? AdAttribute.fromJson(json['attribute']) : null;
-    if(json['option'] != null) {
+    attribute =
+        json['attribute'] != null
+            ? AdAttribute.fromJson(json['attribute'])
+            : null;
+    if (json['option'] != null) {
       option = Option.fromJson(json['option']);
     }
     value = json['value'];
@@ -214,14 +213,10 @@ class Attributes {
     map['value'] = value;
     return map;
   }
-
 }
 
 class Option {
-  Option({
-    this.id,
-    this.value,
-    this.isDefault,});
+  Option({this.id, this.value, this.isDefault});
 
   Option.fromJson(dynamic json) {
     id = json['id'];
@@ -239,7 +234,6 @@ class Option {
     map['is_default'] = isDefault;
     return map;
   }
-
 }
 
 class AdAttribute {
@@ -249,7 +243,8 @@ class AdAttribute {
     this.name,
     this.icon,
     this.allowFromTo,
-    this.validation,});
+    this.validation,
+  });
 
   AdAttribute.fromJson(dynamic json) {
     id = json['id'];
@@ -257,7 +252,10 @@ class AdAttribute {
     name = json['name'];
     icon = json['icon'];
     allowFromTo = json['allow_from_to'];
-    validation = json['validation'] != null ? Validation.fromJson(json['validation']) : null;
+    validation =
+        json['validation'] != null
+            ? Validation.fromJson(json['validation'])
+            : null;
   }
   int? id;
   String? type;
@@ -278,7 +276,6 @@ class AdAttribute {
     }
     return map;
   }
-
 }
 
 class Validation {
@@ -288,7 +285,8 @@ class Validation {
     this.isInt,
     this.required,
     this.validateMax,
-    this.validateMin,});
+    this.validateMin,
+  });
 
   Validation.fromJson(dynamic json) {
     max = json['max'];
@@ -315,19 +313,15 @@ class Validation {
     map['validate_min'] = validateMin;
     return map;
   }
-
 }
 
 class Address {
-  Address({
-    this.id,
-    this.country,
-    this.city,
-    this.state,});
+  Address({this.id, this.country, this.city, this.state});
 
   Address.fromJson(dynamic json) {
     id = json['id'];
-    country = json['country'] != null ? Country.fromJson(json['country']) : null;
+    country =
+        json['country'] != null ? Country.fromJson(json['country']) : null;
     city = json['city'] != null ? City.fromJson(json['city']) : null;
     state = json['state'] != null ? StateData.fromJson(json['state']) : null;
   }
@@ -350,13 +344,10 @@ class Address {
     }
     return map;
   }
-
 }
 
 class City {
-  City({
-    this.id,
-    this.title,});
+  City({this.id, this.title});
 
   City.fromJson(dynamic json) {
     id = json['id'];
@@ -371,13 +362,10 @@ class City {
     map['title'] = title;
     return map;
   }
-
 }
 
 class Country {
-  Country({
-    this.id,
-    this.title,});
+  Country({this.id, this.title});
 
   Country.fromJson(dynamic json) {
     id = json['id'];
@@ -392,16 +380,14 @@ class Country {
     map['title'] = title;
     return map;
   }
-
 }
 
 class Addations {
-  Addations({
-    this.addation,
-    this.price,});
+  Addations({this.addation, this.price});
 
   Addations.fromJson(dynamic json) {
-    addation = json['addation'] != null ? Addation.fromJson(json['addation']) : null;
+    addation =
+        json['addation'] != null ? Addation.fromJson(json['addation']) : null;
     price = json['price'];
   }
   Addation? addation;
@@ -415,14 +401,10 @@ class Addations {
     map['price'] = price;
     return map;
   }
-
 }
 
 class ImageItem {
-  ImageItem({
-    this.id,
-    this.url,
-    this.mimeType,});
+  ImageItem({this.id, this.url, this.mimeType});
 
   ImageItem.fromJson(dynamic json) {
     id = json['id'];
@@ -440,14 +422,10 @@ class ImageItem {
     map['mime_type'] = mimeType;
     return map;
   }
-
 }
 
 class VideoItem {
-  VideoItem({
-    this.id,
-    this.url,
-    this.mimeType,});
+  VideoItem({this.id, this.url, this.mimeType});
 
   VideoItem.fromJson(dynamic json) {
     id = json['id'];
@@ -465,5 +443,4 @@ class VideoItem {
     map['mime_type'] = mimeType;
     return map;
   }
-
 }

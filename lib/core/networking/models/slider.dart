@@ -1,13 +1,14 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class SliderData extends Decodable{
+class SliderData extends Decodable {
   SliderData({
     this.id,
     this.image,
     this.link,
     this.type,
     this.adsId,
-    this.position,});
+    this.position,
+  });
 
   SliderData.fromJson(dynamic json) {
     id = json['id'];
@@ -42,5 +43,4 @@ class SliderData extends Decodable{
   decode(data) {
     return SliderData.fromJson(data);
   }
-
 }

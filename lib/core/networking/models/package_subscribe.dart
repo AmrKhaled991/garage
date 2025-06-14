@@ -1,13 +1,13 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class PackageSubscribe extends Decodable<PackageSubscribe>{
-  PackageSubscribe({
-    this.subscription,
-    this.url,});
+class PackageSubscribe extends Decodable<PackageSubscribe> {
+  PackageSubscribe({this.subscription, this.url});
 
   PackageSubscribe.fromJson(dynamic json) {
-    subscription = json['subscription'] != null ? Subscription.fromJson(json['subscription']) : null;
+    subscription =
+        json['subscription'] != null
+            ? Subscription.fromJson(json['subscription'])
+            : null;
     url = json['url'];
   }
   Subscription? subscription;
@@ -26,7 +26,6 @@ class PackageSubscribe extends Decodable<PackageSubscribe>{
   PackageSubscribe decode(data) {
     return PackageSubscribe.fromJson(data);
   }
-
 }
 
 class Subscription {
@@ -42,7 +41,8 @@ class Subscription {
     this.maxUse,
     this.renewalAt,
     this.renewalCount,
-    this.createdAt,});
+    this.createdAt,
+  });
 
   Subscription.fromJson(dynamic json) {
     id = json['id'];
@@ -87,5 +87,4 @@ class Subscription {
     map['created_at'] = createdAt;
     return map;
   }
-
 }

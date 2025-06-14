@@ -1,8 +1,7 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/vendor.dart';
 
-class Cart extends Decodable<Cart>{
+class Cart extends Decodable<Cart> {
   Cart({
     this.conditions,
     this.subTotal,
@@ -11,7 +10,8 @@ class Cart extends Decodable<Cart>{
     this.items,
     this.vendor,
     this.couponValue,
-    this.deliveryTimeNote,});
+    this.deliveryTimeNote,
+  });
 
   Cart.fromJson(dynamic json) {
     if (json['conditions'] != null) {
@@ -65,9 +65,7 @@ class Cart extends Decodable<Cart>{
   Cart decode(data) {
     return Cart.fromJson(data);
   }
-
 }
-
 
 class Conditions {
   Conditions({
@@ -76,7 +74,8 @@ class Conditions {
     this.type,
     this.value,
     this.order,
-    this.attributes,});
+    this.attributes,
+  });
 
   Conditions.fromJson(dynamic json) {
     target = json['target'];
@@ -84,7 +83,10 @@ class Conditions {
     type = json['type'];
     value = json['value'];
     order = json['order'];
-    attributes = json['attributes'] != null ? Attributes.fromJson(json['attributes']) : null;
+    attributes =
+        json['attributes'] != null
+            ? Attributes.fromJson(json['attributes'])
+            : null;
   }
   String? target;
   String? name;
@@ -92,13 +94,15 @@ class Conditions {
   String? value;
   int? order;
   Attributes? attributes;
-  Conditions copyWith({  String? target,
+  Conditions copyWith({
+    String? target,
     String? name,
     String? type,
     String? value,
     int? order,
     Attributes? attributes,
-  }) => Conditions(  target: target ?? this.target,
+  }) => Conditions(
+    target: target ?? this.target,
     name: name ?? this.name,
     type: type ?? this.type,
     value: value ?? this.value,
@@ -117,13 +121,10 @@ class Conditions {
     }
     return map;
   }
-
 }
 
 class Attributes {
-  Attributes({
-    this.coupon,
-    this.deliveryTimeNote});
+  Attributes({this.coupon, this.deliveryTimeNote});
 
   Attributes.fromJson(dynamic json) {
     coupon = json['coupon'] != null ? Coupon.fromJson(json['coupon']) : null;
@@ -131,9 +132,8 @@ class Attributes {
   }
   Coupon? coupon;
   dynamic deliveryTimeNote;
-  Attributes copyWith({  Coupon? coupon,
-  }) => Attributes(  coupon: coupon ?? this.coupon,
-  );
+  Attributes copyWith({Coupon? coupon}) =>
+      Attributes(coupon: coupon ?? this.coupon);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (coupon != null) {
@@ -142,7 +142,6 @@ class Attributes {
     map['delivery_time_note'] = deliveryTimeNote;
     return map;
   }
-
 }
 
 class Coupon {
@@ -157,7 +156,8 @@ class Coupon {
     this.expiredAt,
     this.status,
     this.createdAt,
-    this.updatedAt,});
+    this.updatedAt,
+  });
 
   Coupon.fromJson(dynamic json) {
     id = json['id'];
@@ -183,7 +183,8 @@ class Coupon {
   dynamic? status;
   String? createdAt;
   String? updatedAt;
-  Coupon copyWith({  int? id,
+  Coupon copyWith({
+    int? id,
     String? code,
     Title? title,
     String? discountType,
@@ -194,7 +195,8 @@ class Coupon {
     String? status,
     String? createdAt,
     String? updatedAt,
-  }) => Coupon(  id: id ?? this.id,
+  }) => Coupon(
+    id: id ?? this.id,
     code: code ?? this.code,
     title: title ?? this.title,
     discountType: discountType ?? this.discountType,
@@ -223,13 +225,10 @@ class Coupon {
     map['updated_at'] = updatedAt;
     return map;
   }
-
 }
 
 class Title {
-  Title({
-    this.en,
-    this.ar,});
+  Title({this.en, this.ar});
 
   Title.fromJson(dynamic json) {
     en = json['en'];
@@ -237,18 +236,14 @@ class Title {
   }
   String? en;
   String? ar;
-  Title copyWith({  String? en,
-    String? ar,
-  }) => Title(  en: en ?? this.en,
-    ar: ar ?? this.ar,
-  );
+  Title copyWith({String? en, String? ar}) =>
+      Title(en: en ?? this.en, ar: ar ?? this.ar);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['en'] = en;
     map['ar'] = ar;
     return map;
   }
-
 }
 
 class CartItem {
@@ -263,7 +258,8 @@ class CartItem {
     this.title,
     this.remainingQty,
     this.price,
-    this.productOptions,});
+    this.productOptions,
+  });
 
   CartItem.fromJson(dynamic json) {
     id = json['id'];
@@ -312,14 +308,10 @@ class CartItem {
     }
     return map;
   }
-
 }
 
 class ProductOptions {
-  ProductOptions({
-    this.id,
-    this.title,
-    this.optionValue,});
+  ProductOptions({this.id, this.title, this.optionValue});
 
   ProductOptions.fromJson(dynamic json) {
     id = json['id'];
@@ -344,13 +336,10 @@ class ProductOptions {
     }
     return map;
   }
-
 }
 
 class OptionValue {
-  OptionValue({
-    this.id,
-    this.title,});
+  OptionValue({this.id, this.title});
 
   OptionValue.fromJson(dynamic json) {
     id = json['id'];
@@ -365,5 +354,4 @@ class OptionValue {
     map['title'] = title;
     return map;
   }
-
 }

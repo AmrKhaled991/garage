@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:get/get.dart';
@@ -14,79 +13,82 @@ import '../networking/base/dynamic_model.dart';
 import '../networking/models/payment.dart';
 import 'base_repository.dart';
 
-class CheckoutRepository extends BaseRepository{
-
+class CheckoutRepository extends BaseRepository {
   UserController userController = Get.find();
 
-  Future<LoadingState<Payment?>> createOrder(Map<String,String?> data) async{
-    data["user_id"] =  userController.userToken;
+  Future<LoadingState<Payment?>> createOrder(Map<String, String?> data) async {
+    data["user_id"] = userController.userToken;
     return networkHandler.postRequest(
-        endpoint: "orders/create",
-        create: ()=> APIResponse<Payment>(create: ()=> Payment()),
-        body: FormData(data)
+      endpoint: "orders/create",
+      create: () => APIResponse<Payment>(create: () => Payment()),
+      body: FormData(data),
     );
   }
 
-  Future<LoadingState> addDeliveryFees({int? stateId, int? addressId}) async{
+  Future<LoadingState> addDeliveryFees({int? stateId, int? addressId}) async {
     return networkHandler.postRequest(
-        endpoint: "cart/add-company-delivery-fees-condition",
-        create: ()=> APIDynamicResponse(create: ()=> DynamicModel()),
-        body: FormData({
-        "user_token" :  userController.userToken,
-          if(stateId!=null) "state_id": stateId.toString(),
-          if(addressId!=null) "address_id": addressId.toString(),
-        })
+      endpoint: "cart/add-company-delivery-fees-condition",
+      create: () => APIDynamicResponse(create: () => DynamicModel()),
+      body: FormData({
+        "user_token": userController.userToken,
+        if (stateId != null) "state_id": stateId.toString(),
+        if (addressId != null) "address_id": addressId.toString(),
+      }),
     );
   }
 
-  Future<LoadingState<List<DeliveryType>?>> getVendorTimes() async{
+  Future<LoadingState<List<DeliveryType>?>> getVendorTimes() async {
     return networkHandler.getRequest(
-        endpoint: "vendors/vendor/delivery-times",
-        create: ()=> APIListResponse<DeliveryType>(create: ()=> DeliveryType()),
-        query: {
-          "user_token" :  userController.userToken,
-        }
+      endpoint: "vendors/vendor/delivery-times",
+      create: () => APIListResponse<DeliveryType>(create: () => DeliveryType()),
+      query: {"user_token": userController.userToken},
     );
   }
 
-  Future<LoadingState<List<PaymentMethod>?>> getPaymentMethods() async{
+  Future<LoadingState<List<PaymentMethod>?>> getPaymentMethods() async {
     return networkHandler.getRequest(
-        endpoint: "orders/payment-methods",
-        create: ()=> APIListResponse<PaymentMethod>(create: ()=> PaymentMethod()),
+      endpoint: "orders/payment-methods",
+      create:
+          () => APIListResponse<PaymentMethod>(create: () => PaymentMethod()),
     );
   }
 
-  Future<LoadingState<List<DeliveryDate>?>> getDeliveryDateTime() async{
+  Future<LoadingState<List<DeliveryDate>?>> getDeliveryDateTime() async {
     return networkHandler.getRequest(
-        endpoint: "deliveryDate",
-        create: ()=> APIListResponse<DeliveryDate>(create: ()=> DeliveryDate()),
+      endpoint: "deliveryDate",
+      create: () => APIListResponse<DeliveryDate>(create: () => DeliveryDate()),
     );
   }
 
-  Future<LoadingState<TransferSummary>> getTransferSummary({String? type,String? sentAmount,String? receivedCurrencyTypeId,}) async{
+  Future<LoadingState<TransferSummary>> getTransferSummary({
+    String? type,
+    String? sentAmount,
+    String? receivedCurrencyTypeId,
+  }) async {
     return networkHandler.postRequest(
-        endpoint: "transferSummary",
-        body: {
-          "type": type,
-          "sent_amount": sentAmount,
-          "received_currency_type_id": receivedCurrencyTypeId,
-        },
-        create: ()=> APIResponse<TransferSummary>(create: ()=> TransferSummary()),
+      endpoint: "transferSummary",
+      body: {
+        "type": type,
+        "sent_amount": sentAmount,
+        "received_currency_type_id": receivedCurrencyTypeId,
+      },
+      create:
+          () => APIResponse<TransferSummary>(create: () => TransferSummary()),
     );
   }
 
-  Future<LoadingState<ChangeCurrency>> changeCurrency({String? currencyId,String? amount}) async{
+  Future<LoadingState<ChangeCurrency>> changeCurrency({
+    String? currencyId,
+    String? amount,
+  }) async {
     return networkHandler.postRequest(
-        endpoint: "changeCurrency",
-        body: {
-          "currency_id": currencyId,
-          "amount": amount,
-        },
-        create: ()=> APIResponse<ChangeCurrency>(create: ()=> ChangeCurrency()),
+      endpoint: "changeCurrency",
+      body: {"currency_id": currencyId, "amount": amount},
+      create: () => APIResponse<ChangeCurrency>(create: () => ChangeCurrency()),
     );
   }
 
-  Future<LoadingState> makeTransfer(Map<String,dynamic> body) async{
+  Future<LoadingState> makeTransfer(Map<String, dynamic> body) async {
     try {
       var senderIdImagePath = body['sender_id_image'];
       var receiverIdImagePath = body['receiver_id_image'];
@@ -109,14 +111,14 @@ class CheckoutRepository extends BaseRepository{
         );
         body["receiver_id_image"] = multipartFile;
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
     }
     return networkHandler.postRequest(
-        endpoint: "makeTransfer",
-        body: FormData(body),
-        create: ()=> APIDynamicResponse<DynamicModel>(create: ()=> DynamicModel()),
+      endpoint: "makeTransfer",
+      body: FormData(body),
+      create:
+          () => APIDynamicResponse<DynamicModel>(create: () => DynamicModel()),
     );
   }
-
 }

@@ -1,10 +1,7 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class PaymentMethod extends Decodable<PaymentMethod>{
-  PaymentMethod({
-      this.code, 
-      this.title, 
-      this.value,});
+class PaymentMethod extends Decodable<PaymentMethod> {
+  PaymentMethod({this.code, this.title, this.value});
 
   PaymentMethod.fromJson(dynamic json) {
     code = json['code'];
@@ -30,5 +27,4 @@ class PaymentMethod extends Decodable<PaymentMethod>{
   PaymentMethod decode(json) {
     return PaymentMethod.fromJson(json);
   }
-
 }

@@ -1,12 +1,7 @@
-
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class City extends Decodable<City>{
-  City({
-    this.id,
-    this.title,
-    this.states,});
+class City extends Decodable<City> {
+  City({this.id, this.title, this.states});
 
   City.fromJson(dynamic json) {
     id = json['id'];
@@ -36,14 +31,10 @@ class City extends Decodable<City>{
   City decode(data) {
     return City.fromJson(data);
   }
-
 }
 
 class StateData {
-  StateData({
-    this.id,
-    this.title,
-    this.countryId,});
+  StateData({this.id, this.title, this.countryId});
 
   StateData.fromJson(dynamic json) {
     id = json['id'];
@@ -64,5 +55,4 @@ class StateData {
     map['country_id'] = countryId;
     return map;
   }
-
 }

@@ -8,8 +8,5 @@ class TranslationService extends Translations {
   static final fallbackLocale = Locale('ar');
 
   @override
-  Map<String, Map<String, String>> get keys => {
-        'ar': ar_EG,
-        'en': en_US,
-      };
+  Map<String, Map<String, String>> get keys => {'ar': ar_EG, 'en': en_US};
 }

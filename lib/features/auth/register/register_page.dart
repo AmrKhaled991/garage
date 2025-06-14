@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'package:garage/core/ui/MyButton.dart';
-import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/controllers/main_controller.dart';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
-import 'package:garage/core/ui/widgets/custom_country_code_and_flag.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
@@ -37,9 +35,8 @@ class _RegisterPageState extends State<RegisterPage> {
         textDelegate: EnglishAssetPickerTextDelegate(),
       ),
     );
-
     if (assets != null && assets.isNotEmpty) {
-      state.selectedAvatarImage.value;
+      state.selectedImage.value;
     }
   }
 
@@ -52,36 +49,44 @@ class _RegisterPageState extends State<RegisterPage> {
           children: <Widget>[
             const SizedBox(height: 30),
 
-            const UserTypeSelector(),
+            UserTypeSelector(controller: controller),
             const SizedBox(height: 30),
             userRegisterView(),
 
             const Spacer(),
-            MyLoadingButton(
-              title: "create_account".tr,
-              onClick: (RoundedLoadingButtonController _controller) {
-                if (!controller.validations()) {
-                  _controller.error();
-                  Timer(const Duration(seconds: 1), () {
-                    _controller.reset();
-                  });
-                  return;
-                }
-
-                userController.register(controller.getRegisterData(), (
-                  success,
-                ) async {
-                  if (success) {
-                    _controller.success();
-                  } else {
+            Obx(() {
+              var userType = controller.state.userType.value;
+              return MyLoadingButton(
+                title: "create_account".tr,
+                onClick: (RoundedLoadingButtonController _controller) {
+                  if (!controller.validations()) {
                     _controller.error();
+                    Timer(const Duration(seconds: 1), () {
+                      _controller.reset();
+                    });
+                    return;
                   }
-                  Timer(const Duration(seconds: 1), () {
+
+                  if (userType == 1) {
+                    userController.register(controller.getRegisterData(), (
+                      success,
+                    ) async {
+                      if (success) {
+                        _controller.success();
+                      } else {
+                        _controller.error();
+                      }
+                      Timer(const Duration(seconds: 1), () {
+                        _controller.reset();
+                      });
+                    });
+                  } else {
+                    Get.toNamed(Routes.COMPANY_PROFILE_EDIT);
                     _controller.reset();
-                  });
-                });
-              },
-            ),
+                  }
+                },
+              );
+            }),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -182,60 +187,56 @@ class _RegisterPageState extends State<RegisterPage> {
   );
 }
 
-class UserTypeSelector extends StatefulWidget {
-  const UserTypeSelector({super.key});
-
-  @override
-  State<UserTypeSelector> createState() => _UserTypeSelectorState();
-}
-
-class _UserTypeSelectorState extends State<UserTypeSelector> {
-  List<String> userTypes = ["person", "company"];
-  String? selectedUserType = "person";
+class UserTypeSelector extends StatelessWidget {
+  final RegisterController controller;
+  const UserTypeSelector({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      spacing: 8,
-      children: [
-        Expanded(
-          child: MyButton(
-            color:
-                selectedUserType == userTypes[0]
-                    ? colorPrimary
-                    : colorContainer,
-            textColor:
-                selectedUserType == userTypes[0] ? colorBlack : Colors.white,
-
-            borderRadius: 8,
-            title: userTypes[0].tr,
-            onClick: () {
-              if (selectedUserType == userTypes[0]) return;
-              setState(() {
-                selectedUserType = userTypes[0];
-              });
-            },
+    // Assuming userType is an RxInt in RegisterState
+    return Obx(() {
+      return Row(
+        children: [
+          Expanded(
+            child: MyButton(
+              color:
+                  controller.state.userType.value == 1
+                      ? colorPrimary
+                      : colorContainer,
+              textColor:
+                  controller.state.userType.value == 1
+                      ? colorBlack
+                      : Colors.white,
+              borderRadius: 8,
+              title: "person".tr,
+              onClick: () {
+                if (controller.state.userType.value != 1) {
+                  controller.state.userType.value = 1;
+                }
+              },
+            ),
           ),
-        ),
-        Expanded(
-          child: MyButton(
-            borderRadius: 8,
-            color:
-                selectedUserType == userTypes[1]
-                    ? colorPrimary
-                    : colorContainer,
-            textColor:
-                selectedUserType == userTypes[1] ? colorBlack : Colors.white,
-            title: userTypes[1].tr,
-            onClick: () {
-              if (selectedUserType == userTypes[1]) return;
-              setState(() {
-                selectedUserType = userTypes[1];
-              });
-            },
+          Expanded(
+            child: MyButton(
+              color:
+                  controller.state.userType.value == 2
+                      ? colorPrimary
+                      : colorContainer,
+              textColor:
+                  controller.state.userType.value == 2
+                      ? colorBlack
+                      : Colors.white,
+              borderRadius: 8,
+              title: "company".tr,
+              onClick: () {
+                if (controller.state.userType.value != 2) {
+                  controller.state.userType.value = 2;
+                }
+              },
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }

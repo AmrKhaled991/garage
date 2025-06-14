@@ -1,21 +1,22 @@
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/category.dart';
 
-class Doctor extends Decodable<Doctor>{
+class Doctor extends Decodable<Doctor> {
   Doctor({
-      this.id, 
-      this.image, 
-      this.name, 
-      this.specialization, 
-      this.subcategories, 
-      this.address, 
-      this.lat, 
-      this.lng, 
-      this.desc, 
-      this.showPrice, 
-      this.rate, 
-      this.rateCount, 
-      this.services,});
+    this.id,
+    this.image,
+    this.name,
+    this.specialization,
+    this.subcategories,
+    this.address,
+    this.lat,
+    this.lng,
+    this.desc,
+    this.showPrice,
+    this.rate,
+    this.rateCount,
+    this.services,
+  });
 
   Doctor.fromJson(dynamic json) {
     id = json['id'];
@@ -95,15 +96,10 @@ class Doctor extends Decodable<Doctor>{
   Doctor decode(json) {
     return Doctor.fromJson(json);
   }
-
 }
 
 class Certificates {
-  Certificates({
-    this.id,
-    this.path,
-    this.extension,
-    this.description,});
+  Certificates({this.id, this.path, this.extension, this.description});
 
   Certificates.fromJson(dynamic json) {
     id = json['id'];
@@ -124,14 +120,10 @@ class Certificates {
     map['description'] = description;
     return map;
   }
-
 }
 
 class Services {
-  Services({
-      this.id, 
-      this.name, 
-      this.price,});
+  Services({this.id, this.name, this.price});
 
   Services.fromJson(dynamic json) {
     id = json['id'];
@@ -149,5 +141,4 @@ class Services {
     map['price'] = price;
     return map;
   }
-
 }

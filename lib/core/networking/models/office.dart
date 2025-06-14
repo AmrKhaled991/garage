@@ -1,9 +1,8 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/city.dart';
 import 'package:garage/core/networking/models/user.dart';
 
-class OfficeData extends Decodable<OfficeData>{
+class OfficeData extends Decodable<OfficeData> {
   OfficeData({
     this.id,
     this.title,
@@ -16,7 +15,8 @@ class OfficeData extends Decodable<OfficeData>{
     this.country,
     this.city,
     this.state,
-    this.user,});
+    this.user,
+  });
 
   OfficeData.fromJson(dynamic json) {
     id = json['id'];
@@ -32,7 +32,8 @@ class OfficeData extends Decodable<OfficeData>{
       });
     }
     adsCount = json['ads_count'];
-    country = json['country'] != null ? Country.fromJson(json['country']) : null;
+    country =
+        json['country'] != null ? Country.fromJson(json['country']) : null;
     city = json['city'] != null ? City.fromJson(json['city']) : null;
     state = json['state'] != null ? StateData.fromJson(json['state']) : null;
     user = json['user'] != null ? User.fromJson(json['user']) : null;
@@ -82,13 +83,10 @@ class OfficeData extends Decodable<OfficeData>{
   OfficeData decode(data) {
     return OfficeData.fromJson(data);
   }
-
 }
 
 class Country {
-  Country({
-    this.id,
-    this.title,});
+  Country({this.id, this.title});
 
   Country.fromJson(dynamic json) {
     id = json['id'];
@@ -103,13 +101,10 @@ class Country {
     map['title'] = title;
     return map;
   }
-
 }
 
 class Socials {
-  Socials({
-    this.key,
-    this.link,});
+  Socials({this.key, this.link});
 
   Socials.fromJson(dynamic json) {
     key = json['key'];
@@ -124,5 +119,4 @@ class Socials {
     map['link'] = link;
     return map;
   }
-
 }

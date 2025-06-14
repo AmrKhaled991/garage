@@ -1,8 +1,7 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/package.dart';
 
-class SubscriptionData extends Decodable<SubscriptionData>{
+class SubscriptionData extends Decodable<SubscriptionData> {
   SubscriptionData({
     this.id,
     this.isFree,
@@ -16,7 +15,8 @@ class SubscriptionData extends Decodable<SubscriptionData>{
     this.renewalAt,
     this.renewalCount,
     this.package,
-    this.createdAt,});
+    this.createdAt,
+  });
 
   SubscriptionData.fromJson(dynamic json) {
     id = json['id'];
@@ -30,7 +30,8 @@ class SubscriptionData extends Decodable<SubscriptionData>{
     maxUse = json['max_use'];
     renewalAt = json['renewal_at'];
     renewalCount = json['renewal_count'];
-    package = json['package'] != null ? PackageData.fromJson(json['package']) : null;
+    package =
+        json['package'] != null ? PackageData.fromJson(json['package']) : null;
     createdAt = json['created_at'];
   }
   String? id;
@@ -71,5 +72,4 @@ class SubscriptionData extends Decodable<SubscriptionData>{
   SubscriptionData decode(data) {
     return SubscriptionData.fromJson(data);
   }
-
 }

@@ -9,9 +9,7 @@ import 'package:garage/utils/utlis.dart';
 
 import '../networking/models/product.dart';
 
-
-class CartController extends GetxController{
-
+class CartController extends GetxController {
   final PreferenceManager sharedPreferenceRepository = Get.find();
   UserController userController = Get.find();
   CartRepository cartRepository = Get.find();
@@ -21,25 +19,24 @@ class CartController extends GetxController{
     super.onReady();
 
     cartItems.listen((cart) {
-      if(cart.data!=null &&
-          cart.data!=null&&
-          cart.data?.items?.isNotEmpty == true&&
-          !cartItems.value.loading){
-        if(isEmpty.value)
-          isEmpty.value = false;
-        cart.data?.items?.sort((a,b)=> a.id.toString().compareTo(b.id.toString()));
-        cartCount.value = cart.data?.items?.length??0;
-      }else{
-        if(!isEmpty.value && !cartItems.value.loading)
-          isEmpty.value = true;
+      if (cart.data != null &&
+          cart.data != null &&
+          cart.data?.items?.isNotEmpty == true &&
+          !cartItems.value.loading) {
+        if (isEmpty.value) isEmpty.value = false;
+        cart.data?.items?.sort(
+          (a, b) => a.id.toString().compareTo(b.id.toString()),
+        );
+        cartCount.value = cart.data?.items?.length ?? 0;
+      } else {
+        if (!isEmpty.value && !cartItems.value.loading) isEmpty.value = true;
         cartCount.value = 0;
       }
     });
-
   }
 
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
     // selectedDate.value = null;
   }
@@ -62,52 +59,59 @@ class CartController extends GetxController{
   //
   // var coupon = 0.0.obs;
 
-
-
-  void addToCart(Map<String,String> data,Map<int,AddonOptions?> singleOptions,Map<int,List<AddonOptions?>> multiOptions,{Function(bool)? onFinish = null}) async{
+  void addToCart(
+    Map<String, String> data,
+    Map<int, AddonOptions?> singleOptions,
+    Map<int, List<AddonOptions?>> multiOptions, {
+    Function(bool)? onFinish = null,
+  }) async {
     //add options to body
 
     singleOptions.values.toList().asMap().forEach((index, value) {
-      data["addonsOptions[$index][id]"] = singleOptions.keys.elementAt(index).toString();
-      data["addonsOptions[$index][options][]"] = value?.id?.toString()??"";
+      data["addonsOptions[$index][id]"] =
+          singleOptions.keys.elementAt(index).toString();
+      data["addonsOptions[$index][options][]"] = value?.id?.toString() ?? "";
     });
 
     multiOptions.values.toList().asMap().forEach((index, value) {
-      if(value.isNotEmpty) {
-        data["addonsOptions[${singleOptions.length + index}][id]"] = multiOptions.keys.elementAt(index).toString();
+      if (value.isNotEmpty) {
+        data["addonsOptions[${singleOptions.length + index}][id]"] =
+            multiOptions.keys.elementAt(index).toString();
         value.asMap().forEach((i, value) {
-          data["addonsOptions[${singleOptions.length + index}][options][$i]"] = value?.id?.toString()??"";
+          data["addonsOptions[${singleOptions.length + index}][options][$i]"] =
+              value?.id?.toString() ?? "";
         });
       }
     });
 
-
     addToCartLoading.value = LoadingState.loading();
     addToCartLoading.value = await cartRepository.addToCart(data);
     onFinish?.call(addToCartLoading.value.success);
-    if(addToCartLoading.value.success) {
+    if (addToCartLoading.value.success) {
       getCartItems(true);
-    }else{
+    } else {
       Utils.showSnackBar(addToCartLoading.value.message);
     }
   }
 
-  void removeFromCart(String productId) async{
+  void removeFromCart(String productId) async {
     removeFromCartLoading.value = LoadingState.loading();
-    removeFromCartLoading.value = await cartRepository.removeFromCart(productId);
-    if(removeFromCartLoading.value.success) {
+    removeFromCartLoading.value = await cartRepository.removeFromCart(
+      productId,
+    );
+    if (removeFromCartLoading.value.success) {
       getCartItems(true);
-    }else{
-      Utils.showSnackBar( addToCartLoading.value.message,);
+    } else {
+      Utils.showSnackBar(addToCartLoading.value.message);
     }
   }
 
-  void clearCart() async{
+  void clearCart() async {
     var response = await cartRepository.clearCart();
-    if(response.success) {
+    if (response.success) {
       getCartItems(true);
-    }else{
-      Utils.showSnackBar( response.message,);
+    } else {
+      Utils.showSnackBar(response.message);
     }
   }
 
@@ -124,9 +128,8 @@ class CartController extends GetxController{
   //   }
   // }
   //
-  void getCartItems(bool? noLoading) async{
-    if(noLoading == false)
-      cartItems.value = LoadingState.loading();
+  void getCartItems(bool? noLoading) async {
+    if (noLoading == false) cartItems.value = LoadingState.loading();
     cartItems.value = await cartRepository.fetchCart();
   }
 
@@ -164,6 +167,7 @@ class CartController extends GetxController{
   //   return subTotal + couponDiscount;
   // }
 }
+
 //
 // enum DeliveryType{IN_TIME,LATER}
 //

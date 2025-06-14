@@ -1,7 +1,6 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class User extends Decodable<User>{
+class User extends Decodable<User> {
   User({
     this.id,
     this.name,
@@ -13,7 +12,8 @@ class User extends Decodable<User>{
     this.idImage,
     this.lang,
     this.isNotify,
-    this.token,});
+    this.token,
+  });
 
   User.fromJson(dynamic json) {
     id = json['id'];
@@ -26,7 +26,7 @@ class User extends Decodable<User>{
     idImage = json['id_image'];
     lang = json['lang'];
     isNotify = json['is_notify'];
-    isActive = json['is_active']??true;
+    isActive = json['is_active'] ?? true;
     type = json['type'];
     token = json['token'];
   }
@@ -66,5 +66,4 @@ class User extends Decodable<User>{
   User decode(data) {
     return User.fromJson(data);
   }
-
 }

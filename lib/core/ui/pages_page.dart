@@ -8,25 +8,27 @@ import 'package:get/get.dart';
 import 'my_scaffold.dart';
 
 class PagesPage extends StatelessWidget {
-
   PagesData? pagesData;
 
-  PagesPage({this.pagesData}){
-    pagesData = Get.arguments != null ? Get.arguments["page"] as PagesData? : pagesData;
+  PagesPage({this.pagesData}) {
+    pagesData =
+        Get.arguments != null ? Get.arguments["page"] as PagesData? : pagesData;
   }
 
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
-      title: pagesData?.title??"",
-        // drawerController: drawerController,
-        // withMenu: true,
-        // withCart: true,
+      title: pagesData?.title ?? "",
+      // drawerController: drawerController,
+      // withMenu: true,
+      // withCart: true,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Html(data: pagesData?.description??"",
-            style: MyTextStyle.htmlSubTitle(color: Colors.white)),
-      )
+        child: Html(
+          data: pagesData?.description ?? "",
+          style: MyTextStyle.htmlSubTitle(color: Colors.white),
+        ),
+      ),
     );
   }
 }

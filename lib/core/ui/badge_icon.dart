@@ -5,8 +5,8 @@ class BadgeIcon extends StatefulWidget {
   const BadgeIcon({
     Key? key,
     required this.itemCount,
-    this.badgeColor= Colors.red,
-    this.badgeTextColor= Colors.white,
+    this.badgeColor = Colors.red,
+    this.badgeTextColor = Colors.white,
     required this.image,
     this.matchTextDirection = false,
     this.width,
@@ -64,8 +64,10 @@ class _BadgeIconState extends State<BadgeIcon>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _animation =
-        CurvedAnimation(parent: _animationController, curve: Curves.elasticOut);
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.elasticOut,
+    );
     _animationController.forward();
   }
 
@@ -94,23 +96,24 @@ class _BadgeIconState extends State<BadgeIcon>
             child: SlideTransition(
               position: _badgePositionTween.animate(_animation),
               child: Material(
-                  type: MaterialType.circle,
-                  elevation: 2.0,
-                  color: Colors.black,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      widget.itemCount.toString(),
-                      style: TextStyle(
-                        fontSize: 13.0,
-                        color: widget.badgeTextColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+                type: MaterialType.circle,
+                elevation: 2.0,
+                color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    widget.itemCount.toString(),
+                    style: TextStyle(
+                      fontSize: 13.0,
+                      color: widget.badgeTextColor,
+                      fontWeight: FontWeight.bold,
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

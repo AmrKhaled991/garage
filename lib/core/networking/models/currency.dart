@@ -1,14 +1,15 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class Currency extends Decodable<Currency>{
+class Currency extends Decodable<Currency> {
   Currency({
-      this.id,
-      this.countryName,
-      this.countryFlag,
-      this.code, 
-      this.isDefault, 
-      this.sellingPrice, 
-      this.buyingPrice,});
+    this.id,
+    this.countryName,
+    this.countryFlag,
+    this.code,
+    this.isDefault,
+    this.sellingPrice,
+    this.buyingPrice,
+  });
 
   Currency.fromJson(dynamic json) {
     id = json['id'];
@@ -43,5 +44,4 @@ class Currency extends Decodable<Currency>{
   Currency decode(json) {
     return Currency.fromJson(json);
   }
-
 }

@@ -19,6 +19,15 @@ class Category extends Decodable<Category> {
     this.parent_id,
   });
 
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /// Creates a copy of the [Category] but with the given fields replaced with
+  /// the new values.
+  ///
+  /// If a field is not provided, it will keep its current value.
+  ///
+  /// A shallow copy is made, so the new [Category] instance will contain the
+  /// same objects as this instance, just with the provided fields updated.
+  /// *****  640d2a8b-6c66-4756-8723-b64550a55bbe  ******
   Category copyWith({
     num? id,
     String? name,
@@ -95,11 +104,6 @@ class Category extends Decodable<Category> {
   @override
   Category decode(json) {
     // TODO: implement decode
-    return Category.fromJson(json);
+    return Category.fromMap(json);
   }
 }
-
-/// Returns a `Map<String, dynamic>` containing the following key-value pairs:
-
-/// - 'id': the category ID
-/// - 'name': the category name

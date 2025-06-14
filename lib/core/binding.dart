@@ -14,7 +14,6 @@ import 'networking/network_handler.dart';
 import 'storage/preference_manager.dart';
 
 class Binding extends Bindings {
-
   @override
   void dependencies() {
     Get.put(PreferenceManager(), permanent: true);
@@ -30,6 +29,5 @@ class Binding extends Bindings {
     Get.put(CheckoutController(), permanent: true);
     Get.put(AddressRepository(), permanent: true);
     Get.put(AddressController(), permanent: true);
-
   }
 }

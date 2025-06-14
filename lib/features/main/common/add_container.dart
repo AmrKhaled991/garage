@@ -9,19 +9,16 @@ class AddContainer extends StatelessWidget {
   final String title;
   final EdgeInsetsGeometry? padding;
   Function? onTap;
-   AddContainer({
-    Key? key,
-    required this.title,
-    this.padding,
-    this.onTap,
-  }) : super(key: key);
+  AddContainer({Key? key, required this.title, this.padding, this.onTap})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
 
-      padding: padding??const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding:
+          padding ?? const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         color: colorContainer,

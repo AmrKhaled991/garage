@@ -1,13 +1,9 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
 import 'product.dart';
 
-class CategoriesWithProducts extends Decodable<CategoriesWithProducts>{
-  CategoriesWithProducts({
-    this.id,
-    this.title,
-    this.products,});
+class CategoriesWithProducts extends Decodable<CategoriesWithProducts> {
+  CategoriesWithProducts({this.id, this.title, this.products});
 
   CategoriesWithProducts.fromJson(dynamic json) {
     id = json['id'];
@@ -37,5 +33,4 @@ class CategoriesWithProducts extends Decodable<CategoriesWithProducts>{
   CategoriesWithProducts decode(data) {
     return CategoriesWithProducts.fromJson(data);
   }
-
 }

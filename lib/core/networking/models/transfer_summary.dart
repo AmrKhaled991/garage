@@ -1,14 +1,15 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class TransferSummary extends Decodable<TransferSummary>{
+class TransferSummary extends Decodable<TransferSummary> {
   TransferSummary({
-      this.sentAmount, 
-      this.transferFees, 
-      this.totalPaid, 
-      this.sellingPrice, 
-      this.receivedPrice, 
-      this.sendCurrency, 
-      this.receivedCurrency,});
+    this.sentAmount,
+    this.transferFees,
+    this.totalPaid,
+    this.sellingPrice,
+    this.receivedPrice,
+    this.sendCurrency,
+    this.receivedCurrency,
+  });
 
   TransferSummary.fromJson(dynamic json) {
     sentAmount = json['sent_amount'];
@@ -43,5 +44,4 @@ class TransferSummary extends Decodable<TransferSummary>{
   TransferSummary decode(json) {
     return TransferSummary.fromJson(json);
   }
-
 }

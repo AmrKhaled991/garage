@@ -29,9 +29,7 @@ class MyClickable extends StatelessWidget {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         foregroundColor: colorWhite,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(cornerRadius ?? 5),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(cornerRadius ?? 5)),
         ),
       ),
       onPressed: isEnabled ? onPressed : null,
@@ -39,10 +37,7 @@ class MyClickable extends StatelessWidget {
     );
 
     if (margin != null) {
-      return Container(
-        margin: margin,
-        child: button,
-      );
+      return Container(margin: margin, child: button);
     } else {
       return button;
     }

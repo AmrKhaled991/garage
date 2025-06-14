@@ -9,7 +9,7 @@ class ContactUsController extends GetxController {
   final ContactUsState state = ContactUsState();
   final ContactUsRepository contactUsRepository = Get.find();
 
-  bool validation(){
+  bool validation() {
     if (state.nameController.text.isEmpty) {
       Utils.showSnackBar("error_name".tr);
       return false;
@@ -26,11 +26,11 @@ class ContactUsController extends GetxController {
     return true;
   }
 
-  void contactUs(Map<String, String> data, Function(bool) onFinish) async{
+  void contactUs(Map<String, String> data, Function(bool) onFinish) async {
     state.contactUsLoading.value = LoadingState.loading();
     state.contactUsLoading.value = await contactUsRepository.contactUs(data);
     onFinish.call(state.contactUsLoading.value.success);
-    if(state.contactUsLoading.value.success == false){
+    if (state.contactUsLoading.value.success == false) {
       Utils.showSnackBar(state.contactUsLoading.value.message);
     }
   }

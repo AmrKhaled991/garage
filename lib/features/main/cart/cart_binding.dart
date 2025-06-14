@@ -7,5 +7,4 @@ class CartBinding extends Bindings {
   void dependencies() {
     // TODO: implement dependencies
   }
-  
 }

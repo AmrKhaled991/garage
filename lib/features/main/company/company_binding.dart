@@ -7,5 +7,4 @@ class CompanyBinding extends Bindings {
   void dependencies() {
     // TODO: implement dependencies
   }
- 
 }

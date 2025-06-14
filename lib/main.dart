@@ -39,7 +39,6 @@ Future<void> main() async {
       Binding().dependencies();
       HttpOverrides.global = MyHttpOverrides();
       // FirebaseNotifications().setUpFirebase();
-
       runApp(const MyApp());
       // The following lines are the same as previously explained in "Handling uncaught errors"
     },

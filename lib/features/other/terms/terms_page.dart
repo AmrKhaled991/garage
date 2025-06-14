@@ -8,27 +8,28 @@ import 'package:garage/theme/styles.dart';
 import 'terms_controller.dart';
 
 class TermsPage extends StatelessWidget {
-
   TermsController controller = Get.find<TermsController>();
-  TermsState state = Get
-      .find<TermsController>()
-      .state;
-
-
+  TermsState state = Get.find<TermsController>().state;
 
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
-        title: "terms".tr,
-        body: Obx(() {
-          return LoadingWidget(
-            loadingState: state.terms.value,
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Html(data: state.terms.value.data??"", style: MyTextStyle.htmlSubTitle(color: Colors.black, fontSize: 22),),
+      title: "terms".tr,
+      body: Obx(() {
+        return LoadingWidget(
+          loadingState: state.terms.value,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Html(
+              data: state.terms.value.data ?? "",
+              style: MyTextStyle.htmlSubTitle(
+                color: Colors.black,
+                fontSize: 22,
+              ),
             ),
-          );
-        })
+          ),
+        );
+      }),
     );
   }
 }

@@ -21,29 +21,34 @@ class GallerySliderPage extends StatelessWidget {
           scrollPhysics: const BouncingScrollPhysics(),
           builder: (BuildContext context, int index) {
             return PhotoViewGalleryPageOptions(
-              imageProvider: CachedNetworkImageProvider(urls?.elementAt(index)??""),
+              imageProvider: CachedNetworkImageProvider(
+                urls?.elementAt(index) ?? "",
+              ),
               initialScale: PhotoViewComputedScale.contained * 1,
               // heroAttributes: PhotoViewHeroAttributes(tag: galleryItems[index].id),
             );
           },
-          itemCount: urls?.length??0,
-          loadingBuilder: (context, event) => Center(
-            child: Container(
-              width: 20.0,
-              height: 20.0,
-              color: Colors.white,
-              child: CircularProgressIndicator(
-                value: event == null
-                    ? 0
-                    : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+          itemCount: urls?.length ?? 0,
+          loadingBuilder:
+              (context, event) => Center(
+                child: Container(
+                  width: 20.0,
+                  height: 20.0,
+                  color: Colors.white,
+                  child: CircularProgressIndicator(
+                    value:
+                        event == null
+                            ? 0
+                            : event.cumulativeBytesLoaded /
+                                event.expectedTotalBytes!,
+                  ),
+                ),
               ),
-            ),
-          ),
           // backgroundDecoration: widget.backgroundDecoration,
           // pageController: widget.pageController,
           // onPageChanged: onPageChanged,
         ),
-      )
+      ),
     );
   }
 }

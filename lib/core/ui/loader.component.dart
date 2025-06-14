@@ -10,7 +10,7 @@ class AppLoader extends StatelessWidget {
         width: 50,
         height: 50,
         child: HeartbeatProgressIndicator(
-          child: Image.asset("assets/images/logo.png" , height: 60 , width: 60,),
+          child: Image.asset("assets/images/logo.png", height: 60, width: 60),
         ),
       ),
     );

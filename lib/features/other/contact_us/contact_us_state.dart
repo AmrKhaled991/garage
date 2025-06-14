@@ -3,8 +3,6 @@ import 'package:garage/core/networking/loading_state.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class ContactUsState {
-
-
   var contactUsLoading = LoadingState().obs;
 
   var nameController = TextEditingController();

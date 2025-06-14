@@ -11,21 +11,17 @@ import 'package:garage/core/repositories/checkout_repository.dart';
 import 'package:garage/core/storage/preference_manager.dart';
 import 'package:garage/utils/utlis.dart';
 
-
-class CheckoutController extends GetxController{
-
+class CheckoutController extends GetxController {
   final PreferenceManager sharedPreferenceRepository = Get.find();
   UserController userController = Get.find();
   CartController cartController = Get.find();
   CheckoutRepository checkoutRepository = Get.find();
   MainController mainController = Get.find();
 
-
   @override
   void onReady() {
     super.onReady();
   }
-
 
   var checkoutLoading = LoadingState<Payment?>().obs;
 
@@ -45,19 +41,16 @@ class CheckoutController extends GetxController{
 
   var coupon = 0.0.obs;
 
-
-
-
-  void checkout(Function(bool,Payment?) success) async{
-    if(userController.isLogged.value){
+  void checkout(Function(bool, Payment?) success) async {
+    if (userController.isLogged.value) {
       authCheckout(success);
-    }else{
+    } else {
       guestCheckout(success);
     }
   }
 
-  void guestCheckout(Function(bool,Payment?) success) async{
-    Map<String,String?> data = {
+  void guestCheckout(Function(bool, Payment?) success) async {
+    Map<String, String?> data = {
       "address[username]": orderAddress.value?.username,
       "address[email]": orderAddress.value?.email,
       "address[mobile]": orderAddress.value?.mobile,
@@ -68,90 +61,95 @@ class CheckoutController extends GetxController{
       "address[floor]": orderAddress.value?.floor,
       "address[flat]": orderAddress.value?.flat,
       "address[building]": orderAddress.value?.building,
-      "address[state_id]":orderAddress.value?.stateId.toString(),
+      "address[state_id]": orderAddress.value?.stateId.toString(),
       "payment": selectedPaymentMethod.value,
       "address_type": "guest_address",
-      "shipping[type]": selectedTime.value!=null? "schedule" : "direct",
+      "shipping[type]": selectedTime.value != null ? "schedule" : "direct",
       "paid_full_amount": paymentAllAmount.value,
     };
-    if(selectedTime.value!=null){
-      data["shipping[date]"] = selectedDate.value??"";
-      data["shipping[time_from]"] = selectedTime.value?.timeFrom??"";
-      data["shipping[time_to]"] = selectedTime.value?.timeTo??"";
+    if (selectedTime.value != null) {
+      data["shipping[date]"] = selectedDate.value ?? "";
+      data["shipping[time_from]"] = selectedTime.value?.timeFrom ?? "";
+      data["shipping[time_to]"] = selectedTime.value?.timeTo ?? "";
     }
     checkoutLoading.value = LoadingState.loading();
     checkoutLoading.value = await checkoutRepository.createOrder(data);
-    if(checkoutLoading.value.success) {
-      success.call(true,checkoutLoading.value.data);
-    }else{
-      success.call(false,null);
-      Utils.showSnackBar( checkoutLoading.value.message,);
+    if (checkoutLoading.value.success) {
+      success.call(true, checkoutLoading.value.data);
+    } else {
+      success.call(false, null);
+      Utils.showSnackBar(checkoutLoading.value.message);
     }
   }
 
-  void authCheckout(Function(bool,Payment?) success) async{
-    Map<String,String?> data = {
+  void authCheckout(Function(bool, Payment?) success) async {
+    Map<String, String?> data = {
       "address_id": orderAddress.value?.id.toString(),
-      "state_id":orderAddress.value?.stateId.toString(),
+      "state_id": orderAddress.value?.stateId.toString(),
       "payment": selectedPaymentMethod.value,
       "address_type": "selected_address",
-      "shipping[type]": selectedTime.value!=null? "schedule" : "direct",
+      "shipping[type]": selectedTime.value != null ? "schedule" : "direct",
       "paid_full_amount": paymentAllAmount.value,
     };
-    if(selectedTime.value!=null){
-      data["shipping[date]"] = selectedDate.value??"";
-      data["shipping[time_from]"] = selectedTime.value?.timeFrom??"";
-      data["shipping[time_to]"] = selectedTime.value?.timeTo??"";
+    if (selectedTime.value != null) {
+      data["shipping[date]"] = selectedDate.value ?? "";
+      data["shipping[time_from]"] = selectedTime.value?.timeFrom ?? "";
+      data["shipping[time_to]"] = selectedTime.value?.timeTo ?? "";
     }
     checkoutLoading.value = LoadingState.loading();
     checkoutLoading.value = await checkoutRepository.createOrder(data);
-    if(checkoutLoading.value.success) {
-      success.call(true,checkoutLoading.value.data);
-    }else{
-      success.call(false,null);
-      Utils.showSnackBar(checkoutLoading.value.message,);
+    if (checkoutLoading.value.success) {
+      success.call(true, checkoutLoading.value.data);
+    } else {
+      success.call(false, null);
+      Utils.showSnackBar(checkoutLoading.value.message);
     }
   }
 
-  void addDeliveryFees({int? stateId, int? addressId, Function(bool)? onFinish}) async{
-    var response = await checkoutRepository.addDeliveryFees(addressId : addressId ,
-        stateId : stateId);
+  void addDeliveryFees({
+    int? stateId,
+    int? addressId,
+    Function(bool)? onFinish,
+  }) async {
+    var response = await checkoutRepository.addDeliveryFees(
+      addressId: addressId,
+      stateId: stateId,
+    );
     onFinish?.call(response.success);
-    if(response.success) {
+    if (response.success) {
       cartController.getCartItems(true);
-    }else{
-      Utils.showSnackBar( response.message,);
+    } else {
+      Utils.showSnackBar(response.message);
     }
   }
 
-
-
-  void checkCoupon() async{
+  void checkCoupon() async {
     couponLoading.value = LoadingState.loading();
 
-    couponLoading.value = await cartController.cartRepository.checkCoupon(couponCode.value);
-    if(couponLoading.value.success){
-      if(couponLoading.value.success == true){
+    couponLoading.value = await cartController.cartRepository.checkCoupon(
+      couponCode.value,
+    );
+    if (couponLoading.value.success) {
+      if (couponLoading.value.success == true) {
         Utils.showSnackBar("coupon_added".tr);
         cartController.getCartItems(true);
-      }else{
+      } else {
         Utils.showSnackBar(couponLoading.value.message);
       }
-    }else{
+    } else {
       Utils.showSnackBar(couponLoading.value.message);
     }
   }
 
-  void removeCoupon({bool withLoading = true}) async{
-    if(withLoading)
-      couponLoading.value = LoadingState.loading();
+  void removeCoupon({bool withLoading = true}) async {
+    if (withLoading) couponLoading.value = LoadingState.loading();
     couponLoading.value = await cartController.cartRepository.removeCoupon();
-    if(couponLoading.value.success){
+    if (couponLoading.value.success) {
       cartController.getCartItems(true);
     }
   }
-
 }
+
 //
 // enum DeliveryType{IN_TIME,LATER}
 //

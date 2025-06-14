@@ -2,7 +2,7 @@ import 'package:garage/core/networking/base/decodable.dart';
 
 import 'city.dart';
 
-class AddressData extends Decodable<AddressData>{
+class AddressData extends Decodable<AddressData> {
   AddressData({
     this.id,
     this.email,
@@ -20,7 +20,8 @@ class AddressData extends Decodable<AddressData>{
     this.additions,
     this.isDefault,
     this.city,
-    this.country,});
+    this.country,
+  });
 
   AddressData.fromJson(dynamic json) {
     id = json['id'];
@@ -39,7 +40,8 @@ class AddressData extends Decodable<AddressData>{
     additions = json['additions'];
     isDefault = json['is_default'];
     city = json['city'] != null ? City.fromJson(json['city']) : null;
-    country = json['country'] != null ? Country.fromJson(json['country']) : null;
+    country =
+        json['country'] != null ? Country.fromJson(json['country']) : null;
   }
   int? id;
   String? email;
@@ -58,7 +60,8 @@ class AddressData extends Decodable<AddressData>{
   bool? isDefault;
   City? city;
   Country? country;
-  AddressData copyWith({  int? id,
+  AddressData copyWith({
+    int? id,
     String? email,
     String? username,
     String? mobile,
@@ -75,7 +78,8 @@ class AddressData extends Decodable<AddressData>{
     bool? isDefault,
     City? city,
     Country? country,
-  }) => AddressData(  id: id ?? this.id,
+  }) => AddressData(
+    id: id ?? this.id,
     email: email ?? this.email,
     username: username ?? this.username,
     mobile: mobile ?? this.mobile,
@@ -123,13 +127,10 @@ class AddressData extends Decodable<AddressData>{
   AddressData decode(data) {
     return AddressData.fromJson(data);
   }
-
 }
 
 class Country {
-  Country({
-    this.id,
-    this.title,});
+  Country({this.id, this.title});
 
   Country.fromJson(dynamic json) {
     id = json['id'];
@@ -137,16 +138,12 @@ class Country {
   }
   int? id;
   String? title;
-  Country copyWith({  int? id,
-    String? title,
-  }) => Country(  id: id ?? this.id,
-    title: title ?? this.title,
-  );
+  Country copyWith({int? id, String? title}) =>
+      Country(id: id ?? this.id, title: title ?? this.title);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['title'] = title;
     return map;
   }
-
 }

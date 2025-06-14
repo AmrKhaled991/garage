@@ -7,13 +7,13 @@ class TermsController extends GetxController {
   final TermsState state = TermsState();
   MainRepository mainRepository = Get.find();
 
-  @override                 
+  @override
   void onInit() {
     fetchTerms();
     super.onInit();
   }
 
-  void fetchTerms() async{
+  void fetchTerms() async {
     state.terms.value = LoadingState.loading();
     state.terms.value = await mainRepository.getTerms();
   }

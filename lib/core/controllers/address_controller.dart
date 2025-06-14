@@ -8,9 +8,7 @@ import 'package:garage/core/storage/preference_manager.dart';
 import 'package:garage/utils/utlis.dart';
 import '../networking/models/address.dart';
 
-
-class AddressController extends GetxController{
-
+class AddressController extends GetxController {
   final PreferenceManager sharedPreferenceRepository = Get.find();
   UserController userController = Get.find();
   final AddressRepository addressRepository = Get.find();
@@ -23,14 +21,11 @@ class AddressController extends GetxController{
     super.onReady();
   }
 
-
   @override
   void onInit() {
-
     fetchAreas();
     selectedArea.value = sharedPreferenceRepository.getLastSelectedArea;
     selectedAddress.value = null;
-
 
     selectedArea.stream.listen((a) {
       print("selectedArea: $a");
@@ -40,10 +35,19 @@ class AddressController extends GetxController{
 
     selectedAddress.stream.listen((a) {
       print("selectedAddress: $a");
-      if(selectedAddress.value == null){
+      if (selectedAddress.value == null) {
         selectedArea.value = null;
-      }else{
-        selectedArea.value = areas.value.data?.firstWhere((element) => element.states?.any((s) => s.id == selectedAddress.value?.stateId)??false).states?.firstWhere((ss) => ss.id == selectedAddress.value?.stateId);
+      } else {
+        selectedArea.value = areas.value.data
+            ?.firstWhere(
+              (element) =>
+                  element.states?.any(
+                    (s) => s.id == selectedAddress.value?.stateId,
+                  ) ??
+                  false,
+            )
+            .states
+            ?.firstWhere((ss) => ss.id == selectedAddress.value?.stateId);
       }
     });
 
@@ -77,41 +81,40 @@ class AddressController extends GetxController{
   var selectedArea = Rx<StateData?>(null);
   var selectedAddress = Rx<AddressData?>(null);
 
-
-  void fetchAddresses() async{
+  void fetchAddresses() async {
     addresses.value = LoadingState.loading();
     addresses.value = await addressRepository.getAddresses();
-    if(selectedAddress.value == null){
-      selectedAddress.value = addresses.value.data?.firstWhereOrNull((element) => element.isDefault == true);
+    if (selectedAddress.value == null) {
+      selectedAddress.value = addresses.value.data?.firstWhereOrNull(
+        (element) => element.isDefault == true,
+      );
     }
   }
 
-  void fetchAreas() async{
-    if(areas.value.data!=null)
-      return;
+  void fetchAreas() async {
+    if (areas.value.data != null) return;
     areas.value = LoadingState.loading();
     areas.value = await addressRepository.getAreas();
   }
 
-  void addAddress(Map<String,String> data, Function(bool) onSuccess) async{
+  void addAddress(Map<String, String> data, Function(bool) onSuccess) async {
     addAddressLoading.value = LoadingState.loading();
     addAddressLoading.value = await addressRepository.addAddresses(data);
     onSuccess.call(addAddressLoading.value.success);
-    if(!addAddressLoading.value.success){
-      Utils.showSnackBar(addAddressLoading.value.message,);
+    if (!addAddressLoading.value.success) {
+      Utils.showSnackBar(addAddressLoading.value.message);
     }
   }
 
-  void deleteAddress(int id) async{
+  void deleteAddress(int id) async {
     deleteAddressLoading.value = LoadingState.loading();
     deleteAddressLoading.value = await addressRepository.deleteAddresses(id);
-    if(deleteAddressLoading.value.success){
+    if (deleteAddressLoading.value.success) {
       fetchAddresses();
     }
   }
 
-  void setDefaultAddress(int? id) async{
-    await addressRepository.setDefaultAddress(id??0);
+  void setDefaultAddress(int? id) async {
+    await addressRepository.setDefaultAddress(id ?? 0);
   }
-
 }

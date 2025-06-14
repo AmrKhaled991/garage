@@ -22,7 +22,6 @@ class CompanyProfileEditView1 extends StatelessWidget {
 
   CompanyProfileEditState state =
       Get.find<CompanyProfileEditController>().state;
-
   UserController userController = Get.find();
   CompanyProfileEditView1({super.key});
 
@@ -55,7 +54,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const WorkCategoriesDropDown(),
+          WorkCategoriesDropDown(controller: controller, state: state),
           const SizedBox(height: 16),
           MyTextForm(
             // controller: state.companyDescription,
@@ -98,9 +97,8 @@ class CompanyProfileEditView1 extends StatelessWidget {
               ),
             ),
           ),
-         // CurrentLocationMap()
+          // CurrentLocationMap()
           const SizedBox(height: 16),
-
           MyTextForm(
             icon: const TextFormFieldIcon(
               assets: "assets/images/ic_whatsapp.svg",
@@ -289,4 +287,3 @@ class WeeklyTimeSelector extends StatelessWidget {
     );
   }
 }
-

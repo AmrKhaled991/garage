@@ -1,11 +1,12 @@
 class MedicalCondition {
   MedicalCondition({
-      this.id, 
-      this.reservationId, 
-      this.description, 
-      this.price, 
-      this.createdAt, 
-      this.updatedAt,});
+    this.id,
+    this.reservationId,
+    this.description,
+    this.price,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   MedicalCondition.fromJson(dynamic json) {
     id = json['id'];
@@ -32,5 +33,4 @@ class MedicalCondition {
     map['updated_at'] = updatedAt;
     return map;
   }
-
 }

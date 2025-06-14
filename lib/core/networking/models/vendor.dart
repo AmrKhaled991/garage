@@ -1,11 +1,9 @@
-
-
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/delivery_type.dart';
 
 import 'category.dart';
 
-class Vendor extends Decodable<Vendor>{
+class Vendor extends Decodable<Vendor> {
   Vendor({
     this.id,
     this.image,
@@ -18,7 +16,8 @@ class Vendor extends Decodable<Vendor>{
     this.preparationTime,
     this.vendorCategories,
     this.openingStatus,
-    this.todayDeliveryTimes});
+    this.todayDeliveryTimes,
+  });
 
   Vendor.fromJson(dynamic json) {
     id = json['id'];
@@ -30,8 +29,14 @@ class Vendor extends Decodable<Vendor>{
     address = json['address'];
     mobile = json['mobile'];
     preparationTime = json['preparation_time'];
-    openingStatus = json['opening_status'] != null ? OpeningStatus.fromJson(json['opening_status']) : null;
-    todayDeliveryTimes = json['today_delivery_times'] != null ? Times.fromJson(json['today_delivery_times']) : null;
+    openingStatus =
+        json['opening_status'] != null
+            ? OpeningStatus.fromJson(json['opening_status'])
+            : null;
+    todayDeliveryTimes =
+        json['today_delivery_times'] != null
+            ? Times.fromJson(json['today_delivery_times'])
+            : null;
     if (json['vendor_categories'] != null) {
       vendorCategories = [];
       json['vendor_categories'].forEach((v) {
@@ -51,7 +56,8 @@ class Vendor extends Decodable<Vendor>{
   OpeningStatus? openingStatus;
   Times? todayDeliveryTimes;
   List<Category>? vendorCategories;
-  Vendor copyWith({  int? id,
+  Vendor copyWith({
+    int? id,
     String? image,
     String? title,
     String? description,
@@ -60,7 +66,8 @@ class Vendor extends Decodable<Vendor>{
     String? mobile,
     OpeningStatus? openingStatus,
     List<Category>? vendorCategories,
-  }) => Vendor(  id: id ?? this.id,
+  }) => Vendor(
+    id: id ?? this.id,
     image: image ?? this.image,
     cover: cover ?? this.cover,
     title: title ?? this.title,
@@ -91,7 +98,8 @@ class Vendor extends Decodable<Vendor>{
       map['today_delivery_times'] = todayDeliveryTimes?.toJson();
     }
     if (vendorCategories != null) {
-      map['vendor_categories'] = vendorCategories?.map((v) => v.toJson()).toList();
+      map['vendor_categories'] =
+          vendorCategories?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -100,14 +108,10 @@ class Vendor extends Decodable<Vendor>{
   Vendor decode(data) {
     return Vendor.fromJson(data);
   }
-
 }
 
 class OpeningStatus {
-  OpeningStatus({
-    this.status,
-    this.flag,
-    this.acceptingOrders,});
+  OpeningStatus({this.status, this.flag, this.acceptingOrders});
 
   OpeningStatus.fromJson(dynamic json) {
     status = json['status'];
@@ -117,10 +121,12 @@ class OpeningStatus {
   String? status;
   String? flag;
   bool? acceptingOrders;
-  OpeningStatus copyWith({  String? status,
+  OpeningStatus copyWith({
+    String? status,
     String? flag,
     bool? acceptingOrders,
-  }) => OpeningStatus(  status: status ?? this.status,
+  }) => OpeningStatus(
+    status: status ?? this.status,
     flag: flag ?? this.flag,
     acceptingOrders: acceptingOrders ?? this.acceptingOrders,
   );
@@ -131,5 +137,4 @@ class OpeningStatus {
     map['accepting_orders'] = acceptingOrders;
     return map;
   }
-
 }

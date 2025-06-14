@@ -1,9 +1,7 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class Times extends Decodable<Times>{
-  Times({
-      this.isAvailable, 
-      this.times,});
+class Times extends Decodable<Times> {
+  Times({this.isAvailable, this.times});
 
   Times.fromJson(dynamic json) {
     isAvailable = json['is_available'];
@@ -30,12 +28,10 @@ class Times extends Decodable<Times>{
   Times decode(json) {
     return Times.fromJson(json);
   }
-
 }
 
 class Time {
-  Time({
-      this.time,});
+  Time({this.time});
 
   Time.fromJson(dynamic json) {
     isAvailable = json['is_available'];
@@ -53,5 +49,4 @@ class Time {
     map['is_available'] = isAvailable;
     return map;
   }
-
 }

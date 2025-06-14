@@ -28,9 +28,12 @@ class CartPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const OrderPriceDetailsCard(),
-            MyButton(title: "continue".tr,onClick: () {
-              Get.toNamed(Routes.COMPLETE_CART_ORDER);
-            },),
+            MyButton(
+              title: "continue".tr,
+              onClick: () {
+                Get.toNamed(Routes.COMPLETE_CART_ORDER);
+              },
+            ),
           ],
         ),
       ),

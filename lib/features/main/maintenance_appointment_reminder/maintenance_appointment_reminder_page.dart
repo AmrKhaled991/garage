@@ -64,10 +64,10 @@ class MaintenanceAppointmentReminderPage extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                           Text(
+                          Text(
                             "appointment".tr,
 
-                            style:const TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFFF7F8F9),
                               fontSize: 18,
                               fontFamily: 'Zain',

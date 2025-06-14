@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TabsExpandedContent extends StatefulWidget {
-
   List<Widget> tabs;
   List<Widget> contents;
 
-  TabsExpandedContent({required this.tabs, required this.contents, Key? key}) : super(key: key);
+  TabsExpandedContent({required this.tabs, required this.contents, Key? key})
+    : super(key: key);
 
   @override
   State<TabsExpandedContent> createState() => _TabsExpandedContent();
 }
 
-class _TabsExpandedContent extends State<TabsExpandedContent>  with TickerProviderStateMixin {
-
+class _TabsExpandedContent extends State<TabsExpandedContent>
+    with TickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -38,22 +38,17 @@ class _TabsExpandedContent extends State<TabsExpandedContent>  with TickerProvid
         Container(
           color: Colors.white,
           child: TabBar(
-              controller: _tabController,
-              indicatorColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .secondary,
-              labelColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .secondary,
-              unselectedLabelColor: Colors.black,
-              onTap: (i) {
-                setState(() {});
-              },
-              tabs: widget.tabs),
+            controller: _tabController,
+            indicatorColor: Theme.of(context).colorScheme.secondary,
+            labelColor: Theme.of(context).colorScheme.secondary,
+            unselectedLabelColor: Colors.black,
+            onTap: (i) {
+              setState(() {});
+            },
+            tabs: widget.tabs,
+          ),
         ),
-        tabView()
+        tabView(),
       ],
     );
   }

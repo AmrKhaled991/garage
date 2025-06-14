@@ -56,9 +56,6 @@ class ProfileEditController extends GetxController {
   }
 
   Map<String, dynamic> requestData() {
-    print(
-      "Request Data: ${state.email.value.text}, ${state.name.value.text}, ${state.phoneNumber.value.text}, ${state.selectedAvatarImage.value}",
-    );
     Map<String, dynamic> data = {
       "email": state.email.value.text,
       "name": state.name.value.text,
