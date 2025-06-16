@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:garage/features/auth/company_profile_edit/models/time_slot.dart';
 import 'package:get/get.dart';
 import 'package:garage/utils/utlis.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'register_state.dart';
 
 class RegisterController extends GetxController {
@@ -22,6 +26,43 @@ class RegisterController extends GetxController {
     return true;
   }
 
+  addAndRemoveTimeSlot(TimeSlot timeSlot) {
+    if (state.listTimeSlot.contains(timeSlot)) {
+      state.listTimeSlot.removeWhere((e) => e.day == timeSlot.day);
+      return;
+    } else {
+      state.listTimeSlot.add(timeSlot);
+    }
+  }
+
+  Map<String, dynamic> getMapToJson() {
+    final Map<String, dynamic> result = {};
+
+    state.listTimeSlot.asMap().forEach((index, value) {
+      result["times[$index][day]"] = value.day;
+      result["times[$index][start]"] = value.start;
+      result["times[$index][end]"] = value.end;
+    });
+
+    return result;
+  }
+
+  setMainImage(AssetEntity image) {
+    state.selectedCompanyImage.value = image;
+  }
+
+  resetMainImage() {
+    state.selectedCompanyImage.value = null;
+  }
+
+  setImages(AssetEntity images) {
+    state.galleryImages.value.add(images);
+  }
+
+  setVideo(AssetEntity video) {
+    state.video.value = video;
+  }
+
   Map<String, dynamic> getRegisterData() {
     Map<String, dynamic> result = {
       "type": state.userType.value,
@@ -31,16 +72,12 @@ class RegisterController extends GetxController {
       "email": state.email.text,
       "password": state.password.text,
       "password_confirmation": state.passwordConfirm.text,
-
-      "times[0][day]": "saturday",
-      "times[0][start]": "09:00",
-      "times[0][end]": "17:00",
-      "image": state.selectedImage.value,
+      ...getMapToJson(),
+      "image": state.selectedCompanyImage.value,
       "work_type_id": state.workTypeId.value,
       "description": state.description.text,
       "direct_phone": state.directPhone.text,
       "commercial_registration_number": state.commercialRegistrationNumber.text,
-
       "whatsapp": state.whatsapp.text,
       "website": state.website.text,
       "instagram": state.instagram.text,
@@ -51,9 +88,9 @@ class RegisterController extends GetxController {
       'lat': state.lat.value,
       'lng': state.lng.value,
       'map_desc': state.mapDesc.text,
-      'files[0]': state.selectedFile.value,
-      'files[2]': state.selectedFile2.value,
-      'video': state.selectedVideo.value,
+      // 'files[0]': state.selectedFile.value,
+      // 'files[2]': state.selectedFile2.value,
+      // 'video': state.selectedVideo.value,
     };
     return result;
   }

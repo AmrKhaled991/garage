@@ -6,6 +6,7 @@ import 'package:garage/core/ui/LoadingWidget.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/features/main/home/home_logic.dart';
 import 'package:garage/features/main/home/home_state.dart';
+import 'package:garage/utils/links_utils.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class HomeSlider extends StatefulWidget {
@@ -20,22 +21,29 @@ class HomeSlider extends StatefulWidget {
 class _HomeSliderState extends State<HomeSlider> {
   @override
   Widget build(BuildContext context) {
-    var homeSlider = widget.state.homeData.value.data?.first.records;
     return Obx(() {
+      var homeSlider = widget.state.slider.value.data;
       return LoadingWidget(
-        loadingState: widget.state.homeData.value,
+        loadingState: widget.state.slider.value,
         child: CarouselSlider.builder(
           itemCount: homeSlider?.length ?? 0,
           itemBuilder: (context, index, realIndex) {
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                if (homeSlider?[index].link != null) {
+                  LinkHelper.openLink(homeSlider?[index].link!);
+                }
+              },
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: MyImage(
-                  image: homeSlider?[index].image!,
-                  fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: MyImage(
+                    image: homeSlider?[index].image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             );

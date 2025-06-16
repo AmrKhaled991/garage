@@ -1,28 +1,37 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
+
 import 'package:garage/core/controllers/user_controller.dart';
+import 'package:garage/core/helpers/time_formater.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/widgets/custom_country_code_and_flag.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_Settings/work_categories_drop_down.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_controller.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_state.dart';
+import 'package:garage/features/auth/company_profile_edit/models/time_slot.dart';
+import 'package:garage/features/auth/register/register_controller.dart';
+import 'package:garage/features/auth/register/register_state.dart';
 import 'package:garage/theme/styles.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 
 class CompanyProfileEditView1 extends StatelessWidget {
   CompanyProfileEditController controller = Get.put(
     CompanyProfileEditController(),
   );
 
-  CompanyProfileEditState state =
+  CompanyProfileEditState dataState =
       Get.find<CompanyProfileEditController>().state;
-  UserController userController = Get.find();
+  RegisterState state = Get.find<RegisterController>().state;
+
+  RegisterController userController = Get.find();
   CompanyProfileEditView1({super.key});
 
   @override
@@ -54,7 +63,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          WorkCategoriesDropDown(controller: controller, state: state),
+          WorkCategoriesDropDown(controller: controller, state: dataState),
           const SizedBox(height: 16),
           MyTextForm(
             // controller: state.companyDescription,
@@ -129,7 +138,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
             icon: const TextFormFieldIcon(
               assets: "assets/images/ic_termsCode.svg",
             ),
-            controller: state.fax,
+            controller: state.commercialRegistrationNumber,
             hint: "fax".tr,
             textInputType: TextInputType.text,
           ),
@@ -147,7 +156,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
           const SizedBox(height: 8),
           MyTextForm(
             icon: const TextFormFieldIcon(assets: "assets/images/twitter.svg"),
-            controller: state.address,
+            controller: state.whatsapp,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
@@ -156,7 +165,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
               assets: "assets/images/ic_tiktok.svg",
             ),
 
-            controller: state.location,
+            controller: state.tiktok,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
@@ -164,19 +173,19 @@ class CompanyProfileEditView1 extends StatelessWidget {
             icon: const TextFormFieldIcon(
               assets: "assets/images/instagram.svg",
             ),
-            controller: state.location,
+            controller: state.instagram,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
           MyTextForm(
             icon: const TextFormFieldIcon(assets: "assets/images/ic_snap.svg"),
-            controller: state.location,
+            controller: state.snapchat,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
           MyTextForm(
             icon: const TextFormFieldIcon(assets: "assets/images/youtube.png"),
-            controller: state.location,
+            controller: state.youtube,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 24),
@@ -191,31 +200,40 @@ class CompanyProfileEditView1 extends StatelessWidget {
               height: 1.20,
             ),
           ),
-          WeeklyTimeSelector(),
+          WeeklyTimeSelector(controller: userController),
         ],
       ),
     );
   }
 }
 
-class WeeklyTimeSelector extends StatelessWidget {
-  final List<String> days = [
-    'السبت',
-    'الأحد',
-    'الاثنين',
-    'الثلاثاء',
-    'الأربعاء',
-    'الخميس',
-  ];
+class WeeklyTimeSelector extends StatefulWidget {
+  final RegisterController controller;
+  const WeeklyTimeSelector({Key? key, required this.controller})
+    : super(key: key);
 
-  WeeklyTimeSelector({super.key});
+  @override
+  State<WeeklyTimeSelector> createState() => _WeeklyTimeSelectorState();
+}
+
+class _WeeklyTimeSelectorState extends State<WeeklyTimeSelector> {
+  final List<TimeSlot> days = [
+    TimeSlot(day: 'saturday'.tr, start: null, end: null, isSelected: false),
+    TimeSlot(day: 'sunday'.tr, start: null, end: null, isSelected: false),
+    TimeSlot(day: 'monday'.tr, start: null, end: null, isSelected: false),
+    TimeSlot(day: 'tuesday'.tr, start: null, end: null, isSelected: false),
+    TimeSlot(day: 'wednesday'.tr, start: null, end: null, isSelected: false),
+    TimeSlot(day: 'thursday'.tr, start: null, end: null, isSelected: false),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: days.map((day) => _buildDayRow(day)).toList());
+    return Column(
+      children: days.map((day) => _buildDayRow(day, context: context)).toList(),
+    );
   }
 
-  Widget _buildDayRow(String day) {
+  Widget _buildDayRow(TimeSlot day, {required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -225,51 +243,133 @@ class WeeklyTimeSelector extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CheckboxTheme(
-                  data: CheckboxThemeData(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        6,
-                      ), // 👈 Border Radius
-                    ),
-                    side: const BorderSide(
-                      color: Colors.orange, // 👈 Border Color when unchecked
-                      width: 2,
-                    ),
-                    fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return Colors.orange; // 👈 Fill color when checked
-                      }
-                      return Colors.transparent;
-                    }),
-                  ),
-                  child: Checkbox(value: true, onChanged: (val) {}),
-                ),
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    children: [
+                      CheckboxTheme(
+                        data: CheckboxThemeData(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              6,
+                            ), // 👈 Border Radius
+                          ),
+                          side: const BorderSide(
+                            color:
+                                Colors.orange, // 👈 Border Color when unchecked
+                            width: 2,
+                          ),
+                          fillColor: WidgetStateProperty.resolveWith<Color>((
+                            states,
+                          ) {
+                            if (states.contains(WidgetState.selected)) {
+                              return Colors
+                                  .orange; // 👈 Fill color when checked
+                            }
+                            return Colors.transparent;
+                          }),
+                        ),
+                        child: Checkbox(
+                          value: day.isSelected,
+                          onChanged: (val) {
+                            setState(() {
+                              day.isSelected = val ?? false;
+                            });
+                            widget.controller.addAndRemoveTimeSlot(day);
+                          },
+                        ),
+                      ),
 
-                Text(
-                  day,
-                  style: const TextStyle(color: Colors.white, fontSize: 16),
-                  textAlign: TextAlign.right,
+                      Text(
+                        day.day ?? "",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  flex: 5,
+                  child: TimeRow(
+                    startTime: day.start,
+                    endTime: day.end,
+                    startTimeChange: (time) => day.start = time,
+                    endTimeChange: (time) => day.end = time,
+                  ),
                 ),
               ],
             ),
           ),
-          // Start time
-          Expanded(child: _buildTimeBox("18:00")),
-          const SizedBox(width: 10),
-          // End time
-          Expanded(child: _buildTimeBox("09:00")),
-          const SizedBox(width: 10),
-
-          // Day name
-
-          // Active check icon
         ],
       ),
     );
   }
+}
 
-  Widget _buildTimeBox(String time) {
+class TimeRow extends StatefulWidget {
+  final Function(String) startTimeChange;
+  final Function(String) endTimeChange;
+  final String? startTime;
+  final String? endTime;
+  const TimeRow({
+    Key? key,
+    required this.startTimeChange,
+    required this.endTimeChange,
+    this.startTime,
+    this.endTime,
+  }) : super(key: key);
+
+  @override
+  State<TimeRow> createState() => _TimeRowState();
+}
+
+class _TimeRowState extends State<TimeRow> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TimePickerSpinnerPopUp(
+            barrierColor: Colors.black12,
+            timeWidgetBuilder:
+                (p0) => _buildTimeBox(
+                  widget.startTime ?? DateTimeFormatter.formatHour12(p0),
+                  context: context,
+                ),
+            mode: CupertinoDatePickerMode.time,
+            initTime: DateTime.now(),
+            onChange: (dateTime) {
+              widget.startTimeChange(DateTimeFormatter.formatHour12(dateTime));
+              // Implement your logic with select dateTime
+            },
+          ),
+        ),
+
+        const SizedBox(width: 10),
+        Expanded(
+          child: TimePickerSpinnerPopUp(
+            barrierColor: Colors.black12,
+            timeWidgetBuilder:
+                (p0) => _buildTimeBox(
+                  widget.endTime ?? DateTimeFormatter.formatHour12(p0),
+                  context: context,
+                ),
+            mode: CupertinoDatePickerMode.time,
+            initTime: DateTime.now(),
+            onChange: (dateTime) {
+              widget.endTimeChange(DateTimeFormatter.formatHour12(dateTime));
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTimeBox(String time, {required BuildContext context}) {
     return Container(
       width: 80,
       height: 45,

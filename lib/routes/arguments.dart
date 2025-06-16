@@ -31,4 +31,10 @@ class MyArguments {
   static String CLINIC = "CLINIC";
   static String TITLE = "TITLE";
   static String OTP_TRACK = "OTP_TRACK";
+
+  //garage
+  static String BRAND_ID = "BRAND_ID";
+  static String BRAND_NAME = "BRAND_NAME";
+  static String CategoryScreenTitle = "CategoryScreenTitle";
+  static String CATEGORYIES = "BRAND_NAME";
 }

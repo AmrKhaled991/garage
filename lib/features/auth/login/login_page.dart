@@ -1,8 +1,6 @@
-import 'package:garage/core/ui/custom_rich_text.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/features/auth/login/widgets/login_form_section.dart';
-import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +20,6 @@ class LoginPage extends StatelessWidget {
               const Center(
                 child: MyImage(image: "assets/images/logo2.png", height: 100),
               ),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(

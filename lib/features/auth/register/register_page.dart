@@ -26,20 +26,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final controller = Get.find<RegisterController>();
   final state = Get.find<RegisterController>().state;
 
-  Future<void> loadAssets(String type) async {
-    final List<AssetEntity>? assets = await AssetPicker.pickAssets(
-      context,
-      pickerConfig: const AssetPickerConfig(
-        maxAssets: 1,
-        requestType: RequestType.image,
-        textDelegate: EnglishAssetPickerTextDelegate(),
-      ),
-    );
-    if (assets != null && assets.isNotEmpty) {
-      state.selectedImage.value;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MyScaffold(

@@ -1,4 +1,6 @@
-class Record {
+import 'package:garage/core/networking/base/decodable.dart';
+
+class Banner extends Decodable<Banner> {
   int? id;
   int? isActive;
   dynamic startDate;
@@ -6,7 +8,7 @@ class Record {
   dynamic link;
   String? image;
 
-  Record({
+  Banner({
     this.id,
     this.isActive,
     this.startDate,
@@ -15,7 +17,7 @@ class Record {
     this.image,
   });
 
-  factory Record.fromJson(Map<String, dynamic> json) => Record(
+  factory Banner.fromJson(Map<String, dynamic> json) => Banner(
     id: json['id'] as int?,
     isActive: json['is_active'] as int?,
     startDate: json['start_date'] as dynamic,
@@ -32,4 +34,10 @@ class Record {
     'link': link,
     'image': image,
   };
+
+  @override
+  Banner decode(json) {
+    // TODO: implement decode
+    return Banner.fromJson(json);
+  }
 }

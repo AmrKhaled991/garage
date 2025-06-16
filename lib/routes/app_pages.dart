@@ -1,7 +1,4 @@
-import 'package:garage/core/networking/models/offer.dart';
-import 'package:garage/core/networking/models/product.dart';
 import 'package:garage/core/ui/pages_page.dart';
-import 'package:garage/core/ui/webview_payment_page.dart';
 import 'package:garage/features/all_chats/all_chats_binding.dart';
 import 'package:garage/features/auth/change_password/change_password_binding.dart';
 import 'package:garage/features/auth/change_password/change_password_page.dart';
@@ -202,7 +199,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.ADDCARPAGEKEY,
-      page: () => const AddCarPage(),
+      page: () => AddCarPage(),
       binding: AddCarBinding(),
       transition: Transition.cupertino,
     ),

@@ -8,6 +8,7 @@ import 'package:garage/core/ui/LoadingWidget.dart';
 import 'package:garage/features/main/home/widgets/custom_category_card.dart';
 import 'package:garage/features/main/home/widgets/home_slider.dart';
 import 'package:garage/routes/app_pages.dart';
+import 'package:garage/routes/arguments.dart';
 import 'package:get/get.dart';
 
 import 'package:garage/core/ui/my_image.dart';
@@ -76,10 +77,8 @@ class HomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 30),
-
             HomeSlider(controller: controller, state: state),
             const SizedBox(height: 12),
-
             TextHeaderWidget(
               title: "recently_viewed".tr,
               child: AddContainer(
@@ -121,7 +120,7 @@ class HomePage extends StatelessWidget {
                           onTab: () {
                             Get.toNamed(
                               Routes.CATEGRYPAGEKEY,
-                              parameters: {'title': "الاثائة"},
+                              arguments: state.categoriesList.value.data,
                             );
                           },
                         );

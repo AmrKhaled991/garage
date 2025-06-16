@@ -26,10 +26,7 @@ class HomeController extends GetxController {
   }
 
   getHomeData({bool forceRefresh = false}) async {
-    if (state.homeData.value.data != null && !forceRefresh) {
-      return;
-    }
-    state.homeData.value = LoadingState.loading();
-    state.homeData.value = await _homeRepository.getHomeData();
+    state.slider.value = LoadingState.loading();
+    state.slider.value = await _homeRepository.getHomeData();
   }
 }

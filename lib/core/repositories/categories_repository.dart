@@ -1,5 +1,6 @@
 import 'package:garage/core/networking/loading_state.dart';
 import 'package:garage/core/networking/models/category_with_products.dart';
+import 'package:garage/core/networking/models/provider_response/provider_response.dart';
 import '../networking/base/api_response.dart';
 import '../networking/models/category.dart';
 import 'base_repository.dart';
@@ -31,6 +32,27 @@ class CategoriesRepository extends BaseRepository {
         "model_flag": "tree",
         if (vendorId != null) "vendor_id": vendorId.toString(),
       },
+    );
+  }
+
+  Future<LoadingState<List<ProviderResponse>?>> getProviders({
+    String? stateId,
+    int? categoryId,
+    String? search,
+    int? page = 1,
+  }) async {
+    var query = {
+      if (stateId != null) "state_id": stateId.toString(),
+      if (search != null) "search": search.toString(),
+      if (categoryId != null) "searchArray[category]": categoryId.toString(),
+    };
+    return networkHandler.getRequest(
+      endpoint: "providers",
+      create:
+          () => APIListResponse<ProviderResponse>(
+            create: () => ProviderResponse(),
+          ),
+      query: query,
     );
   }
 

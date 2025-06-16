@@ -451,4 +451,13 @@ const Map<String, String> en_US = {
       'Request the service that suits you, where your car will be inspected, the problem identified, and a price quote will be provided',
   "start_now_hint": 'Start explore more about our services',
   "update_profile": "Update Profile",
+
+  "model": "Model",
+  "model_year": "Year",
+  "car_owner_name": "Car Owner Name",
+  'error_model': 'Please enter the model',
+  'error_model_year': 'Please enter the model year',
+  'error_car_owner_name': 'Please enter the car owner name',
+  "please_select_a_brand": "Please select a brand",
+  "add_logo": "Add Logo",
 };

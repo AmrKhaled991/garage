@@ -2,7 +2,7 @@ import 'package:garage/core/networking/loading_state.dart';
 import 'package:garage/core/networking/models/advertise.dart';
 import 'package:garage/core/networking/models/category.dart';
 import 'package:garage/core/networking/models/currency.dart';
-import 'package:garage/core/networking/models/home_response/home_response/datum.dart';
+import 'package:garage/core/networking/models/home_response/record.dart';
 import 'package:garage/core/networking/models/slider.dart';
 import 'package:garage/core/networking/models/vendor.dart';
 import '../networking/base/api_response.dart';
@@ -74,10 +74,10 @@ class HomeRepository extends BaseRepository {
     );
   }
 
-  Future<LoadingState<List<HomeResponse>?>> getHomeData() async {
+  Future<LoadingState<List<Banner>?>> getHomeData() async {
     return networkHandler.getRequest(
-      endpoint: "home",
-      create: () => APIListResponse<HomeResponse>(create: () => HomeResponse()),
+      endpoint: "images",
+      create: () => APIListResponse<Banner>(create: () => Banner()),
     );
   }
 }
