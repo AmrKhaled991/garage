@@ -217,7 +217,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.PRODUCT_DETAILSKEY,
-      page: () => const ProductDetailsPage(),
+      page: () =>  ProductDetailsPage(),
       binding: ProductDetailsBinding(),
       transition: Transition.cupertino,
     ),
@@ -247,7 +247,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.SEARCH,
-      page: () => const SearchPage(),
+      page: () => SearchPage(),
       binding: SearchBinding(),
       transition: Transition.cupertino,
     ),

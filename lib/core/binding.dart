@@ -3,6 +3,7 @@ import 'package:garage/core/controllers/cart_controller.dart';
 import 'package:garage/core/controllers/checkout_controller.dart';
 import 'package:garage/core/controllers/main_controller.dart';
 import 'package:garage/core/controllers/user_controller.dart';
+import 'package:garage/core/repositories/categories_repository.dart';
 import 'package:get/get.dart';
 import 'package:garage/core/repositories/address_repository.dart';
 import 'package:garage/core/repositories/auth_repository.dart';
@@ -29,5 +30,7 @@ class Binding extends Bindings {
     Get.put(CheckoutController(), permanent: true);
     Get.put(AddressRepository(), permanent: true);
     Get.put(AddressController(), permanent: true);
+    Get.put(CategoriesRepository(), permanent: true);
+
   }
 }

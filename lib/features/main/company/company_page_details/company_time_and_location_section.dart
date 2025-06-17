@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/networking/models/provider_details_response/time.dart';
 import 'package:garage/core/ui/sheet/normal_sheet.dart';
 import 'package:garage/features/main/company/company_page_details/custom_company_list_tile_button.dart';
 import 'package:garage/features/other/sheet/area_sheet.dart';
 import 'package:garage/features/other/sheet/work_time_sheet.dart';
 import 'package:garage/theme/styles.dart';
+import 'package:garage/utils/links_utils.dart';
 import 'package:garage/utils/utlis.dart';
 import 'package:get/get.dart';
 
 class CompanyTimeAndLocationSection extends StatelessWidget {
-  const CompanyTimeAndLocationSection({super.key});
+  final List<Time>? times;
+  final String? address;
+  final String? lng;
+  final String? lat;
+  const CompanyTimeAndLocationSection({
+    super.key,
+    this.times,
+    this.address,
+    this.lng,
+    this.lat,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +34,8 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.location_on, color: Colors.white),
-              title: const Text(
-                '44 طريق شارع الفهيدي, العاصمة, الكويت',
+              title: Text(
+                address ?? '44 طريق شارع الفهيدي, العاصمة, الكويت',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -33,7 +45,10 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
               ),
               trailing: CustomCompanyListTileButton(
                 title: 'open_map'.tr,
-                onPress: () => null,
+                onPress:
+                    () => LinkHelper.openLink(
+                      'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
+                    ),
               ),
             ),
             const Divider(color: Colors.grey, thickness: 0.50),
@@ -59,7 +74,7 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
                     context,
                     NormalSheet(
                       title: "select_area".tr,
-                      child: const WorkTimeSheet(),
+                      child:  WorkTimeSheet(times:times ),
                     ),
                   );
                 },

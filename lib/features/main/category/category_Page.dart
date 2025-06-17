@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:garage/core/networking/loading_state.dart';
 import 'package:garage/core/networking/models/category.dart';
 import 'package:garage/core/networking/models/provider_response/provider_response.dart';
 import 'package:garage/core/repositories/categories_repository.dart';
@@ -13,7 +12,6 @@ import 'package:garage/features/main/category/category_page_details/company_item
 import 'package:garage/features/main/category/category_page_details/sub_category_item.dart';
 import 'package:garage/features/main/category/category_state.dart';
 import 'package:garage/routes/app_pages.dart';
-import 'package:garage/routes/arguments.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -90,7 +88,7 @@ class CategoryPage extends StatelessWidget {
                             isSelected: state.selectedIndex.value == null,
                             onClick: () {
                               if (state.selectedIndex.value == null) return;
-                              controller.selectCategory(null, null);
+                              controller.categoryChange(null, null);
                             },
                           ),
                           const SizedBox(width: 8),
@@ -106,7 +104,7 @@ class CategoryPage extends StatelessWidget {
                                 onClick: () {
                                   if (state.selectedIndex.value == index)
                                     return;
-                                  controller.selectCategory(
+                                  controller.categoryChange(
                                     index,
                                     item?.id?.toInt(),
                                   );
@@ -147,66 +145,37 @@ class ProviderItems extends StatefulWidget {
 }
 
 class _ProviderItemsState extends State<ProviderItems> {
-  final PagingController<int, ProviderResponse> _pagingController =
-      PagingController(firstPageKey: 1);
   final CategoriesRepository categoryRepository =
       Get.find<CategoriesRepository>();
-  @override
-  void initState() {
-    _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pagingController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _fetchPage(int pageKey) async {
-    try {
-      final response = await categoryRepository.getProviders(
-        stateId: widget.selectedArea,
-        categoryId: widget.categorystate?.selectedCategoryId.value,
-        page: 1,
-      );
-
-      final isLastPage =
-          response.pagination?.currentPage == response.pagination?.totalPages;
-      if (isLastPage) {
-        _pagingController.appendLastPage(response.data ?? []);
-      } else {
-        final nextPageKey = pageKey + 1;
-        _pagingController.appendPage(response.data ?? [], nextPageKey);
-      }
-    } catch (error) {
-      _pagingController.error = error;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      _pagingController.refresh();
-
       return LoadingWidget(
         loadingState: widget.categorystate?.providersList.value,
         child: PagedListView<int, ProviderResponse>(
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
-          pagingController: _pagingController,
+          pagingController: widget.categorystate!.pagingController,
           padding: const EdgeInsets.all(8),
           builderDelegate: PagedChildBuilderDelegate<ProviderResponse>(
-            itemBuilder: (context, item, index) => const CompanyItemCard(),
+            itemBuilder:
+                (context, item, index) =>
+                    item.data == null
+                        ? const SizedBox.shrink()
+                        : CompanyItemCard(
+                          address: item.data?.mapDesc,
+                          title: item.name,
+                          subTitle: item.data?.description,
+                          id: item.id,
+                          image: item.image,
+                        ),
             firstPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
             newPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
             noItemsFoundIndicatorBuilder:
                 (_) => MyErrorWidget(
                   onRetryCall: () {
-                    _pagingController.refresh();
+                    widget.categorystate!.pagingController.refresh();
                   },
                   errorMsg: "no_data_found".tr,
                   errorType: ErrorType.EMPTY,
@@ -214,12 +183,20 @@ class _ProviderItemsState extends State<ProviderItems> {
             firstPageErrorIndicatorBuilder:
                 (_) => MyErrorWidget(
                   onRetryCall: () {
-                    _pagingController.refresh();
+                    widget.categorystate!.pagingController.refresh();
                   },
-                  errorMsg: _pagingController.error.toString().substring(
-                    _pagingController.error.toString().lastIndexOf("(") + 2,
-                    _pagingController.error.toString().length - 2,
-                  ),
+                  errorMsg: widget.categorystate!.pagingController.error
+                      .toString()
+                      .substring(
+                        widget.categorystate!.pagingController.error
+                                .toString()
+                                .lastIndexOf("(") +
+                            2,
+                        widget.categorystate!.pagingController.error
+                                .toString()
+                                .length -
+                            2,
+                      ),
                   withLogin: true,
                 ),
           ),

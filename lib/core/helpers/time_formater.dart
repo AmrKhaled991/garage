@@ -18,4 +18,11 @@ class DateTimeFormatter {
   /// Full DateTime combined: "DD/MM/YYYY hh:mm a"
   static String formatDateTimeDMY12(DateTime dt) =>
       '${formatDateDMY(dt)} ${dt}';
+
+    static  String formatTo12Hour(String time24) {
+  final inputFormat = DateFormat.Hms(); // "15:55:00"
+  final outputFormat = DateFormat('hh:mm a'); // "03:55 PM"
+  final dateTime = inputFormat.parse(time24);
+  return outputFormat.format(dateTime);
+}
 }

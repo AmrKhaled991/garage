@@ -1,5 +1,6 @@
 import 'package:garage/core/networking/loading_state.dart';
 import 'package:garage/core/networking/models/category_with_products.dart';
+import 'package:garage/core/networking/models/provider_details_response/provider_details_response.dart';
 import 'package:garage/core/networking/models/provider_response/provider_response.dart';
 import '../networking/base/api_response.dart';
 import '../networking/models/category.dart';
@@ -43,7 +44,7 @@ class CategoriesRepository extends BaseRepository {
   }) async {
     var query = {
       if (stateId != null) "state_id": stateId.toString(),
-      if (search != null) "search": search.toString(),
+      if (search != null) "searchArray[name]": search.toString(),
       if (categoryId != null) "searchArray[category]": categoryId.toString(),
     };
     return networkHandler.getRequest(
@@ -53,6 +54,20 @@ class CategoriesRepository extends BaseRepository {
             create: () => ProviderResponse(),
           ),
       query: query,
+    );
+  }
+
+  // ProviderDetailsResponse
+
+  Future<LoadingState<ProviderDetailsResponse?>> getProviderDetails({
+    String? providerId,
+  }) async {
+    return networkHandler.getRequest(
+      endpoint: "providers/$providerId",
+      create:
+          () => APIResponse<ProviderDetailsResponse>(
+            create: () => ProviderDetailsResponse(),
+          ),
     );
   }
 

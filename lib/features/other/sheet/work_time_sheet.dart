@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:garage/core/helpers/time_formater.dart';
+import 'package:garage/core/networking/models/provider_details_response/time.dart';
 import 'package:garage/theme/styles.dart';
 
 class WorkTimeSheet extends StatelessWidget {
-  const WorkTimeSheet({super.key});
+  final List<Time>? times;
+  const WorkTimeSheet({super.key, this.times});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +23,13 @@ class WorkTimeSheet extends StatelessWidget {
                 ),
                 clipBehavior: Clip.antiAlias,
                 decoration: MyshapesStyle.PrimaryDecoration,
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'السبت',
+                      times![index].day ?? '',
                       textAlign: TextAlign.right,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                         fontFamily: 'Zain',
@@ -35,8 +38,8 @@ class WorkTimeSheet extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '10:00 ص - 1000 م',
-                      style: TextStyle(
+                      formateTime(times![index]),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                         fontFamily: 'Zain',
@@ -48,9 +51,16 @@ class WorkTimeSheet extends StatelessWidget {
                 ),
               ),
           separatorBuilder: (context, index) => const SizedBox(height: 8),
-          itemCount: 8,
+          itemCount: times?.length ?? 0,
         ),
       ),
     );
+  }
+
+  String formateTime(Time time) {
+    var start = DateTimeFormatter.formatTo12Hour(time.start!);
+    var end = DateTimeFormatter.formatTo12Hour(time.end!);
+
+    return "$start $end";
   }
 }
