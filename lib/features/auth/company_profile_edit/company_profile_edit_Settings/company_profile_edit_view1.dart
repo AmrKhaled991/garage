@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:garage/routes/app_pages.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -66,44 +68,51 @@ class CompanyProfileEditView1 extends StatelessWidget {
           WorkCategoriesDropDown(controller: controller, state: dataState),
           const SizedBox(height: 16),
           MyTextForm(
-            // controller: state.companyDescription,
+            controller: state.description,
             hint: "company_description".tr,
             textInputType: TextInputType.text,
+            lines: 3,
           ),
           const SizedBox(height: 16),
 
-          Container(
-            decoration: BoxDecoration(
-              color: colorContainer,
+          GestureDetector(
+            onTap: () => Get.toNamed(Routes.MAP),
+            child: Container(
+              decoration: BoxDecoration(
+                color: colorContainer,
 
-              borderRadius: BorderRadiusDirectional.circular(8),
-            ),
+                borderRadius: BorderRadiusDirectional.circular(8),
+              ),
 
-            child: ListTile(
-              trailing: const MyImage(
-                image: "assets/images/ic_location.svg",
-                width: 24,
-              ),
-              title: Text(
-                "address".tr,
-                style: const TextStyle(
-                  color: Color(0xFF9E9B94),
-                  fontSize: 14,
-                  fontFamily: 'Zain',
-                  fontWeight: FontWeight.w400,
-                  height: 1.50,
-                ),
-              ),
-              subtitle: const Text(
-                '44 طريق شارع الفهيدي, العاصمة, الكويت',
-                style: TextStyle(
-                  color: Color(0xFFF7F8F9),
-                  fontSize: 18,
-                  fontFamily: 'Zain',
-                  fontWeight: FontWeight.w400,
-                  height: 1.20,
-                ),
-              ),
+              child: Obx(() {
+                var mapDesc = state.mapDesc.value;
+                return ListTile(
+                  trailing: const MyImage(
+                    image: "assets/images/ic_location.svg",
+                    width: 24,
+                  ),
+                  title: Text(
+                    "address".tr,
+                    style: const TextStyle(
+                      color: Color(0xFF9E9B94),
+                      fontSize: 14,
+                      fontFamily: 'Zain',
+                      fontWeight: FontWeight.w400,
+                      height: 1.50,
+                    ),
+                  ),
+                  subtitle: Text(
+                    mapDesc ?? "select_location".tr,
+                    style: const TextStyle(
+                      color: Color(0xFFF7F8F9),
+                      fontSize: 18,
+                      fontFamily: 'Zain',
+                      fontWeight: FontWeight.w400,
+                      height: 1.20,
+                    ),
+                  ),
+                );
+              }),
             ),
           ),
           // CurrentLocationMap()
@@ -112,7 +121,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
             icon: const TextFormFieldIcon(
               assets: "assets/images/ic_whatsapp.svg",
             ),
-            controller: state.website,
+            controller: state.whatsapp,
             hint: "whatsapp".tr,
             textInputType: TextInputType.phone,
           ),
@@ -129,7 +138,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
             icon: const TextFormFieldIcon(
               assets: "assets/images/ic_website.svg",
             ),
-            controller: state.email,
+            controller: state.website,
             hint: "website".tr,
             textInputType: TextInputType.text,
           ),
@@ -156,7 +165,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
           const SizedBox(height: 8),
           MyTextForm(
             icon: const TextFormFieldIcon(assets: "assets/images/twitter.svg"),
-            controller: state.whatsapp,
+            controller: state.twitter,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
@@ -217,96 +226,104 @@ class WeeklyTimeSelector extends StatefulWidget {
 }
 
 class _WeeklyTimeSelectorState extends State<WeeklyTimeSelector> {
-  final List<TimeSlot> days = [
-    TimeSlot(day: 'saturday'.tr, start: null, end: null, isSelected: false),
-    TimeSlot(day: 'sunday'.tr, start: null, end: null, isSelected: false),
-    TimeSlot(day: 'monday'.tr, start: null, end: null, isSelected: false),
-    TimeSlot(day: 'tuesday'.tr, start: null, end: null, isSelected: false),
-    TimeSlot(day: 'wednesday'.tr, start: null, end: null, isSelected: false),
-    TimeSlot(day: 'thursday'.tr, start: null, end: null, isSelected: false),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: days.map((day) => _buildDayRow(day, context: context)).toList(),
-    );
+    return Obx(() {
+      var days = widget.controller.state.listTimeSlot.value;
+      print("ammor days ${days[0].isSelected}");
+      return Column(
+        children:
+            widget.controller.state.listTimeSlot.value
+                .map((day) => _buildDayRow(day, context: context))
+                .toList(),
+      );
+    });
   }
 
   Widget _buildDayRow(TimeSlot day, {required BuildContext context}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Row(
-                    children: [
-                      CheckboxTheme(
-                        data: CheckboxThemeData(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              6,
-                            ), // 👈 Border Radius
+    return Obx(() {
+      var days = widget.controller.state.listTimeSlot.value;
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Row(
+                      children: [
+                        CheckboxTheme(
+                          data: CheckboxThemeData(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                6,
+                              ), // 👈 Border Radius
+                            ),
+                            side: const BorderSide(
+                              color:
+                                  Colors
+                                      .orange, // 👈 Border Color when unchecked
+                              width: 2,
+                            ),
+                            fillColor: WidgetStateProperty.resolveWith<Color>((
+                              states,
+                            ) {
+                              if (states.contains(WidgetState.selected)) {
+                                return Colors
+                                    .orange; // 👈 Fill color when checked
+                              }
+                              return Colors.transparent;
+                            }),
                           ),
-                          side: const BorderSide(
-                            color:
-                                Colors.orange, // 👈 Border Color when unchecked
-                            width: 2,
-                          ),
-                          fillColor: WidgetStateProperty.resolveWith<Color>((
-                            states,
-                          ) {
-                            if (states.contains(WidgetState.selected)) {
-                              return Colors
-                                  .orange; // 👈 Fill color when checked
-                            }
-                            return Colors.transparent;
-                          }),
-                        ),
-                        child: Checkbox(
-                          value: day.isSelected,
-                          onChanged: (val) {
-                            setState(() {
+                          child: Checkbox(
+                            value: day.isSelected,
+                            onChanged: (val) {
                               day.isSelected = val ?? false;
-                            });
-                            widget.controller.addAndRemoveTimeSlot(day);
-                          },
-                        ),
-                      ),
 
-                      Text(
-                        day.day ?? "",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
+                              widget.controller.addAndRemoveTimeSlot(day);
+                            },
+                          ),
                         ),
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
+
+                        Text(
+                          day.day ?? "",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 5,
-                  child: TimeRow(
-                    startTime: day.start,
-                    endTime: day.end,
-                    startTimeChange: (time) => day.start = time,
-                    endTimeChange: (time) => day.end = time,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 5,
+                    child: TimeRow(
+                      startTime: day.start,
+                      endTime: day.end,
+                      startTimeChange: (time) {
+                        day.start = time;
+                        // addStartTime
+                        widget.controller.addStartTime(day);
+                      },
+                      endTimeChange: (time) {
+                        day.end = time;
+                        widget.controller.addEndTime(day);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
 

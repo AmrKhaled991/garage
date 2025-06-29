@@ -29,6 +29,7 @@ class CompanyItemCard extends StatelessWidget {
         if (address != null) Get.toNamed(Routes.COMPANYkEY, arguments: id);
       },
       child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
         padding: const EdgeInsets.all(16),
         decoration: MyshapesStyle.PrimaryDecoration,
         child: Column(
@@ -93,15 +94,18 @@ class CompanyItemCard extends StatelessWidget {
                       color: Colors.white,
                       size: 16,
                     ),
-                    Text(
-                      address ?? '44 طريق شارع الفهيدي, العاصمة, الكويت',
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Zain',
-                        fontWeight: FontWeight.w400,
-                        height: 1.50,
+                    Expanded(
+                      child: Text(
+                        address ?? '44 طريق شارع الفهيدي, العاصمة, الكويت',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'Zain',
+                          fontWeight: FontWeight.w400,
+                          height: 1.50,
+                        ),
                       ),
                     ),
                   ],

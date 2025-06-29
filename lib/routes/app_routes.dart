@@ -74,4 +74,6 @@ abstract class Routes {
   static const AddNewAddressPage = '/AddNewAddressPage';
   static const AccountSetting = '/AccountSetting';
   static const WELCOME_PAGE = '/WelcomPage';
+
+  static const MAP = '/MAP';
 }

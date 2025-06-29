@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:garage/core/networking/models/company.dart';
-import 'package:garage/core/networking/models/provider_response/provider_response.dart';
 import 'package:garage/core/ui/LoadingWidget.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/sliver_app_bar_delegate.dart';
 import 'package:garage/features/main/category/category_page_details/company_item_card.dart';
 import 'package:garage/features/main/company/company_page_details/company_time_and_location_section.dart';
-import 'package:garage/features/main/company/company_page_details/custom_company_list_tile_button.dart';
 import 'package:garage/features/main/company/company_page_details/product_item_card.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';

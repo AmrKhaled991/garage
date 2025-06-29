@@ -2,6 +2,7 @@ import 'package:garage/core/networking/base/api_response.dart';
 import 'package:garage/core/networking/base/dynamic_model.dart';
 import 'package:garage/core/networking/loading_state.dart';
 import 'package:garage/core/networking/models/brand/brand.dart';
+import 'package:garage/core/networking/models/user_car/user_car.dart';
 import 'package:garage/core/repositories/base_repository.dart';
 
 class UserCarRepository extends BaseRepository {
@@ -17,6 +18,13 @@ class UserCarRepository extends BaseRepository {
     return networkHandler.getRequest(
       endpoint: "brands",
       create: () => APIListResponse<Brand>(create: () => Brand()),
+    );
+  }
+
+  Future<LoadingState<List<UserCar>>> getUserCars() async {
+    return networkHandler.getRequest(
+      endpoint: "cars",
+      create: () => APIListResponse<UserCar>(create: () => UserCar()),
     );
   }
 }

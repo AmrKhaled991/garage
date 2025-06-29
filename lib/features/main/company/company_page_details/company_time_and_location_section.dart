@@ -74,7 +74,7 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
                     context,
                     NormalSheet(
                       title: "select_area".tr,
-                      child:  WorkTimeSheet(times:times ),
+                      child: WorkTimeSheet(times: times),
                     ),
                   );
                 },

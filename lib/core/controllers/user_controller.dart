@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
@@ -120,8 +121,19 @@ class UserController extends GetxController {
     // await FirebaseAuth.instance.signOut();
   }
 
+  void printMap(Map<String, dynamic> data) {
+    print('halala : ${data['file[0]']}');
+    final prettyJson = const JsonEncoder.withIndent('  ').convert(
+      data.map(
+        (key, value) => MapEntry<String, dynamic>(key, value.toString()),
+      ),
+    );
+    print(prettyJson);
+  }
+
   void register(Map<String, dynamic> data, Function(bool) onFinish) async {
     login.value = LoadingState.loading();
+    printMap(data);
     login.value = await authRepository.register(data);
 
     if (login.value.success) {

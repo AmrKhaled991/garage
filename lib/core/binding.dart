@@ -31,6 +31,5 @@ class Binding extends Bindings {
     Get.put(AddressRepository(), permanent: true);
     Get.put(AddressController(), permanent: true);
     Get.put(CategoriesRepository(), permanent: true);
-
   }
 }

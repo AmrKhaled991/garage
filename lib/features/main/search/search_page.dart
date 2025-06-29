@@ -7,6 +7,7 @@ import 'package:garage/features/main/search/search_controller.dart';
 import 'package:garage/features/main/search/widgets/provider_searched_items.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
+
 class SearchPage extends StatelessWidget {
   SearchController logic = Get.find<SearchController>();
 

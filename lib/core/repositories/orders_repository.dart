@@ -1,117 +1,56 @@
-import 'package:garage/core/networking/base/dynamic_model.dart';
-import 'package:garage/core/networking/models/Order.dart';
-import 'package:garage/core/networking/models/my_reservation.dart';
-import 'package:garage/core/networking/models/my_transaction.dart';
+import 'package:garage/core/networking/models/my_order/my_order.dart';
+import 'package:garage/core/networking/models/my_orders_details/my_orders_details.dart';
 import 'package:garage/core/networking/models/payment.dart';
+import 'package:garage/core/networking/models/user_prices_request/user_prices_request.dart';
 import 'package:garage/core/storage/preference_manager.dart';
 import 'package:get/get.dart';
 import 'package:garage/core/networking/loading_state.dart';
 import '../networking/base/api_response.dart';
-import '../networking/models/coupon.dart';
-import '../networking/models/times.dart';
 import 'base_repository.dart';
 
 class OrdersRepository extends BaseRepository {
   PreferenceManager preferenceManager = Get.find();
 
-  Future<LoadingState<Payment?>> createReservation(
-    String? doctorId,
-    Map<String, String> body,
-  ) async {
+  Future<LoadingState<Payment?>> payOrder(Map<String, String> body) async {
     return networkHandler.postRequest(
-      endpoint: "reservation/$doctorId",
+      endpoint: "store-order",
       body: body,
       create: () => APIResponse<Payment>(create: () => Payment()),
     );
   }
 
-  Future<LoadingState<Payment?>> reservationPayment(
-    String? reservationId,
-    String? paymentMethod,
-    String? couponCode,
-  ) async {
-    return networkHandler.postRequest(
-      endpoint: "reservation/pay/$reservationId",
-      body: {
-        "payment_method": paymentMethod ?? "upayment",
-        if (couponCode?.isNotEmpty == true) "coupon_code": couponCode,
-      },
-      create: () => APIResponse<Payment>(create: () => Payment()),
+  // Future<LoadingState<CouponData?>> checkCoupon(
+  //   String? reservationId,
+  //   String? couponCode,
+  // ) async {
+  //   return networkHandler.postRequest(
+  //     endpoint: "check/coupon/$reservationId",
+  //     body: {"coupon_code": couponCode},
+  //     create: () => APIResponse<CouponData>(create: () => CouponData()),
+  //   );
+  // }
+
+  Future<LoadingState<List<MyOrder>?>> getOrders() async {
+    return networkHandler.getRequest(
+      endpoint: "my-orders",
+      create: () => APIListResponse<MyOrder>(create: () => MyOrder()),
     );
   }
 
-  Future<LoadingState<CouponData?>> checkCoupon(
-    String? reservationId,
-    String? couponCode,
-  ) async {
-    return networkHandler.postRequest(
-      endpoint: "check/coupon/$reservationId",
-      body: {"coupon_code": couponCode},
-      create: () => APIResponse<CouponData>(create: () => CouponData()),
-    );
-  }
-
-  Future<LoadingState<Times?>> getDoctorTimes(
-    String? doctorId,
-    String? date,
-  ) async {
-    return networkHandler.postRequest(
-      endpoint: "doctor/dates/$doctorId",
-      body: {"date": date},
-      create: () => APIResponse<Times>(create: () => Times()),
-    );
-  }
-
-  Future<LoadingState<List<MyReservation>?>> getReservations({
-    String? type,
+  Future<LoadingState<List<UserPricesRequest>?>> getMyPriceRequests({
+    int? page = 1,
   }) async {
     return networkHandler.getRequest(
-      endpoint:
-          type == "previous" ? "previous/reservations" : "current/reservations",
-      create:
-          () => APIListResponse<MyReservation>(create: () => MyReservation()),
+      endpoint: "my-price-requests?page=$page",
+      create: () => APIListResponse<UserPricesRequest>(create: () => UserPricesRequest()),
     );
   }
 
-  Future<LoadingState<List<OrderData>?>> getOrders() async {
+  Future<LoadingState<MyOrdersDetails>> getMyOrdersDetails(int id) async {
     return networkHandler.getRequest(
-      endpoint: "orders/list",
-      create: () => APIListResponse<OrderData>(create: () => OrderData()),
-    );
-  }
-
-  Future<LoadingState<List<MyTransaction>?>> getMyTransaction({
-    int page = 1,
-  }) async {
-    return networkHandler.getRequest(
-      endpoint: "myTransactions",
-      query: {"page": page.toString()},
+      endpoint: "order-details/$id",
       create:
-          () => APIListResponse<MyTransaction>(create: () => MyTransaction()),
-    );
-  }
-
-  Future<LoadingState<MyTransaction?>> getTransactionById(String id) async {
-    return networkHandler.postRequest(
-      endpoint: "showTransferById",
-      body: {"transfer_id": id},
-      create: () => APIResponse<MyTransaction>(create: () => MyTransaction()),
-    );
-  }
-
-  Future<LoadingState<Payment?>> payTransaction(String id) async {
-    return networkHandler.postRequest(
-      endpoint: "send-money",
-      body: {"transfer_id": id},
-      create: () => APIResponse<Payment>(create: () => Payment()),
-    );
-  }
-
-  Future<LoadingState> rateOrder(String id, String rate) async {
-    return networkHandler.postRequest(
-      endpoint: "orders/$id/rates",
-      create: () => APIDynamicResponse(create: () => DynamicModel()),
-      body: {"rating": rate},
+          () => APIResponse<MyOrdersDetails>(create: () => MyOrdersDetails()),
     );
   }
 }

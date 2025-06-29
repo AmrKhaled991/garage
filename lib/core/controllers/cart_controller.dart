@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/networking/models/cart/data.dart';
 import 'package:get/get.dart';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/networking/loading_state.dart';
-import 'package:garage/core/networking/models/cart.dart';
 import 'package:garage/core/repositories/cart_repository.dart';
 import 'package:garage/core/storage/preference_manager.dart';
 import 'package:garage/utils/utlis.dart';
@@ -15,35 +15,40 @@ class CartController extends GetxController {
   CartRepository cartRepository = Get.find();
 
   @override
+  /*************  ✨ Windsurf Command ⭐  *************/
+  ///
+  /// Called when the widget is inserted into the tree.
+  ///
+  /// Listens to cartItems and updates isEmpty and cartCount accordingly.
+  /// If the cart is not empty, sorts the items by id and updates
+  /// the cartCount with the number of items in the cart.
+  /// If the cart is empty, sets isEmpty to true and cartCount to 0.
+  ///
+  /// *****  89b4d099-1600-4e9e-8018-3c3029cf0991  ******
   void onReady() {
     super.onReady();
 
-    cartItems.listen((cart) {
+    cart.listen((cart) {
       if (cart.data != null &&
           cart.data != null &&
           cart.data?.items?.isNotEmpty == true &&
-          !cartItems.value.loading) {
+          !this.cart.value.loading) {
         if (isEmpty.value) isEmpty.value = false;
         cart.data?.items?.sort(
           (a, b) => a.id.toString().compareTo(b.id.toString()),
         );
         cartCount.value = cart.data?.items?.length ?? 0;
       } else {
-        if (!isEmpty.value && !cartItems.value.loading) isEmpty.value = true;
+        if (!isEmpty.value && !this.cart.value.loading) isEmpty.value = true;
         cartCount.value = 0;
       }
     });
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-    // selectedDate.value = null;
-  }
-
-  var cartItems = LoadingState<Cart?>().obs;
+  var cart = LoadingState<Cart?>().obs;
   var addToCartLoading = LoadingState().obs;
   var removeFromCartLoading = LoadingState().obs;
+  var decreaseCartItemLoading = LoadingState().obs;
   var cartCount = 0.obs;
   var isEmpty = true.obs;
 
@@ -60,37 +65,60 @@ class CartController extends GetxController {
   // var coupon = 0.0.obs;
 
   void addToCart(
-    Map<String, String> data,
-    Map<int, AddonOptions?> singleOptions,
-    Map<int, List<AddonOptions?>> multiOptions, {
-    Function(bool)? onFinish = null,
+    // Map<String, String> data,
+    // Map<int, AddonOptions?> singleOptions,
+    // Map<int, List<AddonOptions?>> multiOptions
+    int productId,
+    int quantity, {
+    Function(bool)? onFinish,
   }) async {
-    //add options to body
+    // //add options to body
 
-    singleOptions.values.toList().asMap().forEach((index, value) {
-      data["addonsOptions[$index][id]"] =
-          singleOptions.keys.elementAt(index).toString();
-      data["addonsOptions[$index][options][]"] = value?.id?.toString() ?? "";
-    });
+    // singleOptions.values.toList().asMap().forEach((index, value) {
+    //   data["addonsOptions[$index][id]"] =
+    //       singleOptions.keys.elementAt(index).toString();
+    //   data["addonsOptions[$index][options][]"] = value?.id?.toString() ?? "";
+    // });
 
-    multiOptions.values.toList().asMap().forEach((index, value) {
-      if (value.isNotEmpty) {
-        data["addonsOptions[${singleOptions.length + index}][id]"] =
-            multiOptions.keys.elementAt(index).toString();
-        value.asMap().forEach((i, value) {
-          data["addonsOptions[${singleOptions.length + index}][options][$i]"] =
-              value?.id?.toString() ?? "";
-        });
-      }
-    });
+    // multiOptions.values.toList().asMap().forEach((index, value) {
+    //   if (value.isNotEmpty) {
+    //     data["addonsOptions[${singleOptions.length + index}][id]"] =
+    //         multiOptions.keys.elementAt(index).toString();
+    //     value.asMap().forEach((i, value) {
+    //       data["addonsOptions[${singleOptions.length + index}][options][$i]"] =
+    //           value?.id?.toString() ?? "";
+    //     });
+    //   }
+    // });
 
     addToCartLoading.value = LoadingState.loading();
-    addToCartLoading.value = await cartRepository.addToCart(data);
+    addToCartLoading.value = await cartRepository.addToCart(
+      productId,
+      quantity,
+    );
     onFinish?.call(addToCartLoading.value.success);
     if (addToCartLoading.value.success) {
       getCartItems(true);
     } else {
       Utils.showSnackBar(addToCartLoading.value.message);
+    }
+  }
+
+  void decreaseCartIem(
+    int productId,
+    int quantity, {
+    Function(bool)? onFinish,
+  }) async {
+    decreaseCartItemLoading.value = LoadingState.loading();
+    decreaseCartItemLoading.value = await cartRepository.decreaseCartIem(
+      productId,
+      quantity,
+    );
+    onFinish?.call(decreaseCartItemLoading.value.success);
+    if (decreaseCartItemLoading.value.success) {
+      getCartItems(true);
+    } else {
+      Utils.showSnackBar(decreaseCartItemLoading.value.message);
     }
   }
 
@@ -129,8 +157,12 @@ class CartController extends GetxController {
   // }
   //
   void getCartItems(bool? noLoading) async {
-    if (noLoading == false) cartItems.value = LoadingState.loading();
-    cartItems.value = await cartRepository.fetchCart();
+    if (noLoading == false) cart.value = LoadingState.loading();
+    cart.value = await cartRepository.fetchCart();
+    if (noLoading == false) {
+      cart.value.loading = false;
+      update();
+    }
   }
 
   // void checkCoupon(String successMsg, String noDiscountMsg) async{

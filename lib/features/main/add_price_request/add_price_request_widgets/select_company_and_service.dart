@@ -18,11 +18,11 @@ class _SelectCompanyAndServiceState extends State<SelectCompanyAndService> {
       spacing: 8,
       children: [
         SelectDropList(
-          selectedItem: OptionItem(id: "1", title: "company1"),
+          selectedItem: OptionItem(id: 1, title: "company1"),
           dropListModel: DropListModel([
-            OptionItem(id: "1", title: "company1"),
-            OptionItem(id: "2", title: "company2"),
-            OptionItem(id: "3", title: "company3"),
+            OptionItem(id: 1, title: "company1"),
+            OptionItem(id: 2, title: "company2"),
+            OptionItem(id: 3, title: "company3"),
           ]),
           onOptionSelected: (item) {
             setState(() {});
@@ -37,11 +37,11 @@ class _SelectCompanyAndServiceState extends State<SelectCompanyAndService> {
           ),
         ),
         SelectDropList(
-          selectedItem: OptionItem(id: "1", title: "service1"),
+          selectedItem: OptionItem(id: 1, title: "service1"),
           dropListModel: DropListModel([
-            OptionItem(id: "1", title: "service1"),
-            OptionItem(id: "2", title: "service2"),
-            OptionItem(id: "3", title: "service3"),
+            OptionItem(id: 1, title: "service1"),
+            OptionItem(id: 2, title: "service2"),
+            OptionItem(id: 3, title: "service3"),
           ]),
           onOptionSelected: (item) {
             setState(() {});

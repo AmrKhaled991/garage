@@ -21,8 +21,8 @@ class MainNavigationPage extends StatefulWidget {
 
 class _MainNavigationPageState extends State<MainNavigationPage> {
   final List<Widget> _children = [
-    const HomePage(),
-    const MyOrdersPage(),
+    HomePage(),
+    MyOrdersPage(),
     const CartPage(),
     const AllChatsPage(),
     const ProfilePage(),

@@ -4,13 +4,15 @@ class Payment extends Decodable<Payment> {
   Payment({this.url});
 
   Payment.fromJson(dynamic json) {
-    url = json['PaymentUrl'];
+    url = json['payment_url'];
   }
   String? url;
 
+  static var obs;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['PaymentUrl'] = url;
+    map['payment_url'] = url;
     return map;
   }
 

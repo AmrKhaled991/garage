@@ -1,4 +1,5 @@
 import 'package:garage/core/ui/pages_page.dart';
+import 'package:garage/core/ui/webview_payment_page.dart';
 import 'package:garage/features/all_chats/all_chats_binding.dart';
 import 'package:garage/features/auth/change_password/change_password_binding.dart';
 import 'package:garage/features/auth/change_password/change_password_page.dart';
@@ -34,6 +35,7 @@ import 'package:garage/features/main/category/category_Page.dart';
 import 'package:garage/features/main/category/category_binding.dart';
 import 'package:garage/features/main/chat/chat_binding.dart';
 import 'package:garage/features/main/chat/chat_page.dart';
+import 'package:garage/features/main/common/google_map.dart';
 import 'package:garage/features/main/company/company_binding.dart';
 import 'package:garage/features/main/company/company_page.dart';
 import 'package:garage/features/main/complete_cart_order/complete_cart_order_binding.dart';
@@ -217,7 +219,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.PRODUCT_DETAILSKEY,
-      page: () =>  ProductDetailsPage(),
+      page: () => ProductDetailsPage(),
       binding: ProductDetailsBinding(),
       transition: Transition.cupertino,
     ),
@@ -259,7 +261,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.PriceRequestDetailsPageKEY,
-      page: () => const PriceRequestDetailsPage(),
+      page: () => PriceRequestDetailsPage(),
       binding: PriceRequestDetailsBinding(),
       transition: Transition.cupertino,
     ),
@@ -297,6 +299,16 @@ class AppPages {
       name: Routes.WELCOME_PAGE,
       page: () => const WelcomePage(),
       binding: WelcomeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.MAP,
+      page: () => const MapScreen(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.WEBVIEW_PAYMENT,
+      page: () => WebviewPaymentPage(),
       transition: Transition.cupertino,
     ),
   ];

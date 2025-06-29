@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/networking/models/my_order/my_order.dart';
+import 'package:garage/core/ui/LoadingWidget.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
@@ -7,33 +9,49 @@ import 'package:get/get.dart';
 import 'my_orders_controller.dart';
 
 class MyOrdersPage extends StatelessWidget {
-  const MyOrdersPage({Key? key}) : super(key: key);
+  final MyOrdersController controller = Get.put(MyOrdersController());
+
+  MyOrdersPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final MyOrdersController logic = Get.put(MyOrdersController());
-
     return MyScaffold(
       title: "my_orders".tr,
       body:
       // const Center(child: EmptyWidget(title: "ليس لديك طلبات")),
-      ListView.separated(
-        itemBuilder: (context, index) => const OrderStatusCard(),
-        separatorBuilder: (context, index) => const SizedBox(height: 8),
-        itemCount: 3,
-      ),
+      Obx(() {
+        return LoadingWidget(
+          loadingState: controller.state.orders.value,
+          child: ListView.separated(
+            padding: const EdgeInsets.only(bottom: 100),
+            itemBuilder:
+                (context, index) => OrderStatusCard(
+                  order: controller.state.orders.value.data![index],
+                ),
+            separatorBuilder: (context, index) => const SizedBox(height: 8),
+            itemCount: controller.state.orders.value.data?.length ?? 0,
+          ),
+        );
+      }),
     );
   }
 }
 
 class OrderStatusCard extends StatelessWidget {
-  const OrderStatusCard({super.key});
+  final MyOrder order;
+  const OrderStatusCard({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.ORDER_DETAILSSKEY);
+        Get.toNamed(
+          Routes.ORDER_DETAILSSKEY,
+          arguments: {
+            'orderId': order.id.toString(),
+            'screenTitle': order.orderNumber.toString(),
+          },
+        );
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -45,9 +63,9 @@ class OrderStatusCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'رقم الطلب #٢٥٢٥',
-                  style: TextStyle(
+                Text(
+                  'رقم الطلب ${order.orderNumber}',
+                  style: const TextStyle(
                     color: Color(0xFFF7F8F9),
                     fontSize: 20,
                     fontFamily: 'Zain',
@@ -60,13 +78,13 @@ class OrderStatusCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: ShapeDecoration(
-                    color: getbackgroundcolor("مكتمله"),
+                    color: getbackgroundcolor(order.orderStatusColor!),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: Text(
-                    'complete'.tr,
+                    order.payStatus ?? 'complete'.tr,
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                       color: Colors.white,
@@ -79,10 +97,10 @@ class OrderStatusCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Text(
-              'شركة المجد للصيانة',
+            Text(
+              order.name ?? 'شركة المجد للصيانة',
               textAlign: TextAlign.right,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFFCCCAC7),
                 fontSize: 14,
                 fontFamily: 'Zain',
@@ -90,10 +108,10 @@ class OrderStatusCard extends StatelessWidget {
                 height: 1.50,
               ),
             ),
-            const Text(
-              'التكلفه: 5 دينار كويتي',
+            Text(
+              'التكلفه: ${order.finalTotal} دينار كويتي',
               textAlign: TextAlign.right,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFFFFB727),
                 fontSize: 16,
                 fontFamily: 'Zain',
@@ -106,10 +124,10 @@ class OrderStatusCard extends StatelessWidget {
               width: double.infinity,
 
               decoration: MyshapesStyle.lightGrayDecoration,
-              child: const Text(
-                '44 طريق شارع الفهيدي, العاصمة, الكويت',
+              child: Text(
+                order.createdAt ?? '2023-01-01',
                 textAlign: TextAlign.right,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontFamily: 'Zain',
@@ -126,11 +144,11 @@ class OrderStatusCard extends StatelessWidget {
 
   Color? getbackgroundcolor(String status) {
     switch (status) {
-      case "مكتمله":
+      case "completed":
         return const Color(0xFF065F46);
-      case "قيد التنفيذ":
+      case "pending":
         return const Color(0xFF604106);
-      case "قيد التنفيذ":
+      case "warning":
         return const Color(0xFF991B1B);
     }
     return null;

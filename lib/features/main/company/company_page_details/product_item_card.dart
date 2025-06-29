@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/controllers/cart_controller.dart';
 import 'package:garage/core/networking/models/provider_details_response/product_model.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/theme/styles.dart';
+import 'package:garage/utils/utlis.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class ProductItemCard extends StatelessWidget {
   final Function? onTap;
@@ -10,6 +14,7 @@ class ProductItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CartController cartController = Get.find();
     return GestureDetector(
       onTap: () {
         onTap?.call();
@@ -39,7 +44,18 @@ class ProductItemCard extends StatelessWidget {
                   right: 8,
                   bottom: 8,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cartController.addToCart(
+                        productModel!.id!,
+                        1,
+                        onFinish: (value) {
+                          if (value)
+                            Utils.showSnackBar(
+                              "item_added_to_cart_successfully".tr,
+                            );
+                        },
+                      );
+                    },
                     icon: const Icon(
                       Icons.add_circle_rounded,
                       color: colorPrimary,

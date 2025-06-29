@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:garage/core/ui/MyButton.dart';
 import 'package:garage/core/controllers/main_controller.dart';
 import 'package:garage/core/controllers/user_controller.dart';
@@ -29,7 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: <Widget>[
@@ -38,13 +39,13 @@ class _RegisterPageState extends State<RegisterPage> {
             UserTypeSelector(controller: controller),
             const SizedBox(height: 30),
             userRegisterView(),
-
-            const Spacer(),
+            SizedBox(height: 100.h),
+            // const Spacer(),
             Obx(() {
               var userType = controller.state.userType.value;
               return MyLoadingButton(
                 title: "create_account".tr,
-                onClick: (RoundedLoadingButtonController _controller) {
+                onClick: (RoundedLoadingButtonController _controller) async {
                   if (!controller.validations()) {
                     _controller.error();
                     Timer(const Duration(seconds: 1), () {
@@ -54,9 +55,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   }
 
                   if (userType == 1) {
-                    userController.register(controller.getRegisterData(), (
-                      success,
-                    ) async {
+                    var data = await controller.getRegisterData();
+
+                    userController.register(data, (success) async {
                       if (success) {
                         _controller.success();
                       } else {

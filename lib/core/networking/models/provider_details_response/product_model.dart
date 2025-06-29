@@ -1,4 +1,5 @@
 class ProductModel {
+  int? id;
   final String? name;
   final String? description;
   final String? price;
@@ -13,20 +14,24 @@ class ProductModel {
     this.madeInCountry,
     this.image,
     this.images,
+    this.id,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
+      id: json['id'],
       name: json['name'],
       description: json['description'],
       price: json['price'],
-      madeInCountry: json['made_in_country'] != null
-          ? Country.fromJson(json['made_in_country'])
-          : null,
+      madeInCountry:
+          json['made_in_country'] != null
+              ? Country.fromJson(json['made_in_country'])
+              : null,
       image: json['image'],
-      images: (json['images'] as List?)
-          ?.map((e) => ProductImage.fromJson(e))
-          .toList(),
+      images:
+          (json['images'] as List?)
+              ?.map((e) => ProductImage.fromJson(e))
+              .toList(),
     );
   }
 }
@@ -37,12 +42,7 @@ class Country {
   final String? key;
   final String? flag;
 
-  Country({
-    this.id,
-    this.name,
-    this.key,
-    this.flag,
-  });
+  Country({this.id, this.name, this.key, this.flag});
 
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(

@@ -28,18 +28,42 @@ class AuthRepository extends BaseRepository {
 
   Future<LoadingState<User?>> register(Map<String, dynamic> body) async {
     Map<String, dynamic> b = {};
-    if (body["image"] != null && body["image"] is AssetEntity) {
-      File? file = await body["image"].file;
-      MultipartFile multipartFile = MultipartFile(file, filename: "image");
-      b["image"] = multipartFile;
-      body.remove("image");
-    }
+
+    // if (body["image"] != null && body["image"] is AssetEntity) {
+    //   File? file = await body["image"].file;
+    //   MultipartFile multipartFile = MultipartFile(file, filename: "image");
+    //   b["image"] = multipartFile;
+    //   body.remove("image");
+    // }
     if (body["cover"] != null && body["cover"] is AssetEntity) {
       File? file = await body["cover"].file;
       MultipartFile multipartFile = MultipartFile(file, filename: "cover");
       b["cover"] = multipartFile;
       body.remove("cover");
     }
+    // if (body["video"] != null && body["video"] is AssetEntity) {
+    //   File? file = await body["video"].file;
+    //   MultipartFile multipartFile = MultipartFile(file, filename: "video");
+    //   b["video"] = multipartFile;
+    //   body.remove("video");
+    // }
+
+    // final keysToRemove = <String>[];
+    // for (var entry in body.entries) {
+    //   final key = entry.key;
+    //   if (key.startsWith('files[') && entry.value is AssetEntity) {
+    //     final asset = entry.value as AssetEntity;
+    //     File? file = await asset.file;
+    //     if (file != null) {
+    //       b[key] = MultipartFile(
+    //         file,
+    //         filename: 'gallery_${key.split('[')[1].split(']')[0]}.jpg',
+    //       );
+    //     }
+    //     keysToRemove.add(key);
+    //   }
+    // }
+
     if (body["document"] != null && body["document"] is AssetEntity) {
       File? file = await body["document"].file;
       MultipartFile multipartFile = MultipartFile(file, filename: "document");

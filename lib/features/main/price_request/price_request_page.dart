@@ -1,28 +1,70 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import 'package:garage/core/networking/models/user_prices_request/user_prices_request.dart';
 import 'package:garage/core/ui/MyButton.dart';
+import 'package:garage/core/ui/my_error_widget.dart';
+import 'package:garage/core/ui/my_loading_widget.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
-import 'package:get/get.dart';
 
 import 'price_request_controller.dart';
 
-class PriceRequestPage extends StatelessWidget {
+class PriceRequestPage extends StatefulWidget {
   const PriceRequestPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final PriceRequestController controller = Get.put(PriceRequestController());
+  State<PriceRequestPage> createState() => _PriceRequestPageState();
+}
 
+class _PriceRequestPageState extends State<PriceRequestPage> {
+  PriceRequestController controller = Get.find<PriceRequestController>();
+
+  @override
+  Widget build(BuildContext context) {
     return MyScaffold(
       title: "price_request".tr,
-      body:
-      // const EmptyWidget(title: "لا يوجد طلبات"),
-      ListView.separated(
-        padding: const EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 100),
-        itemBuilder: (context, index) => const RequestPriceItemCard(),
-        separatorBuilder: (context, index) => const SizedBox(height: 8),
-        itemCount: 10,
+      body: PagedListView<int, UserPricesRequest>(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        pagingController: controller.state.pagingController,
+        padding: const EdgeInsets.all(8),
+        builderDelegate: PagedChildBuilderDelegate<UserPricesRequest>(
+          itemBuilder:
+              (context, item, index) => RequestPriceItemCard(item: item),
+          firstPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
+          newPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
+          noItemsFoundIndicatorBuilder:
+              (_) => MyErrorWidget(
+                onRetryCall: () {
+                  controller.state.pagingController.refresh();
+                },
+                errorMsg: "no_data_found".tr,
+                errorType: ErrorType.EMPTY,
+              ),
+          firstPageErrorIndicatorBuilder:
+              (_) => MyErrorWidget(
+                onRetryCall: () {
+                  controller.state.pagingController.refresh();
+                },
+                errorMsg: controller.state.pagingController.error
+                    .toString()
+                    .substring(
+                      controller.state.pagingController.error
+                              .toString()
+                              .lastIndexOf("(") +
+                          2,
+                      controller.state.pagingController.error
+                              .toString()
+                              .length -
+                          2,
+                    ),
+                withLogin: true,
+              ),
+        ),
       ),
       fab: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
@@ -37,13 +79,14 @@ class PriceRequestPage extends StatelessWidget {
 }
 
 class RequestPriceItemCard extends StatelessWidget {
-  const RequestPriceItemCard({super.key});
+  final UserPricesRequest item;
+  const RequestPriceItemCard({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.PriceRequestDetailsPageKEY);
+        Get.toNamed(Routes.PriceRequestDetailsPageKEY ,arguments: item);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -106,10 +149,10 @@ class RequestPriceItemCard extends StatelessWidget {
               width: double.infinity,
 
               decoration: MyshapesStyle.lightGrayDecoration,
-              child: const Text(
-                "تاريخ الطلب: 15 مارس, 2025 - 08:30 م",
+              child: Text(
+                "تاريخ الطلب: ${item.createdAt.toString().substring(0, 10)}",
                 textAlign: TextAlign.right,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontFamily: 'Zain',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage/core/networking/loading_state.dart';
+import 'package:garage/core/networking/models/payment.dart';
 import 'package:get/get.dart';
 
 class CompleteCartOrderState {
@@ -12,6 +13,7 @@ class CompleteCartOrderState {
   var squareNumberController = TextEditingController();
   var jadaNumberController = TextEditingController();
   var notesController = TextEditingController();
+  var payment = LoadingState<Payment?>().obs;
 
   CompleteCartOrderState() {
     ///Initialize variables

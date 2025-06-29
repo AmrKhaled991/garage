@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/networking/models/my_orders_details/item.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/theme/styles.dart';
 
 class OrderDetailsItemCard extends StatelessWidget {
-  const OrderDetailsItemCard({super.key});
+  final OrderDetailsItem item;
+  const OrderDetailsItemCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

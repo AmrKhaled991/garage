@@ -146,6 +146,11 @@ const Map<String, String> ar_EG = {
   'error_message': 'من فضلك قم بادخال الرسالة',
   'error_password': 'من فضلك قم بادخال كلمة مرور لا تقل عن 6 احرف',
   'error_password_not_match': 'كلمتا المرور غير متطابقتان',
+  "state_error": "من فضلك قم بادخال المحافظه",
+  "street_error": "من فضلك قم بادخال الشارع",
+  "square_error": "من فضلك قم بادخال المنطقه",
+  "jada_error": "من فضلك قم بادخال الجاده",
+
   'login': 'تسجيل دخول',
   'phone_hint': 'رقم الهاتف مثل 96512312',
   'phone_number': 'رقم الهاتف',

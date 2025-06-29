@@ -48,7 +48,7 @@ class CategoriesRepository extends BaseRepository {
       if (categoryId != null) "searchArray[category]": categoryId.toString(),
     };
     return networkHandler.getRequest(
-      endpoint: "providers",
+      endpoint: "providers?page=$page",
       create:
           () => APIListResponse<ProviderResponse>(
             create: () => ProviderResponse(),

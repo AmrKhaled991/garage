@@ -20,7 +20,8 @@ class CompanyProfileEditPage extends StatefulWidget {
   State<CompanyProfileEditPage> createState() => _CompanyProfileEditPageState();
 }
 
-class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
+class _CompanyProfileEditPageState extends State<CompanyProfileEditPage>
+    with AutomaticKeepAliveClientMixin {
   late PageController pageController;
   int currentPage = 0;
   final state = Get.find<RegisterController>().state;
@@ -31,7 +32,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    pageController = PageController();
+    pageController = PageController(initialPage: 0);
     pageController.addListener(() {
       setState(() {
         currentPage = pageController.page!.toInt();
@@ -41,6 +42,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return MyScaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -78,7 +80,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                 )
                 : MyLoadingButton(
                   title: "done".tr,
-                  onClick: (RoundedLoadingButtonController _controller) {
+                  onClick: (RoundedLoadingButtonController _controller) async {
                     if (!controller.validations()) {
                       _controller.error();
                       Timer(const Duration(seconds: 1), () {
@@ -86,9 +88,8 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                       });
                       return;
                     }
-                    userController.register(controller.getRegisterData(), (
-                      success,
-                    ) async {
+                    var data = await controller.getRegisterData();
+                    userController.register(data, (success) async {
                       {
                         if (success) {
                           _controller.success();
@@ -106,4 +107,8 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

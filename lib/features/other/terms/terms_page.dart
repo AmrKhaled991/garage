@@ -11,6 +11,8 @@ class TermsPage extends StatelessWidget {
   TermsController controller = Get.find<TermsController>();
   TermsState state = Get.find<TermsController>().state;
 
+  TermsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
@@ -23,7 +25,7 @@ class TermsPage extends StatelessWidget {
             child: Html(
               data: state.terms.value.data ?? "",
               style: MyTextStyle.htmlSubTitle(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 22,
               ),
             ),

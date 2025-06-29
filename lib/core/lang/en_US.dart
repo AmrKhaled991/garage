@@ -460,4 +460,8 @@ const Map<String, String> en_US = {
   'error_car_owner_name': 'Please enter the car owner name',
   "please_select_a_brand": "Please select a brand",
   "add_logo": "Add Logo",
+  "state_error": "please enter the state",
+  "street_error": "please enter the street",
+  "square_error": 'please enter the square',
+  "jada_error": 'please enter the jada',
 };

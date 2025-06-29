@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/helpers/time_formater.dart';
+import 'package:garage/core/networking/models/user_prices_request/user_prices_request.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 
-import 'price_requst_details_controller.dart';
-
 class PriceRequestDetailsPage extends StatelessWidget {
-  const PriceRequestDetailsPage({Key? key}) : super(key: key);
+  final UserPricesRequest item = Get.arguments;
 
+  PriceRequestDetailsPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final PriceRequstDetailsController logic = Get.put(
-      PriceRequstDetailsController(),
-    );
-
     return MyScaffold(
       title: "price_requst_details".tr,
       body: Padding(
@@ -104,7 +101,7 @@ class PriceRequestDetailsPage extends StatelessWidget {
                 Expanded(
                   child: PriceRequestDetailsSection(
                     header: "الكمية".tr,
-                    text: "1".tr,
+                    text: item.quantity.toString(),
                   ),
                 ),
                 Expanded(
@@ -117,8 +114,10 @@ class PriceRequestDetailsPage extends StatelessWidget {
             ),
             PriceRequestDetailsSection(
               header: "الوقت والتاريخ".tr,
-              text: "الاثنين, 17 مارس,2025".tr,
-              subtext: "08:30 PM".tr,
+              text: item.createdAt.toString().substring(0, 10),
+              subtext: DateTimeFormatter.convert24to12(
+                item.createdAt.toString().substring(11, 16),
+              ),
             ),
             PriceRequestDetailsSection(
               header: "عنوان مركز الصيانه ".tr,

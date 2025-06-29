@@ -22,9 +22,7 @@ class CategoryPage extends StatelessWidget {
   CategoryPage({Key? key}) : super(key: key);
   List<Category>? categories = Get.arguments;
   CategoryController controller = Get.find<CategoryController>();
-  final RefreshController _refreshController = RefreshController(
-    initialRefresh: false,
-  );
+ 
 
   @override
   Widget build(BuildContext context) {
