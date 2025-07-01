@@ -10,49 +10,44 @@ class WorkTimeSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: colorBlack,
-      child: Expanded(
-        child: ListView.separated(
-          padding: const EdgeInsets.all(8),
-          itemBuilder:
-              (context, index) => Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 10,
-                ),
-                clipBehavior: Clip.antiAlias,
-                decoration: MyshapesStyle.PrimaryDecoration,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      times![index].day ?? '',
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: 'Zain',
-                        fontWeight: FontWeight.w400,
-                        height: 1.20,
-                      ),
+    return Expanded(
+      child: ListView.separated(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(8),
+        itemBuilder:
+            (context, index) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+              clipBehavior: Clip.antiAlias,
+              decoration: MyshapesStyle.PrimaryDecoration,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    times![index].day ?? '',
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Zain',
+                      fontWeight: FontWeight.w400,
+                      height: 1.20,
                     ),
-                    Text(
-                      formateTime(times![index]),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: 'Zain',
-                        fontWeight: FontWeight.w400,
-                        height: 1.20,
-                      ),
+                  ),
+                  Text(
+                    formateTime(times![index]),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Zain',
+                      fontWeight: FontWeight.w400,
+                      height: 1.20,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-          separatorBuilder: (context, index) => const SizedBox(height: 8),
-          itemCount: times?.length ?? 0,
-        ),
+            ),
+        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        itemCount: times?.length ?? 0,
       ),
     );
   }

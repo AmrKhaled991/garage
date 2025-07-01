@@ -52,13 +52,14 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
             onTap:
                 () => Utils.showSheet(
                   context,
+                  isScrollable: true,
                   NormalSheet(
                     title: "select_area".tr,
+
                     child: AreaSheet(
                       // singleSelection: widget.stateId != null ? true : false,
                       onSelected: (states) {
-                        state.stateController.text =
-                            states!.first?.id.toString() ?? "0";
+                        state.stateController.value = states;
                       },
                     ),
                   ),
@@ -80,17 +81,21 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
                       height: 1.50,
                     ),
                   ),
-                  const Text(
-                    'القيروان',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Color(0xFFF7F8F9),
-                      fontSize: 18,
-                      fontFamily: 'Zain',
-                      fontWeight: FontWeight.w400,
-                      height: 1.20,
-                    ),
-                  ),
+                  Obx(() {
+                    return Text(
+                      state.stateController.value == null
+                          ? "select_area".tr
+                          : state.stateController.value!.title ?? '',
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(
+                        color: Color(0xFFF7F8F9),
+                        fontSize: 18,
+                        fontFamily: 'Zain',
+                        fontWeight: FontWeight.w400,
+                        height: 1.20,
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -144,13 +149,13 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
         child: MyLoadingButton(
           title: "complete_order".tr,
           onClick: (RoundedLoadingButtonController _controller) {
-            if (!controller.validation()) {
+            if (controller.validation()) {
               controller.completeOrder(
                 {
                   "name": state.nameController.text,
                   "phone": state.phoneController.text,
                   "country_code": '956',
-                  "region_id": '10',
+                  "region_id": state.stateController.value!.id.toString(),
                   "street_name": state.streetController.text,
                   "block_number": state.jadaNumberController.text,
                   "building_number": state.squareNumberController.text,
@@ -189,6 +194,9 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
                 },
               );
             }
+            Timer(const Duration(seconds: 1), () {
+              _controller.reset();
+            });
           },
         ),
       ),

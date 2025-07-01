@@ -1,3 +1,5 @@
+import 'package:garage/core/networking/models/provider_response/provider_response.dart';
+
 class Provider {
   int? id;
   String? name;
@@ -9,6 +11,8 @@ class Provider {
   String? lang;
   bool? isNotify;
   String? token;
+  ProviderInfo? data;
+  
 
   Provider({
     this.id,
@@ -21,6 +25,7 @@ class Provider {
     this.lang,
     this.isNotify,
     this.token,
+    this.data,
   });
 
   factory Provider.fromJson(Map<String, dynamic> json) => Provider(
@@ -34,6 +39,7 @@ class Provider {
     lang: json['lang'] as String?,
     isNotify: json['is_notify'] as bool?,
     token: json['token'] as String?,
+    data: json['data'] == null ? null : ProviderInfo.fromJson(json['data']),
   );
 
   Map<String, dynamic> toJson() => {

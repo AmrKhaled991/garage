@@ -116,6 +116,7 @@ class Utils {
     double? height,
   }) {
     showModalBottomSheet(
+      
       context: context,
       clipBehavior: Clip.antiAlias,
       // showDragHandle: true,
@@ -127,6 +128,7 @@ class Utils {
           topRight: Radius.circular(16),
           topLeft: Radius.circular(16),
         ),
+        
       ),
       builder: (context) {
         return Container(

@@ -9,6 +9,9 @@ class UserPricesRequest extends Decodable<UserPricesRequest> {
   Provider? provider;
   List<File>? files;
   int? quantity;
+  String? details;
+  String? orderNumber;
+  String? status;
   Category? category;
   DateTime? createdAt;
 
@@ -19,11 +22,17 @@ class UserPricesRequest extends Decodable<UserPricesRequest> {
     this.quantity,
     this.category,
     this.createdAt,
+    this.details,
+    this.orderNumber,
+    this.status,
   });
 
   factory UserPricesRequest.fromJson(Map<String, dynamic> json) =>
       UserPricesRequest(
         id: json['id'] as int?,
+        details: json['details'] as String?,
+        orderNumber: json['order_number'] as String?,
+        status: json['status'] as String?,
         provider:
             json['provider'] == null
                 ? null

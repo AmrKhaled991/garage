@@ -76,7 +76,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
           const SizedBox(height: 16),
 
           GestureDetector(
-            onTap: () => Get.toNamed(Routes.MAP),
+            onTap: () => Get.toNamed(Routes.MAP, arguments: "register"),
             child: Container(
               decoration: BoxDecoration(
                 color: colorContainer,

@@ -1,10 +1,14 @@
 import 'dart:ui';
+import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/networking/loading_state.dart';
 import 'package:garage/core/networking/models/page.dart';
 import 'package:garage/core/networking/models/settings.dart';
+import 'package:garage/core/networking/models/socials/socials.dart';
 import 'package:garage/core/networking/models/supportedCountry.dart';
 import 'package:garage/core/repositories/main_repository.dart';
 import 'package:garage/core/storage/preference_manager.dart';
+import 'package:garage/features/main/home/home_logic.dart';
+import 'package:garage/features/main/my_orders/my_orders_controller.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -17,10 +21,11 @@ class MainController extends GetxController {
     language.listen((lang) {
       preferenceManager.setLocale(lang);
       fetchPages(force: true);
+      fetchSocials(force: true);
     });
 
     settings.listen((s) {
-      if (s != null && s != null) {
+      if (s != null) {
         preferenceManager.setSettings(s);
       }
     });
@@ -36,6 +41,8 @@ class MainController extends GetxController {
 
   var language = 'en'.obs;
   var pages = LoadingState<List<PagesData>?>().obs;
+  var socials = LoadingState<List<GarageSocials>?>().obs;
+
   Rx<PackageInfo?> packageInfo = Rx<PackageInfo?>(null);
   Rx<Settings?> settings = Rx<Settings?>(null);
   Rx<List<SupportedCountry>?> supportedCountries = Rx<List<SupportedCountry>?>(
@@ -49,8 +56,12 @@ class MainController extends GetxController {
   }
 
   void toggleLanguage() {
-    language.value = (language.value == "en") ? "ar" : "en";
     Get.updateLocale(Locale(language.value));
+    Get.reload<MainController>(force: true);
+    Get.reload<UserController>(force: true);
+    Get.reload<HomeController>(force: true);
+    Get.reload<MyOrdersController>(force: true);
+    language.value = (language.value == "en") ? "ar" : "en";
   }
 
   void fetchSettings() async {
@@ -75,5 +86,11 @@ class MainController extends GetxController {
     if (data.success && data.data != null) {
       pages.value = data;
     }
+  }
+
+  void fetchSocials({bool force = false}) async {
+    if (socials.value.data != null && !force) return;
+    socials.value = LoadingState.loading();
+    socials.value = await mainRepository.getSocials();
   }
 }

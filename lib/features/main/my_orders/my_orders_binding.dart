@@ -8,6 +8,6 @@ class MyOrdersBinding extends Bindings {
   void dependencies() {
     Get.put(OrdersRepository());
 
-    Get.put(MyOrdersController());
+    Get.lazyPut(() => MyOrdersController());
   }
 }

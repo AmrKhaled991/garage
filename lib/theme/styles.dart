@@ -93,7 +93,7 @@ class MyTextStyle {
   static TextTheme get _textTheme => _appTheme.textTheme;
 
   static TextStyle get normalStyle =>
-      const TextStyle(fontFamily: appFontFamily);
+      const TextStyle(fontFamily: appFontFamily ,color: Colors.white);
 
   static TextStyle get appBarStyle => TextStyle(
     fontFamily: appFontFamily,

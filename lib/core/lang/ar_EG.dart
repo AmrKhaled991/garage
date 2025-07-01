@@ -461,4 +461,29 @@ const Map<String, String> ar_EG = {
   'error_car_owner_name': 'يرجى ادخال اسم صاحب السيارة',
   "please_select_a_brand": "يرجى تحديد علامة تجارية",
   "add_logo": "اضافه شعار",
+
+  'category_error': 'يرجى تحديد فئة',
+  'category_service': 'يرجى تحديد خدمة',
+  'error_quantity': 'يرجى ادخال كلمة المرور',
+  'error_order_details': 'يرجى ادخال تفاصيل الطلب',
+  "new": "جديد",
+  "select_date": "يرجى تحديد التاريخ",
+
+  "title_error": 'يرجى ادخال العنوان',
+  "note_error": 'يرجى ادخال الملاحظة',
+  "kilometer_error": 'يرجى ادخال قراءة العداد',
+  "date_error": 'يرجى ادخال التاريخ',
+  "hour_error": 'يرجى ادخال الساعة',
+
+  'error_description': 'يرجى ادخال الوصف',
+  "cart_empty": 'عذرا لا يوجد في السلة العناصر',
+
+  "cost:": "التكلفه:",
+  "kwt_dinar": "دينار كويتي",
+  "direct_contact": "التواصل المباشر",
+  
+  "select_company": "يرجى تحديد الشركة",
+  "company_error": "يرجى تحديد الشركة",
+   "description_error": "يرجى تحديد الوصف",
+   "file_error": "يرجى تحديد الملف",
 };

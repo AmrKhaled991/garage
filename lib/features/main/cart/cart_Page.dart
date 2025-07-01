@@ -7,6 +7,7 @@ import 'package:garage/core/ui/MyButton.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/features/main/cart/car_details/item_counter.dart';
+import 'package:garage/features/main/common/empty_widget.dart';
 import 'package:garage/features/main/common/order_price_details_card.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
@@ -15,34 +16,40 @@ import 'package:get/get.dart';
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return MyScaffold(
       title: "cart".tr,
-      body: GetBuilder<CartController>(
-        init: CartController(),
-        initState: (_) {
-          Get.find<CartController>().getCartItems(false);
-        },
-        builder: (controller) {
-          return LoadingWidget(
-            loadingState: controller.cart.value,
-            child: ListView.separated(
-              padding: const EdgeInsets.only(
-                top: 16,
-                left: 8,
-                right: 8,
-                bottom: 165,
+      body: Center(
+        child: GetBuilder<CartController>(
+          init: CartController(),
+          initState: (_) {
+            Get.find<CartController>().getCartItems(false);
+          },
+          builder: (controller) {
+            return LoadingWidget(
+              loadingState: controller.cart.value,
+              isEmpty: controller.cart.value.data?.items?.isEmpty == true,
+              emptyWidget: EmptyWidget(title: "cart_empty".tr),
+              child: ListView.separated(
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  left: 8,
+                  right: 8,
+                  bottom: 165,
+                ),
+                itemBuilder:
+                    (context, index) => CartItemCard(
+                      cartItem:
+                          controller.cart.value.data?.items?[index] ??
+                          CartItem(),
+                    ),
+                separatorBuilder: (context, index) => const SizedBox(height: 8),
+                itemCount: controller.cart.value.data?.items?.length ?? 0,
               ),
-              itemBuilder:
-                  (context, index) => CartItemCard(
-                    cartItem:
-                        controller.cart.value.data?.items?[index] ?? CartItem(),
-                  ),
-              separatorBuilder: (context, index) => const SizedBox(height: 8),
-              itemCount: controller.cart.value.data?.items?.length ?? 0,
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
       fab: Obx(() {
         final controller = Get.find<CartController>();

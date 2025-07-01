@@ -129,12 +129,12 @@ class AddressData extends Decodable<AddressData> {
   }
 }
 
-class Country {
+class Country extends Decodable<Country> {
   Country({this.id, this.title});
 
   Country.fromJson(dynamic json) {
     id = json['id'];
-    title = json['title'];
+    title = json['name'];
   }
   int? id;
   String? title;
@@ -143,7 +143,13 @@ class Country {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
-    map['title'] = title;
+    map['name'] = title;
     return map;
+  }
+  
+  @override
+  Country decode(json) {
+    // TODO: implement decode
+    return Country.fromJson(json);
   }
 }

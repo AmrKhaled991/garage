@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'my_orders_controller.dart';
 
 class MyOrdersPage extends StatelessWidget {
-  final MyOrdersController controller = Get.put(MyOrdersController());
+  final MyOrdersController controller = Get.find<MyOrdersController>();
 
   MyOrdersPage({Key? key}) : super(key: key);
 
@@ -64,7 +64,7 @@ class OrderStatusCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'رقم الطلب ${order.orderNumber}',
+                  '${"order_number".tr}${order.orderNumber}',
                   style: const TextStyle(
                     color: Color(0xFFF7F8F9),
                     fontSize: 20,
@@ -109,7 +109,7 @@ class OrderStatusCard extends StatelessWidget {
               ),
             ),
             Text(
-              'التكلفه: ${order.finalTotal} دينار كويتي',
+              '${"cost".tr} ${order.finalTotal} ${"kwt_dinar".tr}',
               textAlign: TextAlign.right,
               style: const TextStyle(
                 color: Color(0xFFFFB727),

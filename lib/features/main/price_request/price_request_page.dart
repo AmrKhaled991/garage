@@ -27,43 +27,49 @@ class _PriceRequestPageState extends State<PriceRequestPage> {
   Widget build(BuildContext context) {
     return MyScaffold(
       title: "price_request".tr,
-      body: PagedListView<int, UserPricesRequest>(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        pagingController: controller.state.pagingController,
-        padding: const EdgeInsets.all(8),
-        builderDelegate: PagedChildBuilderDelegate<UserPricesRequest>(
-          itemBuilder:
-              (context, item, index) => RequestPriceItemCard(item: item),
-          firstPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
-          newPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
-          noItemsFoundIndicatorBuilder:
-              (_) => MyErrorWidget(
-                onRetryCall: () {
-                  controller.state.pagingController.refresh();
-                },
-                errorMsg: "no_data_found".tr,
-                errorType: ErrorType.EMPTY,
-              ),
-          firstPageErrorIndicatorBuilder:
-              (_) => MyErrorWidget(
-                onRetryCall: () {
-                  controller.state.pagingController.refresh();
-                },
-                errorMsg: controller.state.pagingController.error
-                    .toString()
-                    .substring(
-                      controller.state.pagingController.error
-                              .toString()
-                              .lastIndexOf("(") +
-                          2,
-                      controller.state.pagingController.error
-                              .toString()
-                              .length -
-                          2,
-                    ),
-                withLogin: true,
-              ),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 100.0),
+        child: PagedListView<int, UserPricesRequest>(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          pagingController: controller.state.pagingController,
+          padding: const EdgeInsets.all(8),
+          builderDelegate: PagedChildBuilderDelegate<UserPricesRequest>(
+            itemBuilder:
+                (context, item, index) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: RequestPriceItemCard(item: item),
+                ),
+            firstPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
+            newPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
+            noItemsFoundIndicatorBuilder:
+                (_) => MyErrorWidget(
+                  onRetryCall: () {
+                    controller.state.pagingController.refresh();
+                  },
+                  errorMsg: "no_data_found".tr,
+                  errorType: ErrorType.EMPTY,
+                ),
+            firstPageErrorIndicatorBuilder:
+                (_) => MyErrorWidget(
+                  onRetryCall: () {
+                    controller.state.pagingController.refresh();
+                  },
+                  errorMsg: controller.state.pagingController.error
+                      .toString()
+                      .substring(
+                        controller.state.pagingController.error
+                                .toString()
+                                .lastIndexOf("(") +
+                            2,
+                        controller.state.pagingController.error
+                                .toString()
+                                .length -
+                            2,
+                      ),
+                  withLogin: true,
+                ),
+          ),
         ),
       ),
       fab: Container(
@@ -86,7 +92,7 @@ class RequestPriceItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.PriceRequestDetailsPageKEY ,arguments: item);
+        Get.toNamed(Routes.PriceRequestDetailsPageKEY, arguments: item);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -98,9 +104,9 @@ class RequestPriceItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'رقم الطلب #٢٥٢٥',
-                  style: TextStyle(
+                Text(
+                  '${"رقم الطلب ".tr}${item.orderNumber}',
+                  style: const TextStyle(
                     color: Color(0xFFF7F8F9),
                     fontSize: 20,
                     fontFamily: 'Zain',
@@ -113,13 +119,13 @@ class RequestPriceItemCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: ShapeDecoration(
-                    color: const Color(0xFF604106),
+                    color: getbackgroundcolor(item.status ?? ''),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: Text(
-                    'complete'.tr,
+                    (item.status?.replaceAll('admin.', '').tr ?? ''),
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                       color: Colors.white,
@@ -132,10 +138,9 @@ class RequestPriceItemCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Text(
-              "طقم سماعات سيارة",
-              textAlign: TextAlign.right,
-              style: TextStyle(
+            Text(
+              item.details ?? "",
+              style: const TextStyle(
                 color: Color(0xFFCCCAC7),
                 fontSize: 14,
                 fontFamily: 'Zain',
@@ -143,11 +148,9 @@ class RequestPriceItemCard extends StatelessWidget {
                 height: 1.50,
               ),
             ),
-
             Container(
               padding: const EdgeInsets.all(8),
               width: double.infinity,
-
               decoration: MyshapesStyle.lightGrayDecoration,
               child: Text(
                 "تاريخ الطلب: ${item.createdAt.toString().substring(0, 10)}",
@@ -165,5 +168,17 @@ class RequestPriceItemCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color? getbackgroundcolor(String status) {
+    switch (status) {
+      case "admin.completed":
+        return const Color(0xFF065F46);
+      case "admin.new":
+        return const Color(0xFF604106);
+      case "admin.warning":
+        return const Color(0xFF991B1B);
+    }
+    return null;
   }
 }

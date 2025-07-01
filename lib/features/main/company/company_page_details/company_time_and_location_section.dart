@@ -36,7 +36,7 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
               leading: const Icon(Icons.location_on, color: Colors.white),
               title: Text(
                 address ?? '44 طريق شارع الفهيدي, العاصمة, الكويت',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontFamily: 'Zain',
@@ -73,7 +73,7 @@ class CompanyTimeAndLocationSection extends StatelessWidget {
                   Utils.showSheet(
                     context,
                     NormalSheet(
-                      title: "select_area".tr,
+                      title: "work_time".tr,
                       child: WorkTimeSheet(times: times),
                     ),
                   );

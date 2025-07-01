@@ -10,42 +10,33 @@ class NormalSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      maxChildSize: 1,
-      minChildSize: 0.9,
-      initialChildSize: 1,
-      // snap: false,
-      expand: true,
-      builder: (BuildContext context, ScrollController scrollController) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                color: colorBlack,
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Center(
-                    child: Container(
-                      decoration: ShapeDecoration(
-                        shape: const StadiumBorder(),
-                        color: Colors.grey.shade400,
-                      ),
-                      height: 5,
-                      width: 100,
-                    ),
-                  ),
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.only(top: 16),
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // key to wrap content
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+              child: Container(
+                decoration: ShapeDecoration(
+                  shape: const StadiumBorder(),
+                  color: Colors.grey.shade400,
                 ),
+                height: 5,
+                width: 100,
               ),
-
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                color: colorBlack,
-                width: double.infinity,
+            ),
+            if (title != null) ...[
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  title ?? "",
+                  title!,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -54,11 +45,11 @@ class NormalSheet extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(child: child ?? Container()),
             ],
-          ),
-        );
-      },
+            if (child != null) child!,
+          ],
+        ),
+      ),
     );
   }
 }

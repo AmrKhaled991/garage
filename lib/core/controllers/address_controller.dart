@@ -33,24 +33,7 @@ class AddressController extends GetxController {
       sharedPreferenceRepository.setLastSelectedArea(a);
     });
 
-    selectedAddress.stream.listen((a) {
-      print("selectedAddress: $a");
-      if (selectedAddress.value == null) {
-        selectedArea.value = null;
-      } else {
-        selectedArea.value = areas.value.data
-            ?.firstWhere(
-              (element) =>
-                  element.states?.any(
-                    (s) => s.id == selectedAddress.value?.stateId,
-                  ) ??
-                  false,
-            )
-            .states
-            ?.firstWhere((ss) => ss.id == selectedAddress.value?.stateId);
-      }
-    });
-
+    fetchAddresses();
     // addresses.stream.listen((a) {
     //   if(a.loading){
     //     return;
@@ -75,18 +58,21 @@ class AddressController extends GetxController {
 
   var addAddressLoading = LoadingState().obs;
   var deleteAddressLoading = LoadingState().obs;
-  var addresses = LoadingState<List<AddressData>>().obs;
+  var addresses = LoadingState<List<Country>>().obs;
   var guestAddress = Rx<AddressData?>(null);
   var areas = LoadingState<List<City>?>().obs;
   var selectedArea = Rx<StateData?>(null);
-  var selectedAddress = Rx<AddressData?>(null);
+  var selectedAddress = Rx<Country?>(null);
 
   void fetchAddresses() async {
     addresses.value = LoadingState.loading();
-    addresses.value = await addressRepository.getAddresses();
+    addresses.value = await addressRepository.getRegions();
+    print("11111111: ${addresses.value.data?.length}");
     if (selectedAddress.value == null) {
       selectedAddress.value = addresses.value.data?.firstWhereOrNull(
-        (element) => element.isDefault == true,
+        (element) =>
+            (element.title?.contains("الكويت") ??
+                false || (element.title?.contains("kuwait") ?? false)),
       );
     }
   }

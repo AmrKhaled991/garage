@@ -91,6 +91,7 @@ dependencies:
   permission_handler: ^12.0.0+1
   geocoding: ^4.0.0
   webview_flutter: ^4.13.0
+  pusher_channels_flutter: ^2.5.0
 
 dev_dependencies:
 

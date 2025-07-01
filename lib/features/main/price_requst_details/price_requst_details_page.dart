@@ -35,15 +35,15 @@ class PriceRequestDetailsPage extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: ShapeDecoration(
-                          color: const Color(0xFF604106),
+                          color: getbackgroundcolor(item.status ?? ''),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Text(
-                          'مكتمله',
+                        child: Text(
+                          (item.status?.replaceAll('admin.', '').tr ?? ''),
 
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontFamily: 'Zain',
@@ -51,20 +51,20 @@ class PriceRequestDetailsPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Text(
-                        'طقم سماعات سيارة',
+                      Text(
+                        item.details ?? '',
 
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontFamily: 'Zain',
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const Text(
-                        'شركة المجد للاكسسوارت',
+                      Text(
+                        item.provider?.name ?? '',
 
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xFFCCCAC7),
                           fontSize: 16,
                           fontFamily: 'Zain',
@@ -107,7 +107,7 @@ class PriceRequestDetailsPage extends StatelessWidget {
                 Expanded(
                   child: PriceRequestDetailsSection(
                     header: "نوع الخدمة".tr,
-                    text: "أكسسوارت".tr,
+                    text: item.category?.name ?? "",
                   ),
                 ),
               ],
@@ -121,12 +121,24 @@ class PriceRequestDetailsPage extends StatelessWidget {
             ),
             PriceRequestDetailsSection(
               header: "عنوان مركز الصيانه ".tr,
-              text: "لا 44 طريق شارع الفهيدي, العاصمة, الكويت".tr,
+              text: item.provider?.data?.mapDesc ?? "",
             ),
           ],
         ),
       ),
     );
+  }
+
+  Color? getbackgroundcolor(String status) {
+    switch (status) {
+      case "admin.completed":
+        return const Color(0xFF065F46);
+      case "admin.new":
+        return const Color(0xFF604106);
+      case "admin.warning":
+        return const Color(0xFF991B1B);
+    }
+    return null;
   }
 }
 

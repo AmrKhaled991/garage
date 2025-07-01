@@ -267,7 +267,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.AddPriceRequest,
-      page: () => const AddPriceRequestPage(),
+      page: () => AddPriceRequestPage(),
       binding: AddPriceRequestBinding(),
       transition: Transition.cupertino,
     ),
@@ -285,8 +285,8 @@ class AppPages {
     ),
     GetPage(
       name: Routes.AddressPage,
-      page: () => const AddressPage(),
-      binding: AddressBinding(),
+      page: () => AddressPage(),
+      binding: UserAddressBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(
@@ -304,6 +304,7 @@ class AppPages {
     GetPage(
       name: Routes.MAP,
       page: () => const MapScreen(),
+      bindings: [AddNewAddressBinding()],
       transition: Transition.cupertino,
     ),
     GetPage(

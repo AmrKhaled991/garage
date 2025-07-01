@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:garage/core/ui/MyButton.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/features/auth/register/register_controller.dart';
-import 'package:garage/features/auth/register/register_state.dart';
-import 'package:garage/features/main/common/models/map_result.dart';
+import 'package:garage/features/main/add_new_address/add_new_address_logic.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -23,7 +22,7 @@ class _MapScreenState extends State<MapScreen> {
   bool _locationGranted = false;
   LatLng? _userLatLng;
   String? _userAddress;
-  RegisterController controller = Get.find<RegisterController>();
+  final getControllerType = Get.arguments;
 
   @override
   void initState() {
@@ -101,7 +100,6 @@ class _MapScreenState extends State<MapScreen> {
     await Future.delayed(const Duration(milliseconds: 300));
     final address = await _getAddressFromLatLng(tappedLatLng);
     setState(() {
-      print("address111: $address");
       _userAddress = address;
     });
 
@@ -167,11 +165,22 @@ class _MapScreenState extends State<MapScreen> {
                           MyButton(
                             title: 'confirm'.tr,
                             onClick: () {
-                              controller.latLngChanged(
-                                _userLatLng?.latitude ?? 0,
-                                _userLatLng?.longitude ?? 0,
-                                _userAddress,
-                              );
+                              if (getControllerType == "register") {
+                                print("type is register");
+                                Get.find<RegisterController>().latLngChanged(
+                                  _userLatLng?.latitude ?? 0,
+                                  _userLatLng?.longitude ?? 0,
+                                  _userAddress,
+                                );
+                              } else if (getControllerType == "addAddress") {
+                                print("type is addAddress");
+                                Get.find<AddNewAddressController>()
+                                    .latLngChanged(
+                                      _userLatLng?.latitude ?? 0,
+                                      _userLatLng?.longitude ?? 0,
+                                      _userAddress,
+                                    );
+                              }
                               Get.back();
                             },
                           ),

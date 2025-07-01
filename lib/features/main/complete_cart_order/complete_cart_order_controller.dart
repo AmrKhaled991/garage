@@ -30,7 +30,7 @@ class CompleteCartOrderController extends GetxController {
     } else if (state.phoneController.text.isEmpty) {
       Utils.showSnackBar("error_phone".tr);
       return false;
-    } else if (state.stateController.text.isEmpty) {
+    } else if (state.stateController.value == null) {
       Utils.showSnackBar("state_error".tr);
       return false;
     } else if (state.streetController.text.isEmpty) {

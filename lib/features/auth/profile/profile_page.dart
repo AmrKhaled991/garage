@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:garage/features/auth/profile/widgets/auth_item.dart';
 import 'package:garage/features/main/account_settings/account_settings_page.dart';
 import 'package:garage/features/main/account_settings/widgest/language_widget.dart';
+import 'package:garage/utils/links_utils.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -18,6 +19,7 @@ import 'package:garage/features/auth/profile/widgets/settings_item.dart';
 import 'package:garage/features/main/common/text_header_widget.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/utlis.dart';
 import 'profile_controller.dart';
@@ -259,16 +261,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               icon: "assets/images/ic_logout.svg",
                               bgColor: const Color(0xFFFF4C4C),
                               onClick: () {
-                                userController.logout();
                                 Utils.showSheet(
                                   context,
                                   NormalSheet(
                                     child: CustomExistSheet(
                                       title: "logout".tr,
-                                      onClick:
-                                          () => userController.logout().then(
-                                            (value) => Get.back(),
-                                          ),
+                                      onClick: () {
+                                        userController.logout().then(
+                                          (value) => Get.back(),
+                                        );
+                                      },
                                     ),
                                   ),
                                 );
@@ -289,37 +291,34 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           const SizedBox(height: 8),
 
-                          const Row(
-                            spacing: 10,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              MyImage(
-                                image: "assets/images/twitter.svg",
-                                width: 32,
-                                height: 32,
-                              ),
-                              MyImage(
-                                image: "assets/images/ic_snap.svg",
-                                width: 32,
-                                height: 32,
-                              ),
-                              MyImage(
-                                image: "assets/images/instagram.svg",
-                                width: 32,
-                                height: 32,
-                              ),
-                              MyImage(
-                                image: "assets/images/ic_tiktok.svg",
-                                width: 32,
-                                height: 32,
-                              ),
-                              MyImage(
-                                image: "assets/images/youtube.png",
-                                width: 32,
-                                height: 32,
-                              ),
-                            ],
-                          ),
+                          Obx(() {
+                            var listSocials =
+                                Get.find<MainController>().socials.value.data;
+                            print("listSocialfdsfs: ${listSocials?.length}");
+
+                            if (listSocials == null || listSocials.isEmpty) {
+                              return const SizedBox.shrink();
+                            }
+
+                            return Wrap(
+                              spacing: 10,
+                              alignment: WrapAlignment.center,
+                              children:
+                                  listSocials.map<Widget>((social) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        print("social.link: ${social.link}");
+                                        LinkHelper.openLink(social.link ?? '');
+                                      },
+                                      child: MyImage(
+                                        image: social.icon,
+                                        width: 32,
+                                        height: 32,
+                                      ),
+                                    );
+                                  }).toList(),
+                            );
+                          }),
 
                           // authItem(
                           //   title: "remove_account".tr,

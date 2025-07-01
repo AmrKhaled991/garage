@@ -7,6 +7,7 @@ class PriceRequestController extends GetxController {
   final PriceRequestState state = PriceRequestState();
   OrdersRepository ordersRepository = Get.find<OrdersRepository>();
   @override
+
   void onInit() {
     super.onInit();
     state.pagingController.addPageRequestListener((pageKey) {

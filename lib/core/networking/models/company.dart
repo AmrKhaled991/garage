@@ -154,7 +154,7 @@ class Company {
   }
 }
 
-class Socials {
+class Socials extends Decodable<Socials> {
   Socials({this.key, this.link});
 
   Socials.fromJson(dynamic json) {
@@ -169,6 +169,12 @@ class Socials {
     map['key'] = key;
     map['link'] = link;
     return map;
+  }
+
+  @override
+  Socials decode(json) {
+    // TODO: implement decode
+    return Socials.fromJson(json);
   }
 }
 

@@ -42,4 +42,12 @@ class AddressRepository extends BaseRepository {
       create: () => APIDynamicResponse(create: () => DynamicModel()),
     );
   }
+
+  Future<LoadingState<List<Country>>> getRegions() async {
+    return networkHandler.getRequest(
+      endpoint: "regions",
+      create: () => APIListResponse<Country>(create: () => Country()),
+    );
+  }
+
 }

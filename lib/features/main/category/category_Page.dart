@@ -143,8 +143,7 @@ class ProviderItems extends StatefulWidget {
 }
 
 class _ProviderItemsState extends State<ProviderItems> {
-  final CategoriesRepository categoryRepository =
-      Get.find<CategoriesRepository>();
+ 
 
   @override
   Widget build(BuildContext context) {
