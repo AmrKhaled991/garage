@@ -481,9 +481,12 @@ const Map<String, String> ar_EG = {
   "cost:": "التكلفه:",
   "kwt_dinar": "دينار كويتي",
   "direct_contact": "التواصل المباشر",
-  
+
   "select_company": "يرجى تحديد الشركة",
   "company_error": "يرجى تحديد الشركة",
-   "description_error": "يرجى تحديد الوصف",
-   "file_error": "يرجى تحديد الملف",
+  "description_error": "يرجى تحديد الوصف",
+  "file_error": "يرجى تحديد الملف",
+  "Notifications": "الاشعارات",
+  "all_chats": "كل الدردشات",
+  "no_messages": "لا يوجد رسائل",
 };

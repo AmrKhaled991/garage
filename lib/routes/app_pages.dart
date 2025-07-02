@@ -9,6 +9,8 @@ import 'package:garage/features/auth/forget_password/forget_password_binding.dar
 import 'package:garage/features/auth/forget_password/forget_password_page.dart';
 import 'package:garage/features/auth/login/login_binding.dart';
 import 'package:garage/features/auth/login/login_page.dart';
+import 'package:garage/features/auth/notificatoins/notificatoins_binding.dart';
+import 'package:garage/features/auth/notificatoins/notificatoins_view.dart';
 import 'package:garage/features/auth/otp_verify/otp_verify_binding.dart';
 import 'package:garage/features/auth/otp_verify/otp_verify_page.dart';
 import 'package:garage/features/auth/success_dialog_screen/success_dialog_screen.dart';
@@ -285,7 +287,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.AddressPage,
-      page: () => AddressPage(),
+      page: () => const AddressPage(),
       binding: UserAddressBinding(),
       transition: Transition.cupertino,
     ),
@@ -310,6 +312,12 @@ class AppPages {
     GetPage(
       name: Routes.WEBVIEW_PAYMENT,
       page: () => WebviewPaymentPage(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.NotificatoinsPage,
+      page: () => const NotificatoinsPage(),
+      binding: NotificationsBinding(),
       transition: Transition.cupertino,
     ),
   ];

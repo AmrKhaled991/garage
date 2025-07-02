@@ -10,6 +10,6 @@ class AddressState {
   var isLoadingChangeStatus = LoadingState().obs;
   var isLoadingDelete = LoadingState().obs;
   AddressState() {
-    ///Initialize 
+    ///Initialize
   }
 }

@@ -195,7 +195,6 @@ class RegisterController extends GetxController {
     return result;
   }
 
-
   void setWorkCategories(OptionItem item) {
     if (item.id != null) {
       state.workItem.value = item;

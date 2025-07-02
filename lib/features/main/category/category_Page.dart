@@ -22,7 +22,10 @@ class CategoryPage extends StatelessWidget {
   CategoryPage({Key? key}) : super(key: key);
   List<Category>? categories = Get.arguments;
   CategoryController controller = Get.find<CategoryController>();
- 
+  CategoryState? categorystate = Get.find<CategoryController>().state;
+  final RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -32,96 +35,111 @@ class CategoryPage extends StatelessWidget {
       body: SafeArea(
         child: Obx(() {
           var categorySelectedId = state.selectedCategoryId.value;
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                backgroundColor: colorBlack,
-                leading: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-                  ),
-                ),
-                actions: [
-                  GestureDetector(
-                    onTap: () => Get.toNamed(Routes.SEARCH),
-                    child: const MyImage(image: "assets/images/ic_search.svg"),
-                  ),
-                ],
-                title: Text(
-                  "categories".tr,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color(0xFFF7F8F9),
-                    fontSize: 20,
-                    fontFamily: 'Zain',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: SliverAppBarDelegate(
-                  Container(
-                    height: 48,
-                    color: colorBlack,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 8,
+          return SmartRefresher(
+            header: const WaterDropHeader(),
+            controller: _refreshController,
+            physics: const BouncingScrollPhysics(),
+            onRefresh:
+                () => {
+                  categorystate!.pagingController.refresh(),
+                  _refreshController.refreshCompleted(),
+                },
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  backgroundColor: colorBlack,
+                  leading: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                      ),
                     ),
-                    child: Obx(() {
-                      final selectedIndex =
-                          state.selectedIndex.value; // 👈 use directly
-
-                      return ListView(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          SubCategoryItem(
-                            categoryData: Category(id: 0, name: "all".tr),
-                            isSelected: state.selectedIndex.value == null,
-                            onClick: () {
-                              if (state.selectedIndex.value == null) return;
-                              controller.categoryChange(null, null);
-                            },
-                          ),
-                          const SizedBox(width: 8),
-                          ListView.separated(
-                            separatorBuilder:
-                                (context, index) => const SizedBox(width: 8),
-                            itemBuilder: (context, index) {
-                              var item = categories?.elementAt(index);
-                              return SubCategoryItem(
-                                isSelected: selectedIndex == index,
-
-                                categoryData: categories?[index],
-                                onClick: () {
-                                  if (state.selectedIndex.value == index)
-                                    return;
-                                  controller.categoryChange(
-                                    index,
-                                    item?.id?.toInt(),
-                                  );
-                                },
-                              );
-                            },
-                            itemCount: categories?.length ?? 0,
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                          ),
-                        ],
-                      );
-                    }),
+                  ),
+                  actions: [
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.SEARCH),
+                      child: const MyImage(
+                        image: "assets/images/ic_search.svg",
+                      ),
+                    ),
+                  ],
+                  title: Text(
+                    "categories".tr,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Color(0xFFF7F8F9),
+                      fontSize: 20,
+                      fontFamily: 'Zain',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(child: ProviderItems(categorystate: state)),
-            ],
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: SliverAppBarDelegate(
+                    Container(
+                      height: 48,
+                      color: colorBlack,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 8,
+                      ),
+                      child: Obx(() {
+                        final selectedIndex =
+                            state.selectedIndex.value; // 👈 use directly
+
+                        return ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            SubCategoryItem(
+                              categoryData: Category(id: 0, name: "all".tr),
+                              isSelected: state.selectedIndex.value == null,
+                              onClick: () {
+                                if (state.selectedIndex.value == null) return;
+                                controller.categoryChange(null, null);
+                              },
+                            ),
+                            const SizedBox(width: 8),
+                            ListView.separated(
+                              separatorBuilder:
+                                  (context, index) => const SizedBox(width: 8),
+                              itemBuilder: (context, index) {
+                                var item = categories?.elementAt(index);
+                                return SubCategoryItem(
+                                  isSelected: selectedIndex == index,
+
+                                  categoryData: categories?[index],
+                                  onClick: () {
+                                    if (state.selectedIndex.value == index)
+                                      return;
+                                    controller.categoryChange(
+                                      index,
+                                      item?.id?.toInt(),
+                                    );
+                                  },
+                                );
+                              },
+                              itemCount: categories?.length ?? 0,
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(child: ProviderItems(categorystate: state)),
+              ],
+            ),
           );
         }),
       ),
@@ -143,8 +161,6 @@ class ProviderItems extends StatefulWidget {
 }
 
 class _ProviderItemsState extends State<ProviderItems> {
- 
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {

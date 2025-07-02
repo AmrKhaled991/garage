@@ -16,6 +16,7 @@ import 'package:garage/utils/utlis.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
 import 'maintenance_appointment_reminder_controller.dart';
@@ -30,6 +31,9 @@ class MaintenanceAppointmentReminderPage extends StatefulWidget {
 
 class _MaintenanceAppointmentReminderPageState
     extends State<MaintenanceAppointmentReminderPage> {
+  final RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
   @override
   Widget build(BuildContext context) {
     MaintenanceAppointmentReminderController controller =
@@ -37,48 +41,58 @@ class _MaintenanceAppointmentReminderPageState
     var state = Get.find<MaintenanceAppointmentReminderController>().state;
     return MyScaffold(
       title: "maintenance_appointment_reminder".tr,
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: 100.0),
-        child: PagedListView<int, Reminder>(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          pagingController: controller.state.pagingController,
-          padding: const EdgeInsets.all(8),
-          builderDelegate: PagedChildBuilderDelegate<Reminder>(
-            itemBuilder:
-                (context, item, index) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: MaintenanceAppointmentReminderItem(item: item),
-                ),
-            firstPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
-            newPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
-            noItemsFoundIndicatorBuilder:
-                (_) => MyErrorWidget(
-                  onRetryCall: () {
-                    controller.state.pagingController.refresh();
-                  },
-                  errorMsg: "no_data_found".tr,
-                  errorType: ErrorType.EMPTY,
-                ),
-            firstPageErrorIndicatorBuilder:
-                (_) => MyErrorWidget(
-                  onRetryCall: () {
-                    controller.state.pagingController.refresh();
-                  },
-                  errorMsg: controller.state.pagingController.error
-                      .toString()
-                      .substring(
-                        controller.state.pagingController.error
-                                .toString()
-                                .lastIndexOf("(") +
-                            2,
-                        controller.state.pagingController.error
-                                .toString()
-                                .length -
-                            2,
-                      ),
-                  withLogin: true,
-                ),
+      body: SmartRefresher(
+        header: const WaterDropHeader(),
+        controller: _refreshController,
+        physics: const BouncingScrollPhysics(),
+        onRefresh:
+            () => {
+              controller.state.pagingController.refresh(),
+              _refreshController.refreshCompleted(),
+            },
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 100.0),
+          child: PagedListView<int, Reminder>(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            pagingController: controller.state.pagingController,
+            padding: const EdgeInsets.all(8),
+            builderDelegate: PagedChildBuilderDelegate<Reminder>(
+              itemBuilder:
+                  (context, item, index) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: MaintenanceAppointmentReminderItem(item: item),
+                  ),
+              firstPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
+              newPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
+              noItemsFoundIndicatorBuilder:
+                  (_) => MyErrorWidget(
+                    onRetryCall: () {
+                      controller.state.pagingController.refresh();
+                    },
+                    errorMsg: "no_data_found".tr,
+                    errorType: ErrorType.EMPTY,
+                  ),
+              firstPageErrorIndicatorBuilder:
+                  (_) => MyErrorWidget(
+                    onRetryCall: () {
+                      controller.state.pagingController.refresh();
+                    },
+                    errorMsg: controller.state.pagingController.error
+                        .toString()
+                        .substring(
+                          controller.state.pagingController.error
+                                  .toString()
+                                  .lastIndexOf("(") +
+                              2,
+                          controller.state.pagingController.error
+                                  .toString()
+                                  .length -
+                              2,
+                        ),
+                    withLogin: true,
+                  ),
+            ),
           ),
         ),
       ),

@@ -10,6 +10,7 @@ import 'package:garage/core/ui/my_loading_widget.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'price_request_controller.dart';
 
@@ -23,52 +24,66 @@ class PriceRequestPage extends StatefulWidget {
 class _PriceRequestPageState extends State<PriceRequestPage> {
   PriceRequestController controller = Get.find<PriceRequestController>();
 
+  final RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
+
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
       title: "price_request".tr,
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: 100.0),
-        child: PagedListView<int, UserPricesRequest>(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          pagingController: controller.state.pagingController,
-          padding: const EdgeInsets.all(8),
-          builderDelegate: PagedChildBuilderDelegate<UserPricesRequest>(
-            itemBuilder:
-                (context, item, index) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: RequestPriceItemCard(item: item),
-                ),
-            firstPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
-            newPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
-            noItemsFoundIndicatorBuilder:
-                (_) => MyErrorWidget(
-                  onRetryCall: () {
-                    controller.state.pagingController.refresh();
-                  },
-                  errorMsg: "no_data_found".tr,
-                  errorType: ErrorType.EMPTY,
-                ),
-            firstPageErrorIndicatorBuilder:
-                (_) => MyErrorWidget(
-                  onRetryCall: () {
-                    controller.state.pagingController.refresh();
-                  },
-                  errorMsg: controller.state.pagingController.error
-                      .toString()
-                      .substring(
-                        controller.state.pagingController.error
-                                .toString()
-                                .lastIndexOf("(") +
-                            2,
-                        controller.state.pagingController.error
-                                .toString()
-                                .length -
-                            2,
-                      ),
-                  withLogin: true,
-                ),
+      body: SmartRefresher(
+        header: const WaterDropHeader(),
+        controller: _refreshController,
+        physics: const BouncingScrollPhysics(),
+        onRefresh:
+            () => {
+              controller.state.pagingController.refresh(),
+              _refreshController.refreshCompleted(),
+            },
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 100.0),
+          child: PagedListView<int, UserPricesRequest>(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            pagingController: controller.state.pagingController,
+            padding: const EdgeInsets.all(8),
+            builderDelegate: PagedChildBuilderDelegate<UserPricesRequest>(
+              itemBuilder:
+                  (context, item, index) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: RequestPriceItemCard(item: item),
+                  ),
+              firstPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
+              newPageProgressIndicatorBuilder: (_) => const MyLoadingWidget(),
+              noItemsFoundIndicatorBuilder:
+                  (_) => MyErrorWidget(
+                    onRetryCall: () {
+                      controller.state.pagingController.refresh();
+                    },
+                    errorMsg: "no_data_found".tr,
+                    errorType: ErrorType.EMPTY,
+                  ),
+              firstPageErrorIndicatorBuilder:
+                  (_) => MyErrorWidget(
+                    onRetryCall: () {
+                      controller.state.pagingController.refresh();
+                    },
+                    errorMsg: controller.state.pagingController.error
+                        .toString()
+                        .substring(
+                          controller.state.pagingController.error
+                                  .toString()
+                                  .lastIndexOf("(") +
+                              2,
+                          controller.state.pagingController.error
+                                  .toString()
+                                  .length -
+                              2,
+                        ),
+                    withLogin: true,
+                  ),
+            ),
           ),
         ),
       ),

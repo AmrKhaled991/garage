@@ -146,7 +146,7 @@ class Country extends Decodable<Country> {
     map['name'] = title;
     return map;
   }
-  
+
   @override
   Country decode(json) {
     // TODO: implement decode

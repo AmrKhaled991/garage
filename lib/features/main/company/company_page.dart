@@ -68,6 +68,7 @@ class _CompanyPageState extends State<CompanyPage>
                                 horizontal: 8.0,
                               ),
                               child: CompanyItemCard(
+                                showChat: true,
                                 title: providerDetails?.name,
                                 subTitle: providerDetails?.data?.category?.name,
                                 id: providerDetails?.id,

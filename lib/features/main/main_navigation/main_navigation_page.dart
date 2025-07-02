@@ -23,8 +23,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   final List<Widget> _children = [
     HomePage(),
     MyOrdersPage(),
-    const CartPage(),
-    const AllChatsPage(),
+    CartPage(),
+    AllChatsPage(),
     const ProfilePage(),
   ];
 

@@ -7,6 +7,7 @@ import 'package:garage/core/networking/models/socials/socials.dart';
 import 'package:garage/core/networking/models/supportedCountry.dart';
 import 'package:garage/core/repositories/main_repository.dart';
 import 'package:garage/core/storage/preference_manager.dart';
+import 'package:garage/features/all_chats/all_chats_controller.dart';
 import 'package:garage/features/main/home/home_logic.dart';
 import 'package:garage/features/main/my_orders/my_orders_controller.dart';
 import 'package:get/get.dart';
@@ -60,6 +61,7 @@ class MainController extends GetxController {
     Get.reload<MainController>(force: true);
     Get.reload<UserController>(force: true);
     Get.reload<HomeController>(force: true);
+    Get.reload<AllChatsController>(force: true);
     Get.reload<MyOrdersController>(force: true);
     language.value = (language.value == "en") ? "ar" : "en";
   }

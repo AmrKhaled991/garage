@@ -4,6 +4,7 @@ import 'package:garage/core/networking/loading_state.dart';
 import 'package:garage/core/networking/models/brand/brand.dart';
 import 'package:garage/core/networking/models/reminder/reminder.dart';
 import 'package:garage/core/networking/models/user_car/user_car.dart';
+import 'package:garage/core/networking/models/user_notification/notifications.dart';
 import 'package:garage/core/repositories/base_repository.dart';
 
 class UserCarRepository extends BaseRepository {

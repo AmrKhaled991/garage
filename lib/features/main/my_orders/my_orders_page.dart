@@ -5,6 +5,7 @@ import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'my_orders_controller.dart';
 
@@ -12,6 +13,10 @@ class MyOrdersPage extends StatelessWidget {
   final MyOrdersController controller = Get.find<MyOrdersController>();
 
   MyOrdersPage({Key? key}) : super(key: key);
+
+  final RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +27,24 @@ class MyOrdersPage extends StatelessWidget {
       Obx(() {
         return LoadingWidget(
           loadingState: controller.state.orders.value,
-          child: ListView.separated(
-            padding: const EdgeInsets.only(bottom: 100),
-            itemBuilder:
-                (context, index) => OrderStatusCard(
-                  order: controller.state.orders.value.data![index],
-                ),
-            separatorBuilder: (context, index) => const SizedBox(height: 8),
-            itemCount: controller.state.orders.value.data?.length ?? 0,
+          child: SmartRefresher(
+            header: const WaterDropHeader(),
+            controller: _refreshController,
+            physics: const BouncingScrollPhysics(),
+            onRefresh:
+                () => {
+                  controller.fetchMyOrders(),
+                  _refreshController.refreshCompleted(),
+                },
+            child: ListView.separated(
+              padding: const EdgeInsets.only(bottom: 100),
+              itemBuilder:
+                  (context, index) => OrderStatusCard(
+                    order: controller.state.orders.value.data![index],
+                  ),
+              separatorBuilder: (context, index) => const SizedBox(height: 8),
+              itemCount: controller.state.orders.value.data?.length ?? 0,
+            ),
           ),
         );
       }),

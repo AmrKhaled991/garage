@@ -59,7 +59,7 @@ class AddNewAddressController extends GetxController {
         state.timeId.value != null
             ? await mainRepository.updateAddress(
               body: body,
-              id:  state.timeId.value,
+              id: state.timeId.value,
             )
             : await mainRepository.storeAddress(body: body);
     if (state.isLoading.value.success) {

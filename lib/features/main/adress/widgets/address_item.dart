@@ -60,12 +60,12 @@ class _AddressItemState extends State<AddressItem> {
               Transform.scale(
                 scale: 0.9,
                 child: Switch(
-                  value:  isActive,
+                  value: isActive,
                   activeColor: colorWhite,
                   activeTrackColor: colorPrimary,
                   inactiveTrackColor: colorGrey,
                   inactiveThumbColor: colorWhite,
-                  onChanged: (value)async {
+                  onChanged: (value) async {
                     setState(() => isActive = value);
                     await Future.delayed(const Duration(milliseconds: 300));
                     controller.changeActivation(widget.item?.id ?? 0, (
@@ -106,7 +106,6 @@ class _AddressItemState extends State<AddressItem> {
             children: [
               TextButton.icon(
                 onPressed: () {
-                  
                   final id = widget.item?.id;
                   if (id != null) {
                     controller.deleteAddress(id, (success) {

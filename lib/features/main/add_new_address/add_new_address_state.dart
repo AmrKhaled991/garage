@@ -9,12 +9,11 @@ class AddNewAddressState {
   var lat = RxnDouble(null);
   var lng = RxnDouble(null);
   var mapDesc = RxnString(null);
-  var timeId=RxnInt(null);
+  var timeId = RxnInt(null);
   var isActive = false.obs;
   var isDefault = false.obs;
   var isLoading = LoadingState().obs;
   AddNewAddressState() {
     ///Initialize variables
   }
-
 }

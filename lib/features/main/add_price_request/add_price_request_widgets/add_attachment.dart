@@ -182,7 +182,7 @@ class _AddAttachmentState extends State<AddAttachment> {
 class WorkCategoriesDropDown extends StatefulWidget {
   final AddPriceRequestController controller;
   final AddPriceRequestState state;
-  final Function(OptionItem)?  onOptionSelected;
+  final Function(OptionItem)? onOptionSelected;
   const WorkCategoriesDropDown({
     super.key,
     required this.controller,

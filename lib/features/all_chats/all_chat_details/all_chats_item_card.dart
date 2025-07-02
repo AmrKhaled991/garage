@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/networking/models/chat_rooms/room.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/theme/styles.dart';
 
 class AllChatsItemCard extends StatelessWidget {
-  const AllChatsItemCard({super.key});
+  final Room? room;
+  const AllChatsItemCard({super.key, this.room});
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +21,17 @@ class AllChatsItemCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: const MyImage(
-                    image: "assets/images/bar_bg.png",
+                  child: MyImage(
+                    image:
+                        room?.members?.first.image ??
+                        "assets/images/bar_bg.png",
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Column(
                     spacing: 8,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,20 +40,21 @@ class AllChatsItemCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "شركة جراج أونلاين للصيانه",
+                            room?.members?.first.name ??
+                                "شركة جراج أونلاين للصيانه",
 
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                               fontFamily: 'Zain',
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          CircleAvatar(
+                          const CircleAvatar(
                             backgroundColor: Colors.red,
                             radius: 10,
                             child: Text(
-                              "2",
+                              "1",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -61,8 +66,9 @@ class AllChatsItemCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        "نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص.",
-                        style: TextStyle(
+                        room?.lastMessageBody ??
+                            "نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص.",
+                        style: const TextStyle(
                           color: Color(0xFFCCCAC7),
                           fontSize: 12,
                           fontFamily: 'Zain',
@@ -70,8 +76,8 @@ class AllChatsItemCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '2 x 50 د.ك',
-                        style: TextStyle(
+                        room?.lastMessageCreatedAt ?? '2 x 50 د.ك',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                           fontFamily: 'Almarai',

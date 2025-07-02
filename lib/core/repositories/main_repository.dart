@@ -8,6 +8,8 @@ import 'package:garage/core/networking/models/city.dart';
 import 'package:garage/core/networking/models/page.dart';
 import 'package:garage/core/networking/models/socials/socials.dart';
 import 'package:garage/core/networking/models/supportedCountry.dart';
+import 'package:garage/core/networking/models/user_notification/notifications.dart';
+import 'package:garage/core/networking/models/user_notification/user_notifications_data.dart';
 import '../networking/models/settings.dart';
 import 'base_repository.dart';
 import 'package:get/get_connect/http/src/multipart/form_data.dart';
@@ -138,6 +140,18 @@ class MainRepository extends BaseRepository {
 
       create:
           () => APIDynamicResponse<DynamicModel>(create: () => DynamicModel()),
+    );
+  }
+
+  Future<LoadingState<UserNotificationsData>> getUserNotification({
+    page = 1,
+  }) async {
+    return networkHandler.getRequest(
+      endpoint: "notifications?page=$page",
+      create:
+          () => APIResponse<UserNotificationsData>(
+            create: () => UserNotificationsData(),
+          ),
     );
   }
 

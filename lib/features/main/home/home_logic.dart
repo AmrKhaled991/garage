@@ -21,9 +21,6 @@ class HomeController extends GetxController {
   }
 
   getCategories({bool forceRefresh = false}) async {
-    if (state.categoriesList.value.data != null && !forceRefresh) {
-      return;
-    }
     state.categoriesList.value = LoadingState.loading();
     state.categoriesList.value = await _homeRepository.getCategories();
   }

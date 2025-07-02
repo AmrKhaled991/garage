@@ -42,7 +42,10 @@ class OrdersRepository extends BaseRepository {
   }) async {
     return networkHandler.getRequest(
       endpoint: "my-price-requests?page=$page",
-      create: () => APIListResponse<UserPricesRequest>(create: () => UserPricesRequest()),
+      create:
+          () => APIListResponse<UserPricesRequest>(
+            create: () => UserPricesRequest(),
+          ),
     );
   }
 

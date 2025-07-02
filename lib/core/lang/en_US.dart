@@ -484,6 +484,14 @@ const Map<String, String> en_US = {
   "direct_contact": "Direct Contact",
   "select_company": "Please select a company",
   "company_error": "Please select a company",
-   "description_error": 'please enter the description',
-   "file_error":'please select a file',
+  "description_error": 'please enter the description',
+  "file_error": 'please select a file',
+
+  "Notifications": "Notifications",
+  "Select_all": "Select All",
+  "Mark_as_read": "Mark as read",
+  "Mark_as_unread": "Mark as unread",
+  "Delete": "Delete",
+  "all_chats": "All Chats",
+  "no_messages": "No Messages",
 };

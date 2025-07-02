@@ -12,7 +12,6 @@ class Provider {
   bool? isNotify;
   String? token;
   ProviderInfo? data;
-  
 
   Provider({
     this.id,

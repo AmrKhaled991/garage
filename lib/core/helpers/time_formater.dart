@@ -7,10 +7,10 @@ class DateTimeFormatter {
 
   /// Formats a DateTime to "00:00" (24-hour, zero-padded)
   static String formatHour24(DateTime dt) => DateFormat('HH:mm').format(dt);
- static String convert24to12(String time24) {
-  final dateTime = DateFormat('HH:mm').parse(time24);
-  return DateFormat('hh:mm a').format(dateTime);
-}
+  static String convert24to12(String time24) {
+    final dateTime = DateFormat('HH:mm').parse(time24);
+    return DateFormat('hh:mm a').format(dateTime);
+  }
 
   /// Formats a DateTime to "12:00 AM" style (12-hour with AM/PM)
   static String formatHour12(DateTime dt) => DateFormat('hh:mm a').format((dt));

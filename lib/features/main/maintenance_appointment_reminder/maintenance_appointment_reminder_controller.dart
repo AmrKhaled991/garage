@@ -72,14 +72,14 @@ class MaintenanceAppointmentReminderController extends GetxController {
       return true;
     }
   }
-    void resetForm() {
+
+  void resetForm() {
     state.title.clear();
     state.description.clear();
     state.kilometer.clear();
     state.date.value = "";
     state.hour.value = "";
     // Optional: Reset loading or request status if needed
-    // state.reminderRequest.value = LoadingState(); 
+    // state.reminderRequest.value = LoadingState();
   }
-
 }

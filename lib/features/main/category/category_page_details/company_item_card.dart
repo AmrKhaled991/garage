@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:garage/core/networking/models/provider_response/provider_response.dart';
 import 'package:garage/core/ui/my_image.dart';
+import 'package:garage/core/ui/my_loading_widget.dart';
+import 'package:garage/features/main/company/company_controller.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
+import 'package:lottie/lottie.dart';
 
 class CompanyItemCard extends StatelessWidget {
   final String? address;
@@ -12,6 +15,7 @@ class CompanyItemCard extends StatelessWidget {
   final String? title;
   final String? subTitle;
   final int? id;
+  final bool showChat;
 
   const CompanyItemCard({
     Key? key,
@@ -20,6 +24,7 @@ class CompanyItemCard extends StatelessWidget {
     this.title,
     this.subTitle,
     this.id,
+    this.showChat = false,
   }) : super(key: key);
 
   @override
@@ -77,6 +82,31 @@ class CompanyItemCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  if (showChat)
+                    Obx(() {
+                      final controller = Get.find<CompanyController>();
+                      return InkWell(
+                        onTap: () {
+                          print("element:111  $id");
+
+                          controller.createRoom((success, roomId) {
+                            if (success == true) {
+                              Get.toNamed(Routes.CHAT, arguments: roomId);
+                            }
+                          });
+                        },
+                        child:
+                            controller.createRoomLoading.value == true
+                                ? Lottie.asset('assets/lottie/loading.json')
+                                : const Center(
+                                  child: Icon(
+                                    Icons.chat,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
+                      );
+                    }),
                 ],
               ),
             ),

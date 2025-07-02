@@ -12,10 +12,12 @@ import 'package:garage/features/main/common/order_price_details_card.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({Key? key}) : super(key: key);
+  CartPage({Key? key}) : super(key: key);
 
+  final RefreshController _refreshController = RefreshController();
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
@@ -31,21 +33,32 @@ class CartPage extends StatelessWidget {
               loadingState: controller.cart.value,
               isEmpty: controller.cart.value.data?.items?.isEmpty == true,
               emptyWidget: EmptyWidget(title: "cart_empty".tr),
-              child: ListView.separated(
-                padding: const EdgeInsets.only(
-                  top: 16,
-                  left: 8,
-                  right: 8,
-                  bottom: 165,
+              child: SmartRefresher(
+                header: const WaterDropHeader(),
+                controller: _refreshController,
+                physics: const BouncingScrollPhysics(),
+                onRefresh:
+                    () => {
+                      controller.getCartItems(true),
+                      _refreshController.refreshCompleted(),
+                    },
+                child: ListView.separated(
+                  padding: const EdgeInsets.only(
+                    top: 16,
+                    left: 8,
+                    right: 8,
+                    bottom: 165,
+                  ),
+                  itemBuilder:
+                      (context, index) => CartItemCard(
+                        cartItem:
+                            controller.cart.value.data?.items?[index] ??
+                            CartItem(),
+                      ),
+                  separatorBuilder:
+                      (context, index) => const SizedBox(height: 8),
+                  itemCount: controller.cart.value.data?.items?.length ?? 0,
                 ),
-                itemBuilder:
-                    (context, index) => CartItemCard(
-                      cartItem:
-                          controller.cart.value.data?.items?[index] ??
-                          CartItem(),
-                    ),
-                separatorBuilder: (context, index) => const SizedBox(height: 8),
-                itemCount: controller.cart.value.data?.items?.length ?? 0,
               ),
             );
           },

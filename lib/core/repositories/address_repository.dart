@@ -49,5 +49,4 @@ class AddressRepository extends BaseRepository {
       create: () => APIListResponse<Country>(create: () => Country()),
     );
   }
-
 }

@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:garage/core/controllers/main_controller.dart';
-import 'package:garage/core/controllers/user_controller.dart';
-import 'package:garage/core/networking/models/user.dart';
 import 'package:garage/core/ui/my_image.dart';
-import 'package:garage/features/main/home/home_logic.dart';
-import 'package:garage/features/main/my_orders/my_orders_controller.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 
