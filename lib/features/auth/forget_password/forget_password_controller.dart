@@ -7,12 +7,11 @@ class ForgetPasswordController extends GetxController {
   final ForgetPasswordState state = ForgetPasswordState();
 
   bool validations() {
-    if(state.phoneNumber.text.isBlank == true){
+    if (state.phoneNumber.text.isBlank == true) {
       Utils.showSnackBar("error_phone".tr);
       return false;
-    }else{
+    } else {
       return true;
     }
   }
-
 }

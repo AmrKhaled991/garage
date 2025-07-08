@@ -1,18 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:garage/core/ui/my_image.dart';
-import 'package:garage/features/main/adress/address_page.dart';
-import 'package:garage/theme/styles.dart';
+import 'package:garage/features/main/adress/address_controller.dart';
+import 'package:garage/routes/app_pages.dart';
 import 'package:get/get.dart';
 
+import 'package:garage/core/networking/models/adress/user_address.dart';
+import 'package:garage/core/ui/my_image.dart';
+import 'package:garage/theme/styles.dart';
+
 class AddressItem extends StatefulWidget {
-  const AddressItem({super.key});
+  UserAddress? item;
+  AddressItem({Key? key, this.item}) : super(key: key);
 
   @override
   State<AddressItem> createState() => _AddressItemState();
 }
 
 class _AddressItemState extends State<AddressItem> {
+  final controller = Get.find<UserAddressController>();
   bool isActive = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isActive = widget.item?.isActive ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +37,9 @@ class _AddressItemState extends State<AddressItem> {
         children: [
           Row(
             children: [
-              const Text(
-                'المنزل 1',
-                style: TextStyle(
+              Text(
+                widget.item?.title ?? 'المنزل 1',
+                style: const TextStyle(
                   color: Color(0xFFF7F8F9),
                   fontSize: 20,
                   fontFamily: 'Zain',
@@ -53,23 +65,31 @@ class _AddressItemState extends State<AddressItem> {
                   activeTrackColor: colorPrimary,
                   inactiveTrackColor: colorGrey,
                   inactiveThumbColor: colorWhite,
-                  onChanged: (value) {
+                  onChanged: (value) async {
                     setState(() => isActive = value);
+                    await Future.delayed(const Duration(milliseconds: 300));
+                    controller.changeActivation(widget.item?.id ?? 0, (
+                      success,
+                    ) {
+                      if (!success) {
+                        setState(() => isActive = !isActive);
+                      }
+                    });
                   },
                 ),
               ),
             ],
           ),
           const SizedBox(height: 8),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              MyImage(image: 'assets/images/location.svg', height: 20),
-              SizedBox(width: 4),
+              const MyImage(image: 'assets/images/location.svg', height: 20),
+              const SizedBox(width: 4),
               Expanded(
                 child: Text(
-                  '44 طريق شارع الفهيدي',
-                  style: TextStyle(
+                  widget.item?.description ?? '44 طريق شارع الفهيدي',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                     fontFamily: 'Zain',
@@ -85,7 +105,17 @@ class _AddressItemState extends State<AddressItem> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  final id = widget.item?.id;
+                  if (id != null) {
+                    controller.deleteAddress(id, (success) {
+                      if (success) {
+                        controller.state.pagingController
+                            .refresh(); // Reload list after delete
+                      }
+                    });
+                  }
+                },
                 icon: const MyImage(
                   image: 'assets/images/trash.svg',
                   height: 20,
@@ -96,7 +126,9 @@ class _AddressItemState extends State<AddressItem> {
                 ),
               ),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(Routes.AddNewAddressPage, arguments: widget.item);
+                },
                 icon: const MyImage(
                   image: 'assets/images/edit.svg',
                   height: 20,

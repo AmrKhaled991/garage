@@ -1,12 +1,11 @@
+import 'package:garage/core/repositories/categories_repository.dart';
 import 'package:get/get.dart';
 
-import 'category_comtroller.dart';
+import 'category_controller.dart';
 
 class CategoryBinding extends Bindings {
-
   @override
   void dependencies() {
-    Get.lazyPut(() => CategoryController(), fenix: true);
-   }
-
+    Get.put(CategoryController());
+  }
 }

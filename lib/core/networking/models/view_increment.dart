@@ -1,9 +1,7 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
 class ViewIncrement extends Decodable<ViewIncrement> {
-  ViewIncrement({
-    this.view,});
+  ViewIncrement({this.view});
 
   ViewIncrement.fromJson(dynamic json) {
     view = json['view'];
@@ -20,5 +18,4 @@ class ViewIncrement extends Decodable<ViewIncrement> {
   ViewIncrement decode(data) {
     return ViewIncrement.fromJson(data);
   }
-
 }

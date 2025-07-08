@@ -3,30 +3,38 @@ import 'package:garage/features/main/order_details/order_details_widgets/order_d
 import 'package:garage/theme/styles.dart';
 
 class OrderPriceDetailsCard extends StatelessWidget {
-  const OrderPriceDetailsCard({super.key});
+  final int? deliveryPrice;
+  final int totalPrice;
+
+  const OrderPriceDetailsCard({
+    super.key,
+    required this.deliveryPrice,
+    required this.totalPrice,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: MyshapesStyle.darkGrayDecoration,
-      child: const Column(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         spacing: 8,
         children: [
           OrderDetailsPriceRow(
             title: "sub_total",
-            price: "50 د.ك",
+            price: "$totalPrice د.ك",
             color: DarkGrayPriceColor,
           ),
-          OrderDetailsPriceRow(
-            title: "delivery_fee",
-            price: "1 د.ك",
-            color: DarkGrayPriceColor,
-          ),
+          if (deliveryPrice != null)
+            OrderDetailsPriceRow(
+              title: "delivery_fee",
+              price: "$deliveryPrice د.ك",
+              color: DarkGrayPriceColor,
+            ),
           OrderDetailsPriceRow(
             title: "total",
-            price: "51 د.ك",
+            price: "${totalPrice + (deliveryPrice ?? 0)} د.ك",
             color: DarkGrayPriceColor,
           ),
         ],

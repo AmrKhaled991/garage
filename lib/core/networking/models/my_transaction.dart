@@ -1,16 +1,17 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class MyTransaction extends Decodable<MyTransaction>{
+class MyTransaction extends Decodable<MyTransaction> {
   MyTransaction({
-      this.id, 
-      this.serial, 
-      this.totalPaidAmount, 
-      this.currencyCode, 
-      this.senderName, 
-      this.receiverName, 
-      this.paymentDate, 
-      this.transferFees, 
-      this.transferAmounts,});
+    this.id,
+    this.serial,
+    this.totalPaidAmount,
+    this.currencyCode,
+    this.senderName,
+    this.receiverName,
+    this.paymentDate,
+    this.transferFees,
+    this.transferAmounts,
+  });
 
   MyTransaction.fromJson(dynamic json) {
     id = json['id'];
@@ -52,7 +53,8 @@ class MyTransaction extends Decodable<MyTransaction>{
     map['transfer_fees'] = transferFees;
     map['status'] = status;
     if (transferAmounts != null) {
-      map['transfer_amounts'] = transferAmounts?.map((v) => v.toJson()).toList();
+      map['transfer_amounts'] =
+          transferAmounts?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -61,19 +63,19 @@ class MyTransaction extends Decodable<MyTransaction>{
   MyTransaction decode(json) {
     return MyTransaction.fromJson(json);
   }
-
 }
 
 class TransferAmounts {
   TransferAmounts({
-      this.id, 
-      this.transferTransactionId, 
-      this.sentAmount, 
-      this.sentCurrencyType, 
-      this.receivedAmount, 
-      this.receivedCurrencyTypeId, 
-      this.sellingPrice, 
-      this.buyingPrice,});
+    this.id,
+    this.transferTransactionId,
+    this.sentAmount,
+    this.sentCurrencyType,
+    this.receivedAmount,
+    this.receivedCurrencyTypeId,
+    this.sellingPrice,
+    this.buyingPrice,
+  });
 
   TransferAmounts.fromJson(dynamic json) {
     id = json['id'];
@@ -106,5 +108,4 @@ class TransferAmounts {
     map['buying_price'] = buyingPrice;
     return map;
   }
-
 }

@@ -1,9 +1,7 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class Wallet extends Decodable<Wallet>{
-  Wallet({
-      this.walletAmount, 
-      this.transactions,});
+class Wallet extends Decodable<Wallet> {
+  Wallet({this.walletAmount, this.transactions});
 
   Wallet.fromJson(dynamic json) {
     walletAmount = json['wallet_amount'];
@@ -30,18 +28,18 @@ class Wallet extends Decodable<Wallet>{
   Wallet decode(json) {
     return Wallet.fromJson(json);
   }
-
 }
 
 class Transaction {
   Transaction({
-      this.id, 
-      this.name, 
-      this.amount, 
-      this.type, 
-      this.orderId, 
-      this.date, 
-      this.createdAt,});
+    this.id,
+    this.name,
+    this.amount,
+    this.type,
+    this.orderId,
+    this.date,
+    this.createdAt,
+  });
 
   Transaction.fromJson(dynamic json) {
     id = json['id'];
@@ -71,5 +69,4 @@ class Transaction {
     map['created_at'] = createdAt;
     return map;
   }
-
 }

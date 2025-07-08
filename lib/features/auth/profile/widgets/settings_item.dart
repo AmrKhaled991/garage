@@ -30,7 +30,7 @@ class SettingsItem extends StatelessWidget {
         child: Row(
           children: [
             if (icon != null)
-              MyImage(image: icon, width: 30, color:iconColor?? colorPrimary),
+              MyImage(image: icon, width: 30, color: iconColor ?? colorPrimary),
             if (icon != null) const SizedBox(width: 12),
             Expanded(
               child: Text(

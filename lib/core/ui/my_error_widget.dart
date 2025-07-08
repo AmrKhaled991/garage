@@ -15,52 +15,62 @@ class MyErrorWidget extends StatelessWidget {
   final bool withPadding;
   final ErrorType errorType;
 
-  MyErrorWidget({this.onRetryCall,this.errorMsg,this.errorImage,this.withLogin = false, this.withPadding = false, this.errorType = ErrorType.NETWORK ,Key? key}) : super(key: key);
+  MyErrorWidget({
+    this.onRetryCall,
+    this.errorMsg,
+    this.errorImage,
+    this.withLogin = false,
+    this.withPadding = false,
+    this.errorType = ErrorType.NETWORK,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    String _errorImage(){
-      if(errorType == ErrorType.EMPTY){
+    String _errorImage() {
+      if (errorType == ErrorType.EMPTY) {
         return "assets/images/no_data.png";
-      }else if(errorType == ErrorType.API && errorMsg?.isNotEmpty == true){
+      } else if (errorType == ErrorType.API && errorMsg?.isNotEmpty == true) {
         return "assets/images/api_error.png";
-      }else{
+      } else {
         return "assets/images/network_error.png";
       }
     }
+
     return Container(
-        alignment: Alignment.center,
-        margin: withPadding? EdgeInsets.only(top: Get.height /4) : null,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            MyImage(image: errorImage??_errorImage(), height: 100,),
-            Text(errorMsg??"error_try_again".tr, textAlign: TextAlign.center,style: MyTextStyle.myBlackSubTitle,),
-            Visibility(
-              visible: onRetryCall != null && errorType != ErrorType.EMPTY,
-              child: TextButton.icon(
-                label: Text("retry".tr, style: MyTextStyle.myBlackSubTitle,),
-                icon: const Icon(Icons.refresh),
-                onPressed: onRetryCall,
-              ).marginSymmetric(horizontal: 20),
-            ),
-            Visibility(
-              visible: withLogin && !userController.isLogged.value,
-              child: TextButton(
-                child: Text("login".tr, style: MyTextStyle.myBlackSubTitle,),
-                onPressed: (){
-                  Get.toNamed(Routes.LOGIN);
-                },
-              ).marginSymmetric(horizontal: 20),
-            )
-          ],
-        )
+      alignment: Alignment.center,
+      margin: withPadding ? EdgeInsets.only(top: Get.height / 4) : null,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          MyImage(image: errorImage ?? _errorImage(), height: 100),
+          Text(
+            errorMsg ?? "error_try_again".tr,
+            textAlign: TextAlign.center,
+            style: MyTextStyle.myBlackSubTitle.copyWith(color: Colors.white),
+          ),
+          Visibility(
+            visible: onRetryCall != null && errorType != ErrorType.EMPTY,
+            child: TextButton.icon(
+              label: Text("retry".tr, style: MyTextStyle.myBlackSubTitle),
+              icon: const Icon(Icons.refresh),
+              onPressed: onRetryCall,
+            ).marginSymmetric(horizontal: 20),
+          ),
+          Visibility(
+            visible: withLogin && !userController.isLogged.value,
+            child: TextButton(
+              child: Text("login".tr, style: MyTextStyle.myBlackSubTitle),
+              onPressed: () {
+                Get.toNamed(Routes.LOGIN);
+              },
+            ).marginSymmetric(horizontal: 20),
+          ),
+        ],
+      ),
     );
   }
 }
 
-enum ErrorType{
-  EMPTY, API, NETWORK
-}
+enum ErrorType { EMPTY, API, NETWORK }

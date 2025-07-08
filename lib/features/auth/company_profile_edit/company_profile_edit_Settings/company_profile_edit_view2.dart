@@ -1,21 +1,14 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:garage/features/auth/company_profile_edit/company_profile_edit_controller.dart';
-import 'package:garage/features/auth/company_profile_edit/company_profile_edit_state.dart';
+import 'package:garage/features/auth/register/register_controller.dart';
 import 'package:garage/features/main/common/add_container.dart';
 import 'package:garage/features/main/common/text_header_widget.dart';
-import 'package:garage/features/main/home/custom_category_card.dart';
+import 'package:garage/utils/utlis.dart';
 import 'package:get/get.dart';
-import 'package:garage/core/controllers/user_controller.dart';
-import 'package:garage/core/ui/MyLoadingButton.dart';
-import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/theme/styles.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class CompanyProfileEditView2 extends StatefulWidget {
@@ -27,354 +20,221 @@ class CompanyProfileEditView2 extends StatefulWidget {
 }
 
 class _CompanyProfileEditView2State extends State<CompanyProfileEditView2> {
-  final CompanyProfileEditController controller = Get.put(
-    CompanyProfileEditController(),
-  );
+  final RegisterController controller = Get.find<RegisterController>();
+  final state = Get.find<RegisterController>().state;
 
-  final CompanyProfileEditState state =
-      Get.find<CompanyProfileEditController>().state;
-
-  UserController userController = Get.find();
+  AssetEntity? selectedAsset;
+  // Future<bool> requestPermissions() async {
+  //   if (Platform.isAndroid) {
+  //     var status =
+  //         await Permission.storage
+  //             .request(); // or Permission.mediaLibrary for Android 13+
+  //     return status.isGranted;
+  //   } else if (Platform.isIOS) {
+  //     var status = await Permission.photos.request(); // iOS photo/video access
+  //     return status.isGranted;
+  //   }
+  //   return false;
+  // }
 
   Future<void> loadAssets(String type) async {
-    final List<AssetEntity>? assets = await AssetPicker.pickAssets(
-      context,
-      pickerConfig: AssetPickerConfig(
-        maxAssets: type == "avatar" ? 1 : 5,
-        requestType: RequestType.image,
-        textDelegate: const EnglishAssetPickerTextDelegate(),
-      ),
-    );
+    if (type == 'upload_video') {
+      // if (await requestPermissions()) {
+      final List<AssetEntity>? assets = await AssetPicker.pickAssets(
+        context,
+        pickerConfig: const AssetPickerConfig(
+          maxAssets: 1,
+          requestType: RequestType.video,
+          textDelegate: EnglishAssetPickerTextDelegate(),
+        ),
+      );
+      assets != null ? controller.setVideo(assets.first) : null;
+      setState(() {});
+      // } else {
+      //   Utils.showSnackBar("plese_grant_permission".tr);
+      // }
+    } else {
+      final List<AssetEntity>? assets = await AssetPicker.pickAssets(
+        context,
+        pickerConfig: AssetPickerConfig(
+          maxAssets: type == "main_image_of_project" ? 1 : 10,
+          requestType: RequestType.image,
+          textDelegate: const EnglishAssetPickerTextDelegate(),
+        ),
+      );
 
-    if (assets != null && assets.isNotEmpty) {
-      if (type == "avatar") {
-        var file = await assets.first.file;
-        if (file != null) {
-          var xfile = await compressImageAndGetFile(file);
-          state.selectedAvatarImage.value = xfile?.path;
-        }
-      } else {
-        assets.forEach((element) async {
-          var file = await element.file;
-          if (file != null) {
-            var xfile = await compressImageAndGetFile(file);
-            state.selectedCompanyImages.add(xfile?.path ?? "");
-          }
+      if (assets != null && assets.isNotEmpty) {
+        setState(() {
+          selectedAsset = assets.first;
         });
+        if (type == "main_image_of_project") {
+          controller.setMainImage(assets.first);
+        } else if (type == "upload_images") {
+          controller.setImages(assets);
+        } else {}
       }
     }
   }
 
-  Future<XFile?> compressImageAndGetFile(File file) async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    // final extension = p.extension(file.absolute.path);
-
-    var result = await FlutterImageCompress.compressAndGetFile(
-      file.absolute.path,
-      appDocPath + "/${DateTime.now().millisecondsSinceEpoch}.jpeg",
-      quality: 88,
-      format: CompressFormat.jpeg,
-    );
-
-    print(
-      "original file: ${file.absolute.path}\ncompresed file: ${result?.path}",
-    );
-    // print(file.lengthSync());
-    // print(result.lengthSync());
-
-    return result;
-  }
-
   @override
-  void initState() {
-    var user = userController.user.value;
-    if (user != null) {
-      state.phoneNumber.text = user.phone ?? "";
-      state.email.text = user.email ?? "";
-    }
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return const UploadCompanyAssetsScreen();
-
-    ListView(
-      children: <Widget>[
-        SizedBox(
-          height: 160,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                bottom: 0,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundColor: colorLightGrey,
-                        child: Obx(() {
-                          return state.selectedAvatarImage.value != null
-                              ? ClipOval(
-                                child: Image.file(
-                                  File(state.selectedAvatarImage.value ?? ""),
-                                  fit: BoxFit.cover,
-                                  width: 100,
-                                  height: 100,
-                                ),
-                              )
-                              : ClipOval(
-                                child: MyImage(
-                                  image: userController.user.value?.image,
-                                  fit: BoxFit.cover,
-                                  width: 100,
-                                  height: 100,
-                                ),
-                              );
-                        }),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        child: InkWell(
-                          onTap: () {
-                            loadAssets("avatar");
-                          },
-                          child: const CircleAvatar(
-                            backgroundColor: colorPrimary,
-                            child: Icon(Icons.camera_alt, size: 20),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        editForm(),
-        const SizedBox(height: 16),
-        MyLoadingButton(
-          title: "save".tr,
-          onClick: (RoundedLoadingButtonController _controller) async {
-            if (!controller.validations()) {
-              _controller.error();
-              Timer(const Duration(seconds: 1), () {
-                _controller.reset();
-              });
-              return;
-            }
-
-            userController.updateProfile(controller.updateDate(), (success) {
-              if (success) {
-                _controller.success();
-              } else {
-                _controller.error();
-              }
-              Timer(const Duration(seconds: 1), () {
-                _controller.reset();
-              });
-            });
-          },
-        ),
-        const SizedBox(height: 16),
-      ],
-    );
-  }
-
-  Widget editForm() => Column(
-    key: const ValueKey<int>(0),
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const SizedBox(height: 16),
-      Text("company_images".tr, style: MyTextStyle.myBlackBoldTitle),
-      const SizedBox(height: 16),
-      GestureDetector(
-        onTap: () {
-          loadAssets("images");
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: colorContainer,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: colorContainerBorder),
-          ),
-          width: Get.width,
-          height: Get.width * 0.3,
-          alignment: Alignment.center,
-          child: MyImage(
-            image: "assets/images/ic_images.svg",
-            height: Get.width * 0.1,
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-class UploadCompanyAssetsScreen extends StatelessWidget {
-  const UploadCompanyAssetsScreen({
-    super.key,
-    this.onPickLogo,
-    this.onRemoveLogo,
-    this.onPickImages,
-    this.onPickVideo,
-  });
-
-  /// Callback for picking a single logo image.
-  final VoidCallback? onPickLogo;
-
-  /// Callback for removing the selected logo.
-  final VoidCallback? onRemoveLogo;
-
-  /// Callback for picking multiple images (max 10, each ≤ 1 MB).
-  final VoidCallback? onPickImages;
-
-  /// Callback for picking a video file (≤ 20 MB).
-  final VoidCallback? onPickVideo;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return SingleChildScrollView(
       child: Column(
         spacing: 24,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            width: 343,
-            height: 48,
-            child: Text(
-              "upload_company_logo".tr,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 32,
-                fontFamily: 'Zain',
-                fontWeight: FontWeight.w700,
-                height: 1.50,
-              ),
+          // Logo Upload
+          Text(
+            "upload_company_logo".tr,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 32,
+              fontFamily: 'Zain',
+              fontWeight: FontWeight.w700,
             ),
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-              decoration: MyshapesStyle.PrimaryDecoration,
-              child: Column(
-                spacing: 24,
-                children: [
-                  Column(
-                    spacing: 8,
-                    children: [
-                      Container(
-                        width: 88,
-                        height: 44,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: MyshapesStyle.transparentDecoration,
-                      ),
-                      Text(
-                        "delete".tr,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 14,
-                          fontFamily: 'Zain',
-                          fontWeight: FontWeight.w400,
-                          height: 1.50,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+          AddContainer(
+            onTap: () {
+              state.selectedCompanyImage.value == null
+                  ? loadAssets("main_image_of_project")
+                  : controller.resetMainImage();
+              setState(() {});
+            },
+            title: "add_logo".tr,
+            content:
+                state.selectedCompanyImage.value == null
+                    ? null
+                    : _buildImagePreview(
+                      state.selectedCompanyImage.value!,
+                      isSingle: true,
+                    ),
           ),
+
+          // Gallery Upload
           TextHeaderWidget(
             title: "company_gallery".tr,
             child: AddContainer(
               title: "company_gallery_hint".tr,
               padding: const EdgeInsets.symmetric(vertical: 24),
+              onTap: () {
+                state.galleryImages.isEmpty
+                    ? loadAssets("upload_images")
+                    : controller.resetImages();
+                setState(() {});
+              },
+              content:
+                  state.galleryImages.value.where((e) => e != null).isEmpty
+                      ? null
+                      : Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children:
+                            state.galleryImages.value
+                                .whereType<AssetEntity>()
+                                .map((asset) => _buildImagePreview(asset))
+                                .toList(),
+                      ),
             ),
           ),
 
+          // Video Upload
           TextHeaderWidget(
             title: "upload_video".tr,
-            child:  AddContainer(
-              title: "upload_video_hint",
-              padding: EdgeInsets.symmetric(vertical: 24),
+            child: AddContainer(
+              title: "upload_video_hint".tr,
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              onTap: () {
+                state.video.value == null
+                    ? loadAssets("upload_video")
+                    : controller.resetMainImage();
+              },
+
+              content:
+                  state.video.value == null
+                      ? null
+                      : _buildImagePreview(
+                        state.video.value!,
+                        isVideo: true,
+                        isSingle: true,
+                      ),
             ),
           ),
         ],
       ),
     );
   }
-}
 
-/// Reusable section widget with title, content, optional footer and action.
-class _Section extends StatelessWidget {
-  const _Section({
-    required this.title,
-    required this.child,
-    this.footer,
-    this.action,
-  });
+  Widget _buildImagePreview(
+    AssetEntity asset, {
+    bool isVideo = false,
+    bool isSingle = false,
+  }) {
+    return FutureBuilder<File?>(
+      future: asset.file,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData || snapshot.data == null) {
+          return const SizedBox.shrink();
+        }
 
-  final String title;
-  final Widget child;
-  final Widget? footer;
-  final Widget? action;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Stack(
           children: [
-            Text(
-              title,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+            if (isVideo) ...[
+              FutureBuilder(
+                future: asset.thumbnailDataWithSize(
+                  const ThumbnailSize(200, 200),
+                ), // from AssetEntity
+                builder: (_, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    return Image.memory(
+                      snapshot.data!,
+                      width: isSingle ? 88 : 60,
+                      height: isSingle ? 44 : 60,
+                      fit: BoxFit.cover,
+                    );
+                  } else {
+                    return Container(
+                      width: isSingle ? 88 : 60,
+                      height: isSingle ? 44 : 60,
+                      color: Colors.grey.shade300,
+                      child: const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ] else
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.file(
+                  snapshot.data!,
+                  width: isSingle ? 88 : 60,
+                  height: isSingle ? 44 : 60,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: InkWell(
+                onTap: () {
+                  if (isVideo) {
+                    controller.state.video.value = null;
+                  } else if (isSingle) {
+                    controller.resetMainImage();
+                  } else {
+                    controller.state.galleryImages.value.remove(asset);
+                  }
+                  setState(() {});
+                },
+                child: const Icon(Icons.close, color: Colors.red, size: 20),
+              ),
             ),
-            if (action != null) action!,
           ],
-        ),
-        const SizedBox(height: 12),
-        child,
-        if (footer != null) ...[const SizedBox(height: 8), footer!],
-      ],
-    );
-  }
-}
-
-/// Dashed border box used for adding files.
-class _DashedBox extends StatelessWidget {
-  const _DashedBox({super.key, required this.child, this.onTap});
-
-  final Widget child;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 120,
-        decoration: BoxDecoration(
-          color: const Color(0xFF1E1E1E),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: Colors.white24,
-            width: 2,
-            style: BorderStyle.solid, // Use a package for real dashed border.
-          ),
-        ),
-        child: Center(child: child),
-      ),
+        );
+      },
     );
   }
 }

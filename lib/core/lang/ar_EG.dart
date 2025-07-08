@@ -146,6 +146,11 @@ const Map<String, String> ar_EG = {
   'error_message': 'من فضلك قم بادخال الرسالة',
   'error_password': 'من فضلك قم بادخال كلمة مرور لا تقل عن 6 احرف',
   'error_password_not_match': 'كلمتا المرور غير متطابقتان',
+  "state_error": "من فضلك قم بادخال المحافظه",
+  "street_error": "من فضلك قم بادخال الشارع",
+  "square_error": "من فضلك قم بادخال المنطقه",
+  "jada_error": "من فضلك قم بادخال الجاده",
+
   'login': 'تسجيل دخول',
   'phone_hint': 'رقم الهاتف مثل 96512312',
   'phone_number': 'رقم الهاتف',
@@ -446,4 +451,42 @@ const Map<String, String> ar_EG = {
   "service_welcom_hint":
       'أطلب الخدمة المناسبة لك حيث يتم الفحص السيارة وتحديد المشكله مع عرض السعر',
   "start_now_hint": 'ابدأ بالتعرف أكثر علي خدماتنا',
+  "update_profile": "تحديث الملف الشخصي",
+
+  "model": "الموديل",
+  "model_year": "سنة الموديل",
+  "car_owner_name": "اسم صاحب السيارة",
+  'error_model': 'يرجى ادخال الموديل',
+  'error_model_year': 'يرجى ادخال سنة الموديل',
+  'error_car_owner_name': 'يرجى ادخال اسم صاحب السيارة',
+  "please_select_a_brand": "يرجى تحديد علامة تجارية",
+  "add_logo": "اضافه شعار",
+
+  'category_error': 'يرجى تحديد فئة',
+  'category_service': 'يرجى تحديد خدمة',
+  'error_quantity': 'يرجى ادخال كلمة المرور',
+  'error_order_details': 'يرجى ادخال تفاصيل الطلب',
+  "new": "جديد",
+  "select_date": "يرجى تحديد التاريخ",
+
+  "title_error": 'يرجى ادخال العنوان',
+  "note_error": 'يرجى ادخال الملاحظة',
+  "kilometer_error": 'يرجى ادخال قراءة العداد',
+  "date_error": 'يرجى ادخال التاريخ',
+  "hour_error": 'يرجى ادخال الساعة',
+
+  'error_description': 'يرجى ادخال الوصف',
+  "cart_empty": 'عذرا لا يوجد في السلة العناصر',
+
+  "cost:": "التكلفه:",
+  "kwt_dinar": "دينار كويتي",
+  "direct_contact": "التواصل المباشر",
+
+  "select_company": "يرجى تحديد الشركة",
+  "company_error": "يرجى تحديد الشركة",
+  "description_error": "يرجى تحديد الوصف",
+  "file_error": "يرجى تحديد الملف",
+  "Notifications": "الاشعارات",
+  "all_chats": "كل الدردشات",
+  "no_messages": "لا يوجد رسائل",
 };

@@ -1,7 +1,6 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class Attribute extends Decodable<Attribute>{
+class Attribute extends Decodable<Attribute> {
   Attribute({
     this.id,
     this.type,
@@ -9,7 +8,8 @@ class Attribute extends Decodable<Attribute>{
     this.icon,
     this.allowFromTo,
     this.options,
-    this.validation,});
+    this.validation,
+  });
 
   Attribute.fromJson(dynamic json) {
     id = json['id'];
@@ -23,7 +23,10 @@ class Attribute extends Decodable<Attribute>{
         options?.add(Options.fromJson(v));
       });
     }
-    validation = json['validation'] != null ? Validation.fromJson(json['validation']) : null;
+    validation =
+        json['validation'] != null
+            ? Validation.fromJson(json['validation'])
+            : null;
   }
   int? id;
   String? type;
@@ -53,7 +56,6 @@ class Attribute extends Decodable<Attribute>{
   Attribute decode(data) {
     return Attribute.fromJson(data);
   }
-
 }
 
 class Validation {
@@ -63,7 +65,8 @@ class Validation {
     this.validateMax,
     this.validateMin,
     this.min,
-    this.max,});
+    this.max,
+  });
 
   Validation.fromJson(dynamic json) {
     required = json['required'];
@@ -90,14 +93,10 @@ class Validation {
     map['max'] = max;
     return map;
   }
-
 }
 
 class Options {
-  Options({
-    this.id,
-    this.value,
-    this.isDefault,});
+  Options({this.id, this.value, this.isDefault});
 
   Options.fromJson(dynamic json) {
     id = json['id'];
@@ -115,5 +114,4 @@ class Options {
     map['is_default'] = isDefault;
     return map;
   }
-
 }

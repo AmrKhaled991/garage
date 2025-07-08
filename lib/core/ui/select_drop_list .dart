@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DropListModel {
   DropListModel(this.options);
@@ -6,8 +7,8 @@ class DropListModel {
 }
 
 class OptionItem {
-  final String id;
-  final String title;
+  final int? id;
+  final String? title;
   OptionItem({required this.id, required this.title});
 }
 
@@ -105,7 +106,7 @@ class _SelectDropListState extends State<SelectDropList>
                 ],
                 Expanded(
                   child: Text(
-                    currentSelectedItem.title,
+                    currentSelectedItem.title ?? "select_category".tr,
                     style:
                         widget.selectedTextStyle ??
                         const TextStyle(
@@ -176,7 +177,7 @@ class _SelectDropListState extends State<SelectDropList>
           border: Border(top: BorderSide(color: Colors.grey[300]!)),
         ),
         child: Text(
-          item.title,
+          item.title ?? "select_category".tr,
           style:
               widget.itemTextStyle ??
               const TextStyle(color: Color(0xFF307DF1), fontSize: 14),

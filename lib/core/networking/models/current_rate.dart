@@ -1,15 +1,15 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/user.dart';
 
-class CurrentRate  extends Decodable{
-  CurrentRate({
-    this.user,
-    this.currentUserRate,});
+class CurrentRate extends Decodable {
+  CurrentRate({this.user, this.currentUserRate});
 
   CurrentRate.fromJson(dynamic json) {
     user = json['user'] != null ? User.fromJson(json['user']) : null;
-    currentUserRate = json['current_user_rate'] != null ? CurrentUserRate.fromJson(json['current_user_rate']) : null;
+    currentUserRate =
+        json['current_user_rate'] != null
+            ? CurrentUserRate.fromJson(json['current_user_rate'])
+            : null;
   }
   User? user;
   CurrentUserRate? currentUserRate;
@@ -29,7 +29,6 @@ class CurrentRate  extends Decodable{
   decode(data) {
     return CurrentRate.fromJson(data);
   }
-
 }
 
 class CurrentUserRate {
@@ -38,7 +37,8 @@ class CurrentUserRate {
     this.rate,
     this.note,
     this.createdAt,
-    this.updatedAt,});
+    this.updatedAt,
+  });
 
   CurrentUserRate.fromJson(dynamic json) {
     id = json['id'];
@@ -62,5 +62,4 @@ class CurrentUserRate {
     map['updated_at'] = updatedAt;
     return map;
   }
-
 }

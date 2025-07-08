@@ -1,11 +1,7 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class CouponData extends Decodable<CouponData>{
-  CouponData({
-    this.discountAmount,
-    this.finalPrice,
-    this.coupon,});
+class CouponData extends Decodable<CouponData> {
+  CouponData({this.discountAmount, this.finalPrice, this.coupon});
 
   CouponData.fromJson(dynamic json) {
     discountAmount = json['discount_amount'];
@@ -30,14 +26,10 @@ class CouponData extends Decodable<CouponData>{
   CouponData decode(data) {
     return CouponData.fromJson(data);
   }
-
 }
 
 class Coupon {
-  Coupon({
-    this.type,
-    this.discount,
-    this.id,});
+  Coupon({this.type, this.discount, this.id});
 
   Coupon.fromJson(dynamic json) {
     type = json['type'];
@@ -55,5 +47,4 @@ class Coupon {
     map['id'] = id;
     return map;
   }
-
 }

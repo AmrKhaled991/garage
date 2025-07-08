@@ -58,9 +58,8 @@ class ChangePasswordPage extends StatelessWidget {
 
                 userController.resetPassword(
                   {
-                    "current_password": state.oldPassword.text,
+                    "old_password": state.oldPassword.text,
                     "password": state.password.text,
-                    "password_confirmation": state.passwordConfirm.text,
                   },
                   (success) async {
                     if (success) {

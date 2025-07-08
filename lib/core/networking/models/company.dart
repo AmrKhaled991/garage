@@ -1,9 +1,8 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/category.dart';
 import 'package:garage/core/networking/models/city.dart';
 
-class CompanyData extends Decodable<CompanyData>{
+class CompanyData extends Decodable<CompanyData> {
   CompanyData({
     this.id,
     this.name,
@@ -18,7 +17,8 @@ class CompanyData extends Decodable<CompanyData>{
     this.adminVerified,
     this.company,
     this.firebaseUuid,
-    this.adsCount});
+    this.adsCount,
+  });
 
   CompanyData.fromJson(dynamic json) {
     id = json['id'];
@@ -32,7 +32,8 @@ class CompanyData extends Decodable<CompanyData>{
     numberOfFree = json['number_of_free'];
     isVerified = json['is_verified'];
     adminVerified = json['admin_verified'];
-    company = json['company'] != null ? Company.fromJson(json['company']) : null;
+    company =
+        json['company'] != null ? Company.fromJson(json['company']) : null;
     firebaseUuid = json['firebase_uuid'];
     adsCount = json['ads_count'];
   }
@@ -76,9 +77,7 @@ class CompanyData extends Decodable<CompanyData>{
   CompanyData decode(data) {
     return CompanyData.fromJson(data);
   }
-
 }
-
 
 class Company {
   Company({
@@ -92,7 +91,8 @@ class Company {
     this.categories,
     this.state,
     this.city,
-    this.address,});
+    this.address,
+  });
 
   Company.fromJson(dynamic json) {
     id = json['id'];
@@ -152,14 +152,10 @@ class Company {
     }
     return map;
   }
-
 }
 
-
-class Socials {
-  Socials({
-    this.key,
-    this.link,});
+class Socials extends Decodable<Socials> {
+  Socials({this.key, this.link});
 
   Socials.fromJson(dynamic json) {
     key = json['key'];
@@ -175,12 +171,15 @@ class Socials {
     return map;
   }
 
+  @override
+  Socials decode(json) {
+    // TODO: implement decode
+    return Socials.fromJson(json);
+  }
 }
 
 class City {
-  City({
-    this.id,
-    this.title,});
+  City({this.id, this.title});
 
   City.fromJson(dynamic json) {
     id = json['id'];
@@ -195,14 +194,10 @@ class City {
     map['title'] = title;
     return map;
   }
-
 }
 
 class CompanyState {
-  CompanyState({
-    this.id,
-    this.title,
-    this.cityId,});
+  CompanyState({this.id, this.title, this.cityId});
 
   CompanyState.fromJson(dynamic json) {
     id = json['id'];
@@ -220,7 +215,6 @@ class CompanyState {
     map['city_id'] = cityId;
     return map;
   }
-
 }
 
 class Categories {
@@ -231,7 +225,8 @@ class Categories {
     this.isEndCategory,
     this.slimDetails,
     this.type,
-    this.title,});
+    this.title,
+  });
 
   Categories.fromJson(dynamic json) {
     id = json['id'];
@@ -261,5 +256,4 @@ class Categories {
     map['title'] = title;
     return map;
   }
-
 }

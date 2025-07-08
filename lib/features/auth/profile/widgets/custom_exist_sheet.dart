@@ -15,6 +15,7 @@ class CustomExistSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           title?.tr ?? "",
@@ -61,7 +62,7 @@ class CustomExistSheet extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'next'.tr,
+                    'cancel'.tr,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.white,
@@ -72,7 +73,7 @@ class CustomExistSheet extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    onClick?.call();
+                    Get.back();
                   },
                 ),
               ),
@@ -84,7 +85,7 @@ class CustomExistSheet extends StatelessWidget {
                   title: title?.tr,
                   isOutline: true,
                   onClick: () {
-                    Get.offAllNamed(Routes.LOGIN);
+                    onClick?.call();
                   },
                 ),
               ),

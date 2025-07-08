@@ -8,6 +8,5 @@ class CompanyProfileEditBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => CompanyProfileEditController());
     Get.lazyPut(() => SelectLocationController());
-
   }
 }

@@ -1,7 +1,6 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class PackageData extends Decodable<PackageData>{
+class PackageData extends Decodable<PackageData> {
   PackageData({
     this.id,
     this.title,
@@ -12,7 +11,8 @@ class PackageData extends Decodable<PackageData>{
     this.numberOfImage,
     this.durationOfAds,
     this.isFree,
-    this.createdAt,});
+    this.createdAt,
+  });
 
   PackageData.fromJson(dynamic json) {
     id = json['id'];
@@ -56,5 +56,4 @@ class PackageData extends Decodable<PackageData>{
   PackageData decode(data) {
     return PackageData.fromJson(data);
   }
-
 }

@@ -6,7 +6,7 @@ class FloatingModal extends StatelessWidget {
   final Color? backgroundColor;
 
   const FloatingModal({Key? key, this.child, this.backgroundColor})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {

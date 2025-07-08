@@ -1,10 +1,11 @@
 class Pagination {
   Pagination({
-      this.totalItems, 
-      this.countItems, 
-      this.perPage, 
-      this.totalPages, 
-      this.currentPage,});
+    this.totalItems,
+    this.countItems,
+    this.perPage,
+    this.totalPages,
+    this.currentPage,
+  });
 
   Pagination.fromJson(dynamic json) {
     totalItems = json['total_items'];
@@ -28,5 +29,4 @@ class Pagination {
     map['current_page'] = currentPage;
     return map;
   }
-
 }

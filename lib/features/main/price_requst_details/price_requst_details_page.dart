@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/helpers/time_formater.dart';
+import 'package:garage/core/networking/models/user_prices_request/user_prices_request.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
 
-import 'price_requst_details_controller.dart';
-
 class PriceRequestDetailsPage extends StatelessWidget {
-  const PriceRequestDetailsPage({Key? key}) : super(key: key);
+  final UserPricesRequest item = Get.arguments;
 
+  PriceRequestDetailsPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final PriceRequstDetailsController logic = Get.put(
-      PriceRequstDetailsController(),
-    );
-
     return MyScaffold(
       title: "price_requst_details".tr,
       body: Padding(
@@ -38,15 +35,15 @@ class PriceRequestDetailsPage extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: ShapeDecoration(
-                          color: const Color(0xFF604106),
+                          color: getbackgroundcolor(item.status ?? ''),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Text(
-                          'مكتمله',
+                        child: Text(
+                          (item.status?.replaceAll('admin.', '').tr ?? ''),
 
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontFamily: 'Zain',
@@ -54,20 +51,20 @@ class PriceRequestDetailsPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Text(
-                        'طقم سماعات سيارة',
+                      Text(
+                        item.details ?? '',
 
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontFamily: 'Zain',
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const Text(
-                        'شركة المجد للاكسسوارت',
+                      Text(
+                        item.provider?.name ?? '',
 
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xFFCCCAC7),
                           fontSize: 16,
                           fontFamily: 'Zain',
@@ -104,30 +101,44 @@ class PriceRequestDetailsPage extends StatelessWidget {
                 Expanded(
                   child: PriceRequestDetailsSection(
                     header: "الكمية".tr,
-                    text: "1".tr,
+                    text: item.quantity.toString(),
                   ),
                 ),
                 Expanded(
                   child: PriceRequestDetailsSection(
                     header: "نوع الخدمة".tr,
-                    text: "أكسسوارت".tr,
+                    text: item.category?.name ?? "",
                   ),
                 ),
               ],
             ),
             PriceRequestDetailsSection(
               header: "الوقت والتاريخ".tr,
-              text: "الاثنين, 17 مارس,2025".tr,
-              subtext: "08:30 PM".tr,
+              text: item.createdAt.toString().substring(0, 10),
+              subtext: DateTimeFormatter.convert24to12(
+                item.createdAt.toString().substring(11, 16),
+              ),
             ),
             PriceRequestDetailsSection(
               header: "عنوان مركز الصيانه ".tr,
-              text: "لا 44 طريق شارع الفهيدي, العاصمة, الكويت".tr,
+              text: item.provider?.data?.mapDesc ?? "",
             ),
           ],
         ),
       ),
     );
+  }
+
+  Color? getbackgroundcolor(String status) {
+    switch (status) {
+      case "admin.completed":
+        return const Color(0xFF065F46);
+      case "admin.new":
+        return const Color(0xFF604106);
+      case "admin.warning":
+        return const Color(0xFF991B1B);
+    }
+    return null;
   }
 }
 

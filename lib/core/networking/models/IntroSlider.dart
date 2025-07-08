@@ -1,14 +1,15 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class IntroSlider extends Decodable<IntroSlider>{
+class IntroSlider extends Decodable<IntroSlider> {
   IntroSlider({
-      this.id, 
-      this.image, 
-      this.status, 
-      this.title, 
-      this.description, 
-      this.deletedAt, 
-      this.createdAt,});
+    this.id,
+    this.image,
+    this.status,
+    this.title,
+    this.description,
+    this.deletedAt,
+    this.createdAt,
+  });
 
   IntroSlider.fromJson(dynamic json) {
     id = json['id'];
@@ -43,5 +44,4 @@ class IntroSlider extends Decodable<IntroSlider>{
   IntroSlider decode(data) {
     return IntroSlider.fromJson(data);
   }
-
 }

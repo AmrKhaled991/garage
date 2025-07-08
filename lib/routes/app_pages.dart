@@ -1,5 +1,3 @@
-import 'package:garage/core/networking/models/offer.dart';
-import 'package:garage/core/networking/models/product.dart';
 import 'package:garage/core/ui/pages_page.dart';
 import 'package:garage/core/ui/webview_payment_page.dart';
 import 'package:garage/features/all_chats/all_chats_binding.dart';
@@ -11,6 +9,8 @@ import 'package:garage/features/auth/forget_password/forget_password_binding.dar
 import 'package:garage/features/auth/forget_password/forget_password_page.dart';
 import 'package:garage/features/auth/login/login_binding.dart';
 import 'package:garage/features/auth/login/login_page.dart';
+import 'package:garage/features/auth/notificatoins/notificatoins_binding.dart';
+import 'package:garage/features/auth/notificatoins/notificatoins_view.dart';
 import 'package:garage/features/auth/otp_verify/otp_verify_binding.dart';
 import 'package:garage/features/auth/otp_verify/otp_verify_page.dart';
 import 'package:garage/features/auth/success_dialog_screen/success_dialog_screen.dart';
@@ -37,10 +37,12 @@ import 'package:garage/features/main/category/category_Page.dart';
 import 'package:garage/features/main/category/category_binding.dart';
 import 'package:garage/features/main/chat/chat_binding.dart';
 import 'package:garage/features/main/chat/chat_page.dart';
+import 'package:garage/features/main/common/google_map.dart';
 import 'package:garage/features/main/company/company_binding.dart';
 import 'package:garage/features/main/company/company_page.dart';
 import 'package:garage/features/main/complete_cart_order/complete_cart_order_binding.dart';
 import 'package:garage/features/main/complete_cart_order/complete_cart_order_page.dart';
+import 'package:garage/features/main/home/home_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_binding.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_page.dart';
 import 'package:garage/features/main/maintenance_appointment_reminder/maintenance_appointment_reminder_binding.dart';
@@ -186,6 +188,7 @@ class AppPages {
       page: () => const MainNavigationPage(),
       bindings: [
         ProfileBinding(),
+        HomePageBinding(),
         MainNavigationBinding(),
         MyOrdersBinding(),
         CartBinding(),
@@ -200,7 +203,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.ADDCARPAGEKEY,
-      page: () => const AddCarPage(),
+      page: () => AddCarPage(),
       binding: AddCarBinding(),
       transition: Transition.cupertino,
     ),
@@ -218,7 +221,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.PRODUCT_DETAILSKEY,
-      page: () => const ProductDetailsPage(),
+      page: () => ProductDetailsPage(),
       binding: ProductDetailsBinding(),
       transition: Transition.cupertino,
     ),
@@ -248,7 +251,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.SEARCH,
-      page: () => const SearchPage(),
+      page: () => SearchPage(),
       binding: SearchBinding(),
       transition: Transition.cupertino,
     ),
@@ -260,13 +263,13 @@ class AppPages {
     ),
     GetPage(
       name: Routes.PriceRequestDetailsPageKEY,
-      page: () => const PriceRequestDetailsPage(),
+      page: () => PriceRequestDetailsPage(),
       binding: PriceRequestDetailsBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(
       name: Routes.AddPriceRequest,
-      page: () => const AddPriceRequestPage(),
+      page: () => AddPriceRequestPage(),
       binding: AddPriceRequestBinding(),
       transition: Transition.cupertino,
     ),
@@ -285,7 +288,7 @@ class AppPages {
     GetPage(
       name: Routes.AddressPage,
       page: () => const AddressPage(),
-      binding: AddressBinding(),
+      binding: UserAddressBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(
@@ -298,6 +301,23 @@ class AppPages {
       name: Routes.WELCOME_PAGE,
       page: () => const WelcomePage(),
       binding: WelcomeBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.MAP,
+      page: () => const MapScreen(),
+      bindings: [AddNewAddressBinding()],
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.WEBVIEW_PAYMENT,
+      page: () => WebviewPaymentPage(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.NotificatoinsPage,
+      page: () => const NotificatoinsPage(),
+      binding: NotificationsBinding(),
       transition: Transition.cupertino,
     ),
   ];

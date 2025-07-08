@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/networking/models/category.dart';
 import 'package:garage/theme/styles.dart';
 
 class SubCategoryItem extends StatelessWidget {
-  // final OffersCategory? categoryData;
+  final Category? categoryData;
   final bool isSelected;
   VoidCallback? onClick;
   SubCategoryItem({
     Key? key,
-    // this.categoryData,
+    this.categoryData,
     required this.isSelected,
     this.onClick,
   }) : super(key: key);
@@ -28,7 +29,7 @@ class SubCategoryItem extends StatelessWidget {
             ),
           ),
           child: Text(
-            "car amr",
+            categoryData?.name ?? "",
             textAlign: TextAlign.right,
             style: TextStyle(
               color: isSelected ? colorBlack : backgroundCustomChipTextColor,

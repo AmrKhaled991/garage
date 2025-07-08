@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:garage/core/binding.dart';
-import 'package:garage/core/controllers/main_controller.dart';
 import 'package:garage/core/lang/translation_service.dart';
 import 'package:garage/core/storage/preference_manager.dart';
 import 'package:garage/routes/app_pages.dart';
@@ -12,8 +11,6 @@ import 'package:garage/theme/theme_service.dart';
 import 'package:garage/theme/themes.dart';
 import 'package:garage/utils/logger_utils.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -39,7 +36,6 @@ Future<void> main() async {
       Binding().dependencies();
       HttpOverrides.global = MyHttpOverrides();
       // FirebaseNotifications().setUpFirebase();
-
       runApp(const MyApp());
       // The following lines are the same as previously explained in "Handling uncaught errors"
     },

@@ -17,34 +17,12 @@ class IntroController extends GetxController {
 
   void fetchIntro() async {
     state.intros.value = LoadingState.loading();
-    // state.intros.value = await mainRepository.getIntroSliders();
 
-    state.intros.value?.data = [
-      IntroSlider(
-        id: 1,
-        title: "test_title".tr,
-        description: "test_description".tr,
-        image: "assets/images/logo.png",
-      ),
-      IntroSlider(
-        id: 1,
-        title: "test_title".tr,
-        description: "test_description".tr,
-        image: "assets/images/logo.png",
-      ),
-      IntroSlider(
-        id: 1,
-        title: "test_title".tr,
-        description: "test_description".tr,
-        image: "assets/images/logo.png",
-      ),
-    ];
-
-    // state.intros.value = await mainRepository.getIntroSliders();
+    state.intros.value = await mainRepository.getIntroSliders();
 
     if (state.intros.value?.error == true ||
         state.intros.value?.data?.isEmpty == true) {
-      // Get.offAllNamed(Routes.MAIN);
+      Get.offAllNamed(Routes.MAIN);
     }
   }
 }

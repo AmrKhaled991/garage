@@ -1,29 +1,39 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:garage/routes/app_pages.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
+
 import 'package:garage/core/controllers/user_controller.dart';
+import 'package:garage/core/helpers/time_formater.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/widgets/custom_country_code_and_flag.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_Settings/work_categories_drop_down.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_controller.dart';
 import 'package:garage/features/auth/company_profile_edit/company_profile_edit_state.dart';
+import 'package:garage/features/auth/company_profile_edit/models/time_slot.dart';
+import 'package:garage/features/auth/register/register_controller.dart';
+import 'package:garage/features/auth/register/register_state.dart';
 import 'package:garage/theme/styles.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 
 class CompanyProfileEditView1 extends StatelessWidget {
   CompanyProfileEditController controller = Get.put(
     CompanyProfileEditController(),
   );
 
-  CompanyProfileEditState state =
+  CompanyProfileEditState dataState =
       Get.find<CompanyProfileEditController>().state;
+  RegisterState state = Get.find<RegisterController>().state;
 
-  UserController userController = Get.find();
+  RegisterController userController = Get.find();
   CompanyProfileEditView1({super.key});
 
   @override
@@ -55,57 +65,63 @@ class CompanyProfileEditView1 extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const WorkCategoriesDropDown(),
+          WorkCategoriesDropDown(controller: controller, state: dataState),
           const SizedBox(height: 16),
           MyTextForm(
-            // controller: state.companyDescription,
+            controller: state.description,
             hint: "company_description".tr,
             textInputType: TextInputType.text,
+            lines: 3,
           ),
           const SizedBox(height: 16),
 
-          Container(
-            decoration: BoxDecoration(
-              color: colorContainer,
+          GestureDetector(
+            onTap: () => Get.toNamed(Routes.MAP, arguments: "register"),
+            child: Container(
+              decoration: BoxDecoration(
+                color: colorContainer,
 
-              borderRadius: BorderRadiusDirectional.circular(8),
-            ),
+                borderRadius: BorderRadiusDirectional.circular(8),
+              ),
 
-            child: ListTile(
-              trailing: const MyImage(
-                image: "assets/images/ic_location.svg",
-                width: 24,
-              ),
-              title: Text(
-                "address".tr,
-                style: const TextStyle(
-                  color: Color(0xFF9E9B94),
-                  fontSize: 14,
-                  fontFamily: 'Zain',
-                  fontWeight: FontWeight.w400,
-                  height: 1.50,
-                ),
-              ),
-              subtitle: const Text(
-                '44 طريق شارع الفهيدي, العاصمة, الكويت',
-                style: TextStyle(
-                  color: Color(0xFFF7F8F9),
-                  fontSize: 18,
-                  fontFamily: 'Zain',
-                  fontWeight: FontWeight.w400,
-                  height: 1.20,
-                ),
-              ),
+              child: Obx(() {
+                var mapDesc = state.mapDesc.value;
+                return ListTile(
+                  trailing: const MyImage(
+                    image: "assets/images/ic_location.svg",
+                    width: 24,
+                  ),
+                  title: Text(
+                    "address".tr,
+                    style: const TextStyle(
+                      color: Color(0xFF9E9B94),
+                      fontSize: 14,
+                      fontFamily: 'Zain',
+                      fontWeight: FontWeight.w400,
+                      height: 1.50,
+                    ),
+                  ),
+                  subtitle: Text(
+                    mapDesc ?? "select_location".tr,
+                    style: const TextStyle(
+                      color: Color(0xFFF7F8F9),
+                      fontSize: 18,
+                      fontFamily: 'Zain',
+                      fontWeight: FontWeight.w400,
+                      height: 1.20,
+                    ),
+                  ),
+                );
+              }),
             ),
           ),
-         // CurrentLocationMap()
+          // CurrentLocationMap()
           const SizedBox(height: 16),
-
           MyTextForm(
             icon: const TextFormFieldIcon(
               assets: "assets/images/ic_whatsapp.svg",
             ),
-            controller: state.website,
+            controller: state.whatsapp,
             hint: "whatsapp".tr,
             textInputType: TextInputType.phone,
           ),
@@ -122,7 +138,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
             icon: const TextFormFieldIcon(
               assets: "assets/images/ic_website.svg",
             ),
-            controller: state.email,
+            controller: state.website,
             hint: "website".tr,
             textInputType: TextInputType.text,
           ),
@@ -131,7 +147,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
             icon: const TextFormFieldIcon(
               assets: "assets/images/ic_termsCode.svg",
             ),
-            controller: state.fax,
+            controller: state.commercialRegistrationNumber,
             hint: "fax".tr,
             textInputType: TextInputType.text,
           ),
@@ -149,7 +165,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
           const SizedBox(height: 8),
           MyTextForm(
             icon: const TextFormFieldIcon(assets: "assets/images/twitter.svg"),
-            controller: state.address,
+            controller: state.twitter,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
@@ -158,7 +174,7 @@ class CompanyProfileEditView1 extends StatelessWidget {
               assets: "assets/images/ic_tiktok.svg",
             ),
 
-            controller: state.location,
+            controller: state.tiktok,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
@@ -166,19 +182,19 @@ class CompanyProfileEditView1 extends StatelessWidget {
             icon: const TextFormFieldIcon(
               assets: "assets/images/instagram.svg",
             ),
-            controller: state.location,
+            controller: state.instagram,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
           MyTextForm(
             icon: const TextFormFieldIcon(assets: "assets/images/ic_snap.svg"),
-            controller: state.location,
+            controller: state.snapchat,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 8),
           MyTextForm(
             icon: const TextFormFieldIcon(assets: "assets/images/youtube.png"),
-            controller: state.location,
+            controller: state.youtube,
             textInputType: TextInputType.text,
           ),
           const SizedBox(height: 24),
@@ -193,85 +209,184 @@ class CompanyProfileEditView1 extends StatelessWidget {
               height: 1.20,
             ),
           ),
-          WeeklyTimeSelector(),
+          WeeklyTimeSelector(controller: userController),
         ],
       ),
     );
   }
 }
 
-class WeeklyTimeSelector extends StatelessWidget {
-  final List<String> days = [
-    'السبت',
-    'الأحد',
-    'الاثنين',
-    'الثلاثاء',
-    'الأربعاء',
-    'الخميس',
-  ];
-
-  WeeklyTimeSelector({super.key});
+class WeeklyTimeSelector extends StatefulWidget {
+  final RegisterController controller;
+  const WeeklyTimeSelector({Key? key, required this.controller})
+    : super(key: key);
 
   @override
+  State<WeeklyTimeSelector> createState() => _WeeklyTimeSelectorState();
+}
+
+class _WeeklyTimeSelectorState extends State<WeeklyTimeSelector> {
+  @override
   Widget build(BuildContext context) {
-    return Column(children: days.map((day) => _buildDayRow(day)).toList());
+    return Obx(() {
+      var days = widget.controller.state.listTimeSlot.value;
+      print("ammor days ${days[0].isSelected}");
+      return Column(
+        children:
+            widget.controller.state.listTimeSlot.value
+                .map((day) => _buildDayRow(day, context: context))
+                .toList(),
+      );
+    });
   }
 
-  Widget _buildDayRow(String day) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CheckboxTheme(
-                  data: CheckboxThemeData(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        6,
-                      ), // 👈 Border Radius
+  Widget _buildDayRow(TimeSlot day, {required BuildContext context}) {
+    return Obx(() {
+      var days = widget.controller.state.listTimeSlot.value;
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Row(
+                      children: [
+                        CheckboxTheme(
+                          data: CheckboxThemeData(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                6,
+                              ), // 👈 Border Radius
+                            ),
+                            side: const BorderSide(
+                              color:
+                                  Colors
+                                      .orange, // 👈 Border Color when unchecked
+                              width: 2,
+                            ),
+                            fillColor: WidgetStateProperty.resolveWith<Color>((
+                              states,
+                            ) {
+                              if (states.contains(WidgetState.selected)) {
+                                return Colors
+                                    .orange; // 👈 Fill color when checked
+                              }
+                              return Colors.transparent;
+                            }),
+                          ),
+                          child: Checkbox(
+                            value: day.isSelected,
+                            onChanged: (val) {
+                              day.isSelected = val ?? false;
+
+                              widget.controller.addAndRemoveTimeSlot(day);
+                            },
+                          ),
+                        ),
+
+                        Text(
+                          day.day ?? "",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
                     ),
-                    side: const BorderSide(
-                      color: Colors.orange, // 👈 Border Color when unchecked
-                      width: 2,
-                    ),
-                    fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return Colors.orange; // 👈 Fill color when checked
-                      }
-                      return Colors.transparent;
-                    }),
                   ),
-                  child: Checkbox(value: true, onChanged: (val) {}),
-                ),
-
-                Text(
-                  day,
-                  style: const TextStyle(color: Colors.white, fontSize: 16),
-                  textAlign: TextAlign.right,
-                ),
-              ],
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 5,
+                    child: TimeRow(
+                      startTime: day.start,
+                      endTime: day.end,
+                      startTimeChange: (time) {
+                        day.start = time;
+                        // addStartTime
+                        widget.controller.addStartTime(day);
+                      },
+                      endTimeChange: (time) {
+                        day.end = time;
+                        widget.controller.addEndTime(day);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
+          ],
+        ),
+      );
+    });
+  }
+}
+
+class TimeRow extends StatefulWidget {
+  final Function(String) startTimeChange;
+  final Function(String) endTimeChange;
+  final String? startTime;
+  final String? endTime;
+  const TimeRow({
+    Key? key,
+    required this.startTimeChange,
+    required this.endTimeChange,
+    this.startTime,
+    this.endTime,
+  }) : super(key: key);
+
+  @override
+  State<TimeRow> createState() => _TimeRowState();
+}
+
+class _TimeRowState extends State<TimeRow> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TimePickerSpinnerPopUp(
+            barrierColor: Colors.black12,
+            timeWidgetBuilder:
+                (p0) => _buildTimeBox(
+                  widget.startTime ?? DateTimeFormatter.formatHour12(p0),
+                  context: context,
+                ),
+            mode: CupertinoDatePickerMode.time,
+            initTime: DateTime.now(),
+            onChange: (dateTime) {
+              widget.startTimeChange(DateTimeFormatter.formatHour12(dateTime));
+              // Implement your logic with select dateTime
+            },
           ),
-          // Start time
-          Expanded(child: _buildTimeBox("18:00")),
-          const SizedBox(width: 10),
-          // End time
-          Expanded(child: _buildTimeBox("09:00")),
-          const SizedBox(width: 10),
+        ),
 
-          // Day name
-
-          // Active check icon
-        ],
-      ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: TimePickerSpinnerPopUp(
+            barrierColor: Colors.black12,
+            timeWidgetBuilder:
+                (p0) => _buildTimeBox(
+                  widget.endTime ?? DateTimeFormatter.formatHour12(p0),
+                  context: context,
+                ),
+            mode: CupertinoDatePickerMode.time,
+            initTime: DateTime.now(),
+            onChange: (dateTime) {
+              widget.endTimeChange(DateTimeFormatter.formatHour12(dateTime));
+            },
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _buildTimeBox(String time) {
+  Widget _buildTimeBox(String time, {required BuildContext context}) {
     return Container(
       width: 80,
       height: 45,
@@ -289,4 +404,3 @@ class WeeklyTimeSelector extends StatelessWidget {
     );
   }
 }
-

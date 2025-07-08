@@ -1,7 +1,6 @@
 import 'decodable.dart';
 
-class DynamicModel  extends Decodable<DynamicModel>{
-
+class DynamicModel extends Decodable<DynamicModel> {
   DynamicModel({this.data});
 
   dynamic data;
@@ -11,5 +10,4 @@ class DynamicModel  extends Decodable<DynamicModel>{
     this.data = json['data'];
     return this;
   }
-
 }

@@ -5,7 +5,6 @@ import 'company_controller.dart';
 class CompanyBinding extends Bindings {
   @override
   void dependencies() {
-    // TODO: implement dependencies
+    Get.put(CompanyController()); // TODO: implement dependencies
   }
- 
 }

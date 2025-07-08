@@ -1,11 +1,7 @@
 import 'package:garage/core/networking/base/decodable.dart';
 
-class Offer extends Decodable<Offer>{
-  Offer({
-      this.id, 
-      this.title, 
-      this.description, 
-      this.image,});
+class Offer extends Decodable<Offer> {
+  Offer({this.id, this.title, this.description, this.image});
 
   Offer.fromJson(dynamic json) {
     id = json['id'];
@@ -31,5 +27,4 @@ class Offer extends Decodable<Offer>{
   Offer decode(json) {
     return Offer.fromJson(json);
   }
-
 }

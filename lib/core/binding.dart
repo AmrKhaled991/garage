@@ -3,6 +3,8 @@ import 'package:garage/core/controllers/cart_controller.dart';
 import 'package:garage/core/controllers/checkout_controller.dart';
 import 'package:garage/core/controllers/main_controller.dart';
 import 'package:garage/core/controllers/user_controller.dart';
+import 'package:garage/core/repositories/categories_repository.dart';
+import 'package:garage/core/repositories/chat_repostiory.dart';
 import 'package:get/get.dart';
 import 'package:garage/core/repositories/address_repository.dart';
 import 'package:garage/core/repositories/auth_repository.dart';
@@ -14,7 +16,6 @@ import 'networking/network_handler.dart';
 import 'storage/preference_manager.dart';
 
 class Binding extends Bindings {
-
   @override
   void dependencies() {
     Get.put(PreferenceManager(), permanent: true);
@@ -30,6 +31,7 @@ class Binding extends Bindings {
     Get.put(CheckoutController(), permanent: true);
     Get.put(AddressRepository(), permanent: true);
     Get.put(AddressController(), permanent: true);
-
+    Get.put(CategoriesRepository(), permanent: true);
+    Get.put(ChatRepository(), permanent: true);
   }
 }

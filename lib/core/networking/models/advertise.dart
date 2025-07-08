@@ -1,13 +1,7 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
 class Advertise extends Decodable<Advertise> {
-  Advertise({
-    this.id,
-    this.image,
-    this.link,
-    this.type,
-    this.adsId,});
+  Advertise({this.id, this.image, this.link, this.type, this.adsId});
 
   Advertise.fromJson(dynamic json) {
     id = json['id'];
@@ -36,5 +30,4 @@ class Advertise extends Decodable<Advertise> {
   Advertise decode(data) {
     return Advertise.fromJson(data);
   }
-
 }

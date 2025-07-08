@@ -1,9 +1,7 @@
-
-
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/vendor.dart';
 
-class Product extends Decodable<Product>{
+class Product extends Decodable<Product> {
   Product({
     this.id,
     this.sku,
@@ -22,7 +20,8 @@ class Product extends Decodable<Product>{
     this.addons,
     this.sharableLink,
     this.preparationTime,
-    this.isFavorite,});
+    this.isFavorite,
+  });
 
   Product.fromJson(dynamic json) {
     id = json['id'];
@@ -82,7 +81,8 @@ class Product extends Decodable<Product>{
   String? sharableLink;
   String? preparationTime;
   dynamic isFavorite;
-  Product copyWith({  int? id,
+  Product copyWith({
+    int? id,
     String? sku,
     String? price,
     String? originPrice,
@@ -99,7 +99,8 @@ class Product extends Decodable<Product>{
     List<Addons>? addons,
     String? sharableLink,
     dynamic isFavorite,
-  }) => Product(  id: id ?? this.id,
+  }) => Product(
+    id: id ?? this.id,
     sku: sku ?? this.sku,
     price: price ?? this.price,
     originPrice: originPrice ?? this.originPrice,
@@ -142,7 +143,8 @@ class Product extends Decodable<Product>{
       map['tags'] = tags?.map((v) => v.toJson()).toList();
     }
     if (productsOptions != null) {
-      map['products_options'] = productsOptions?.map((v) => v.toJson()).toList();
+      map['products_options'] =
+          productsOptions?.map((v) => v.toJson()).toList();
     }
     if (addons != null) {
       map['addons'] = addons?.map((v) => v.toJson()).toList();
@@ -157,7 +159,6 @@ class Product extends Decodable<Product>{
   Product decode(data) {
     return Product.fromJson(data);
   }
-
 }
 
 class Addons {
@@ -170,7 +171,8 @@ class Addons {
     this.maxOptionsCount,
     this.isRequired,
     this.createdAt,
-    this.addonOptions,});
+    this.addonOptions,
+  });
 
   Addons.fromJson(dynamic json) {
     id = json['id'];
@@ -197,7 +199,8 @@ class Addons {
   bool? isRequired;
   String? createdAt;
   List<AddonOptions>? addonOptions;
-  Addons copyWith({  int? id,
+  Addons copyWith({
+    int? id,
     String? name,
     String? image,
     String? type,
@@ -206,7 +209,8 @@ class Addons {
     bool? isRequired,
     String? createdAt,
     List<AddonOptions>? addonOptions,
-  }) => Addons(  id: id ?? this.id,
+  }) => Addons(
+    id: id ?? this.id,
     name: name ?? this.name,
     image: image ?? this.image,
     type: type ?? this.type,
@@ -231,7 +235,6 @@ class Addons {
     }
     return map;
   }
-
 }
 
 class AddonOptions {
@@ -241,7 +244,8 @@ class AddonOptions {
     this.price,
     this.qty,
     this.image,
-    this.default_,});
+    this.default_,
+  });
 
   AddonOptions.fromJson(dynamic json) {
     id = json['id'];
@@ -257,13 +261,15 @@ class AddonOptions {
   dynamic qty;
   String? image;
   int? default_;
-  AddonOptions copyWith({  int? id,
+  AddonOptions copyWith({
+    int? id,
     String? option,
     String? price,
     dynamic qty,
     String? image,
     int? default_,
-  }) => AddonOptions(  id: id ?? this.id,
+  }) => AddonOptions(
+    id: id ?? this.id,
     option: option ?? this.option,
     price: price ?? this.price,
     qty: qty ?? this.qty,
@@ -280,35 +286,26 @@ class AddonOptions {
     map['default'] = default_;
     return map;
   }
-
 }
 
 class ProductsOptions {
-  ProductsOptions({
-    this.type,});
+  ProductsOptions({this.type});
 
   ProductsOptions.fromJson(dynamic json) {
     type = json['type'];
   }
   String? type;
-  ProductsOptions copyWith({  String? type,
-  }) => ProductsOptions(  type: type ?? this.type,
-  );
+  ProductsOptions copyWith({String? type}) =>
+      ProductsOptions(type: type ?? this.type);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['type'] = type;
     return map;
   }
-
 }
 
 class Tags {
-  Tags({
-    this.id,
-    this.title,
-    this.color,
-    this.background,
-    this.image,});
+  Tags({this.id, this.title, this.color, this.background, this.image});
 
   Tags.fromJson(dynamic json) {
     id = json['id'];
@@ -322,12 +319,14 @@ class Tags {
   String? color;
   String? background;
   dynamic image;
-  Tags copyWith({  int? id,
+  Tags copyWith({
+    int? id,
     String? title,
     String? color,
     String? background,
     dynamic image,
-  }) => Tags(  id: id ?? this.id,
+  }) => Tags(
+    id: id ?? this.id,
     title: title ?? this.title,
     color: color ?? this.color,
     background: background ?? this.background,
@@ -342,43 +341,35 @@ class Tags {
     map['image'] = image;
     return map;
   }
-
 }
 
 class Images {
-  Images({
-    this.url,});
+  Images({this.url});
 
   Images.fromJson(dynamic json) {
     url = json['url'];
   }
   String? url;
-  Images copyWith({  String? url,
-  }) => Images(  url: url ?? this.url,
-  );
+  Images copyWith({String? url}) => Images(url: url ?? this.url);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['url'] = url;
     return map;
   }
-
 }
 
 class ProductOffer {
-  ProductOffer({
-    this.offerPrice,});
+  ProductOffer({this.offerPrice});
 
   ProductOffer.fromJson(dynamic json) {
     offerPrice = json['offer_price'];
   }
   String? offerPrice;
-  ProductOffer copyWith({  String? offerPrice,
-  }) => ProductOffer(  offerPrice: offerPrice ?? this.offerPrice,
-  );
+  ProductOffer copyWith({String? offerPrice}) =>
+      ProductOffer(offerPrice: offerPrice ?? this.offerPrice);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['offer_price'] = offerPrice;
     return map;
   }
-
 }

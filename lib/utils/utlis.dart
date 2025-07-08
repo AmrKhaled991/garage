@@ -130,7 +130,6 @@ class Utils {
       ),
       builder: (context) {
         return Container(
-          height: height ?? Get.height * .5,
           padding: MediaQuery.of(context).viewInsets,
           child: widget,
         );

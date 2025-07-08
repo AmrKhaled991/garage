@@ -4,24 +4,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../theme/styles.dart';
 
 class MyText extends StatelessWidget {
-  const MyText(
-      {Key? key,
-      required this.text,
-      this.color,
-      this.backgroundColor,
-      this.fontSize,
-      this.fontWeight,
-      this.fontStyle,
-      this.padding,
-      this.margin,
-      this.height,
-      this.textAlign,
-      this.maxLines,
-      this.overflow,
-      this.crossedOut = false,
-      this.fixFontTopPadding,
-      this.fontFamily = appFontFamily})
-      : super(key: key);
+  const MyText({
+    Key? key,
+    required this.text,
+    this.color,
+    this.backgroundColor,
+    this.fontSize,
+    this.fontWeight,
+    this.fontStyle,
+    this.padding,
+    this.margin,
+    this.height,
+    this.textAlign,
+    this.maxLines,
+    this.overflow,
+    this.crossedOut = false,
+    this.fixFontTopPadding,
+    this.fontFamily = appFontFamily,
+  }) : super(key: key);
 
   final String? text;
   final Color? color;

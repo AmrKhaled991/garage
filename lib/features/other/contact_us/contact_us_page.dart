@@ -45,32 +45,27 @@ class _ContactUsPageState extends State<ContactUsPage> {
             hint: "name".tr,
             textInputType: TextInputType.text,
           ),
-          const SizedBox(
-            height: 16,
-          ),
+          const SizedBox(height: 16),
           MyTextForm(
             controller: state.phoneController,
             hint: "phone_number".tr,
             textInputType: TextInputType.phone,
           ),
-          const SizedBox(
-            height: 16,
-          ),
+          const SizedBox(height: 16),
           MyTextForm(
             controller: state.emailController,
             hint: "email".tr,
             textInputType: TextInputType.emailAddress,
           ),
-          const SizedBox(
-            height: 16,
-          ),
+          const SizedBox(height: 16),
           MyTextForm(
             controller: state.messageController,
             hint: "message".tr,
             textInputType: TextInputType.text,
             lines: 5,
           ),
-          Obx(() => Visibility(
+          Obx(
+            () => Visibility(
               visible: state.contactUsLoading.value.error,
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -79,28 +74,30 @@ class _ContactUsPageState extends State<ContactUsPage> {
                   textAlign: TextAlign.center,
                   style: MyTextStyle.myErrorSubTitle,
                 ),
-              ))),
-          const SizedBox(
-            height: 30,
+              ),
+            ),
           ),
+          const SizedBox(height: 30),
           MyLoadingButton(
-              title: "send".tr,
-              onClick: (RoundedLoadingButtonController _controller) {
-                if (!controller.validation()) {
-                  _controller.error();
-                  Timer(const Duration(seconds: 1), () {
-                    _controller.reset();
-                  });
-                  return;
-                }
+            title: "send".tr,
+            onClick: (RoundedLoadingButtonController _controller) {
+              if (!controller.validation()) {
+                _controller.error();
+                Timer(const Duration(seconds: 1), () {
+                  _controller.reset();
+                });
+                return;
+              }
 
-                controller.contactUs({
+              controller.contactUs(
+                {
                   "user_name": state.nameController.text,
                   "phone": state.phoneController.text,
                   "complaint": state.messageController.text,
                   "email": state.emailController.text,
                   "type": "contact",
-                }, (success) {
+                },
+                (success) {
                   if (success) {
                     Utils.showSnackBar("message_sent".tr);
                     _controller.success();
@@ -111,8 +108,10 @@ class _ContactUsPageState extends State<ContactUsPage> {
                   Timer(const Duration(seconds: 1), () {
                     _controller.reset();
                   });
-                });
-              }),
+                },
+              );
+            },
+          ),
         ],
       ),
     );

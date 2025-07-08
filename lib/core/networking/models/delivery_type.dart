@@ -1,14 +1,13 @@
-
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class DeliveryType extends Decodable<DeliveryType>{
+class DeliveryType extends Decodable<DeliveryType> {
   DeliveryType({
     this.type,
     this.title,
     this.message,
     this.times,
-    this.withTimes,});
+    this.withTimes,
+  });
 
   DeliveryType.fromJson(dynamic json) {
     type = json['type'];
@@ -27,12 +26,14 @@ class DeliveryType extends Decodable<DeliveryType>{
   String? message;
   List<Times>? times;
   bool? withTimes;
-  DeliveryType copyWith({  String? type,
+  DeliveryType copyWith({
+    String? type,
     String? title,
     String? message,
     List<Times>? times,
     bool? withTimes,
-  }) => DeliveryType(  type: type ?? this.type,
+  }) => DeliveryType(
+    type: type ?? this.type,
     title: title ?? this.title,
     message: message ?? this.message,
     times: times ?? this.times,
@@ -54,15 +55,10 @@ class DeliveryType extends Decodable<DeliveryType>{
   DeliveryType decode(data) {
     return DeliveryType.fromJson(data);
   }
-
 }
 
 class Times {
-  Times({
-    this.date,
-    this.dayCode,
-    this.dayName,
-    this.times,});
+  Times({this.date, this.dayCode, this.dayName, this.times});
 
   Times.fromJson(dynamic json) {
     date = json['date'];
@@ -79,11 +75,13 @@ class Times {
   String? dayCode;
   String? dayName;
   List<TimesData>? times;
-  Times copyWith({  String? date,
+  Times copyWith({
+    String? date,
     String? dayCode,
     String? dayName,
     List<TimesData>? times,
-  }) => Times(  date: date ?? this.date,
+  }) => Times(
+    date: date ?? this.date,
     dayCode: dayCode ?? this.dayCode,
     dayName: dayName ?? this.dayName,
     times: times ?? this.times,
@@ -98,13 +96,10 @@ class Times {
     }
     return map;
   }
-
 }
 
 class TimesData {
-  TimesData({
-    this.timeFrom,
-    this.timeTo,});
+  TimesData({this.timeFrom, this.timeTo});
 
   TimesData.fromJson(dynamic json) {
     timeFrom = json['time_from'];
@@ -112,9 +107,8 @@ class TimesData {
   }
   String? timeFrom;
   String? timeTo;
-  TimesData copyWith({  String? timeFrom,
-    String? timeTo,
-  }) => TimesData(  timeFrom: timeFrom ?? this.timeFrom,
+  TimesData copyWith({String? timeFrom, String? timeTo}) => TimesData(
+    timeFrom: timeFrom ?? this.timeFrom,
     timeTo: timeTo ?? this.timeTo,
   );
   Map<String, dynamic> toJson() {
@@ -123,5 +117,4 @@ class TimesData {
     map['time_to'] = timeTo;
     return map;
   }
-
 }

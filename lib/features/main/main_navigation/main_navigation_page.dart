@@ -6,6 +6,7 @@ import 'package:garage/features/main/cart/cart_Page.dart';
 import 'package:garage/features/main/home/home_page.dart';
 import 'package:garage/features/main/main_navigation/main_navigation_state.dart';
 import 'package:garage/features/main/my_orders/my_orders_page.dart';
+import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,11 +21,11 @@ class MainNavigationPage extends StatefulWidget {
 
 class _MainNavigationPageState extends State<MainNavigationPage> {
   final List<Widget> _children = [
-    const HomePage(),
-    const MyOrdersPage(),
+    HomePage(),
+    MyOrdersPage(),
     CartPage(),
     AllChatsPage(),
-    ProfilePage(),
+    const ProfilePage(),
   ];
 
   final MainNavigationController mainNavigationController = Get.find();
@@ -71,11 +72,22 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     return Obx(() {
       return BottomNavigationBar(
         items: _getNavigationItems(),
+
         backgroundColor: colorContainer,
         elevation: 0,
         iconSize: 30,
         currentIndex: state.currentIndex.value,
         onTap: (index) {
+          if (!userController.isLogged.value) {
+            if (index == 4 || index == 0) {
+              // If the user tries to access the cart without being logged in, redirect to the login page
+              state.currentIndex.value = index;
+              return;
+            }
+            // If the user is not logged in, redirect to the login page
+            Get.toNamed(Routes.LOGIN);
+            return;
+          }
           state.currentIndex.value = index;
         },
         type: BottomNavigationBarType.fixed,

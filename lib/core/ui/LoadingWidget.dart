@@ -19,70 +19,106 @@ class LoadingWidget extends StatefulWidget {
   bool withErrorWidget;
   bool withPadding;
 
-  LoadingWidget({this.loadingState,this.loadingWidget,this.child,this.emptyWidget,this.onRetryCall,
-    this.isEmpty=false,this.hideIfEmpty=false,this.loadingOnly=false,this.withPadding=false,this.withPullToRefresh = false,this.withLogin = false,this.withErrorWidget = true});
+  LoadingWidget({
+    this.loadingState,
+    this.loadingWidget,
+    this.child,
+    this.emptyWidget,
+    this.onRetryCall,
+    this.isEmpty = false,
+    this.hideIfEmpty = false,
+    this.loadingOnly = false,
+    this.withPadding = false,
+    this.withPullToRefresh = false,
+    this.withLogin = false,
+    this.withErrorWidget = true,
+  });
 
   @override
   _LoadingWidgetState createState() => _LoadingWidgetState();
 }
 
 class _LoadingWidgetState extends State<LoadingWidget> {
-  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
 
   @override
   Widget build(BuildContext context) {
-
     Widget _child() {
       if (widget.loadingState?.loading == true) {
         if (widget.loadingWidget == null) {
-          return Center(child: MyLoadingWidget(withPadding: widget.withPadding));
+          return Center(
+            child: MyLoadingWidget(withPadding: widget.withPadding),
+          );
         } else {
-          return widget.loadingWidget??MyLoadingWidget(withPadding: widget.withPadding);
+          return widget.loadingWidget ??
+              MyLoadingWidget(withPadding: widget.withPadding);
         }
-      }else if (widget.loadingState?.success == true && widget.isEmpty && !widget.loadingOnly && widget.withErrorWidget) {
+      } else if (widget.loadingState?.success == true &&
+          widget.isEmpty &&
+          !widget.loadingOnly &&
+          widget.withErrorWidget) {
         return Visibility(
           visible: !widget.hideIfEmpty,
-          child: widget.emptyWidget?? Center(
-            child: MyErrorWidget(onRetryCall: widget.onRetryCall,withLogin: widget.withLogin,
-                errorMsg: "no_data_found".tr, errorType: ErrorType.EMPTY,withPadding: widget.withPadding),
+          child:
+              widget.emptyWidget ??
+              Center(
+                child: MyErrorWidget(
+                  onRetryCall: widget.onRetryCall,
+                  withLogin: widget.withLogin,
+                  errorMsg: "no_data_found".tr,
+                  errorType: ErrorType.EMPTY,
+                  withPadding: widget.withPadding,
+                ),
+              ),
+        );
+      } else if ((widget.loadingState?.retry == true ||
+              widget.loadingState?.error == true) &&
+          !widget.loadingOnly &&
+          widget.withErrorWidget) {
+        return Center(
+          child: MyErrorWidget(
+            onRetryCall: widget.onRetryCall,
+            withLogin: widget.withLogin,
+            errorMsg: widget.loadingState?.message,
+            errorType:
+                widget.loadingState?.message.isEmpty == true
+                    ? ErrorType.NETWORK
+                    : ErrorType.API,
+            withPadding: widget.withPadding,
           ),
         );
-      }else if ((widget.loadingState?.retry == true || widget.loadingState?.error == true) && !widget.loadingOnly && widget.withErrorWidget) {
-        return Center(
-          child: MyErrorWidget(onRetryCall: widget.onRetryCall,withLogin: widget.withLogin,
-              errorMsg: widget.loadingState?.message,
-              errorType: widget.loadingState?.message.isEmpty == true? ErrorType.NETWORK : ErrorType.API,withPadding: widget.withPadding),
-        );
-      } else if (widget.loadingState?.success == true){
-        return widget.child??Container();
-      } else{
+      } else if (widget.loadingState?.success == true) {
+        return widget.child ?? Container();
+      } else {
         return Container();
       }
     }
 
-    if(!widget.withPullToRefresh) {
+    if (!widget.withPullToRefresh) {
       return _child();
     } else {
       return SmartRefresher(
-      controller: _refreshController,
-      physics: const BouncingScrollPhysics(),
-      header: const WaterDropHeader(),
-      // enablePullUp: true,
-      onRefresh: () {
-        widget.onRetryCall?.call();
-        _refreshController.refreshCompleted();
-      },
-      // onLoading: () async{
-      //   var state = await widget.onLoadingMore;
-      //   if(state == PagingState.MORE_FAILED)
-      //     _refreshController.loadFailed();
-      //   else if(state == PagingState.NO_MORE)
-      //     _refreshController.loadNoData();
-      //   else
-      //     _refreshController.loadComplete();
-      // },
-      child: _child(),
-    );
+        controller: _refreshController,
+        physics: const BouncingScrollPhysics(),
+        header: const WaterDropHeader(),
+        // enablePullUp: true,
+        onRefresh: () {
+          widget.onRetryCall?.call();
+          _refreshController.refreshCompleted();
+        },
+        // onLoading: () async{
+        //   var state = await widget.onLoadingMore;
+        //   if(state == PagingState.MORE_FAILED)
+        //     _refreshController.loadFailed();
+        //   else if(state == PagingState.NO_MORE)
+        //     _refreshController.loadNoData();
+        //   else
+        //     _refreshController.loadComplete();
+        // },
+        child: _child(),
+      );
     }
   }
 }

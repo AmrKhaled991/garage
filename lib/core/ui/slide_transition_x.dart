@@ -7,9 +7,8 @@ class SlideTransitionX extends AnimatedWidget {
     this.transformHitTests = true,
     this.direction = AxisDirection.down,
     required this.child,
-  })
-      : assert(position != null),
-        super(key: key, listenable: position) {
+  }) : assert(position != null),
+       super(key: key, listenable: position) {
     // 偏移在内部处理
     switch (direction) {
       case AxisDirection.up:
@@ -26,7 +25,6 @@ class SlideTransitionX extends AnimatedWidget {
         break;
     }
   }
-
 
   Animation<double> get position => listenable as Animation<double>;
 

@@ -1,4 +1,3 @@
-
 class Meta {
   Meta({
     this.currentPage,
@@ -7,7 +6,8 @@ class Meta {
     this.path,
     this.perPage,
     this.to,
-    this.total,});
+    this.total,
+  });
 
   Meta.fromJson(dynamic json) {
     currentPage = json['current_page'];
@@ -25,14 +25,16 @@ class Meta {
   int? perPage;
   int? to;
   int? total;
-  Meta copyWith({  int? currentPage,
+  Meta copyWith({
+    int? currentPage,
     int? from,
     int? lastPage,
     String? path,
     int? perPage,
     int? to,
     int? total,
-  }) => Meta(  currentPage: currentPage ?? this.currentPage,
+  }) => Meta(
+    currentPage: currentPage ?? this.currentPage,
     from: from ?? this.from,
     lastPage: lastPage ?? this.lastPage,
     path: path ?? this.path,
@@ -51,5 +53,4 @@ class Meta {
     map['total'] = total;
     return map;
   }
-
 }

@@ -3,13 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:garage/features/auth/profile/widgets/auth_item.dart';
+import 'package:garage/features/main/account_settings/account_settings_page.dart';
+import 'package:garage/features/main/account_settings/widgest/language_widget.dart';
+import 'package:garage/utils/links_utils.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:garage/core/controllers/main_controller.dart';
 import 'package:garage/core/controllers/user_controller.dart';
-import 'package:garage/core/ui/MyButton.dart';
-import 'package:garage/core/ui/btn_social.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/core/ui/sheet/normal_sheet.dart';
@@ -18,6 +19,7 @@ import 'package:garage/features/auth/profile/widgets/settings_item.dart';
 import 'package:garage/features/main/common/text_header_widget.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/utlis.dart';
 import 'profile_controller.dart';
@@ -49,28 +51,30 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 16.verticalSpace,
                 Visibility(
-                  visible: true,
+                  visible: isLogged.value == true,
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration:
                         MyshapesStyle.PrimaryDecoration, // لون الخلفية هنا واضح
-                    child: const Row(
+                    child: Row(
                       children: [
                         ClipOval(
                           child: MyImage(
-                            image: "assets/images/bar_header.png",
+                            image:
+                                userController.user.value?.image ??
+                                "assets/images/ic_profile.png",
                             fit: BoxFit.cover,
                             width: 70,
                             height: 70,
                           ),
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Column(
                           children: [
                             Text(
-                              'محمد أحمد سعد',
+                              userController.user.value?.name ?? "User Name",
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontFamily: 'Zain',
@@ -79,9 +83,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             Text(
-                              '+965 121564564522',
+                              userController.user.value?.phone ?? "User Phone",
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFFCCCAC7),
                                 fontSize: 16,
                                 fontFamily: 'Zain',
@@ -96,14 +100,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Visibility(
-                  visible: true,
+                  visible: isLogged.value == true,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-
                         spacing: 15,
                         children: [
                           Expanded(
@@ -177,12 +180,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 30),
                 TextHeaderWidget(
-                  title: "account".tr,
+                  title: isLogged.value == true ? "account".tr : null,
                   child: Column(
                     spacing: 8,
                     children: [
                       Visibility(
-                        visible: isLogged.value == true,
+                        visible: isLogged.value == false,
                         child: SettingsItem(
                           title: "login".tr,
                           icon: "assets/images/ic_profile_edit.svg",
@@ -192,7 +195,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       Visibility(
-                        visible: true,
+                        visible: isLogged.value == true,
                         child: SettingsItem(
                           title: "account_info".tr,
                           icon: "assets/images/ic_profile_edit.svg",
@@ -203,7 +206,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
 
                       Visibility(
-                        visible: true,
+                        visible: isLogged.value == true,
                         child: SettingsItem(
                           title: "settings_profile".tr,
                           icon: "assets/images/settings_profile.svg",
@@ -228,12 +231,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         },
                       ),
 
-                      SettingsItem(
-                        title: "address".tr,
-                        icon: "assets/images/ic_location.svg",
-                        onClick: () {
-                          Get.toNamed(Routes.AddressPage);
-                        },
+                      Visibility(
+                        visible: isLogged.value == true,
+                        child: SettingsItem(
+                          title: "address".tr,
+                          icon: "assets/images/ic_location.svg",
+                          onClick: () {
+                            Get.toNamed(Routes.AddressPage);
+                          },
+                        ),
                       ),
                       AuthItem(
                         title: "contact_us".tr,
@@ -242,110 +248,112 @@ class _ProfilePageState extends State<ProfilePage> {
                           Get.toNamed(Routes.CONTACT_US);
                         },
                       ),
-                      // languageWidget(context),
                       Visibility(
-                        visible: true,
-                        child: Column(
-                          children: [
-                            AuthItem(
+                        visible: isLogged.value == false,
+                        child: LanguageWidget(),
+                      ),
+                      Column(
+                        children: [
+                          Visibility(
+                            visible: isLogged.value == true,
+                            child: AuthItem(
                               title: "logout".tr,
                               icon: "assets/images/ic_logout.svg",
                               bgColor: const Color(0xFFFF4C4C),
                               onClick: () {
-                                userController.logout();
                                 Utils.showSheet(
-                                  height: 250,
                                   context,
                                   NormalSheet(
                                     child: CustomExistSheet(
                                       title: "logout".tr,
-                                      onClick: () => userController.logout(),
+                                      onClick: () {
+                                        userController.logout().then(
+                                          (value) => Get.back(),
+                                        );
+                                      },
                                     ),
                                   ),
                                 );
                               },
                             ),
-                            const SizedBox(height: 20),
-                            Text(
-                              "follow_us".tr,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontFamily: 'Zain',
-                                fontWeight: FontWeight.w400,
-                                height: 1.20,
-                              ),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            "follow_us".tr,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: 'Zain',
+                              fontWeight: FontWeight.w400,
+                              height: 1.20,
                             ),
-                            const SizedBox(height: 8),
+                          ),
+                          const SizedBox(height: 8),
 
-                            const Row(
+                          Obx(() {
+                            var listSocials =
+                                Get.find<MainController>().socials.value.data;
+                            print("listSocialfdsfs: ${listSocials?.length}");
+
+                            if (listSocials == null || listSocials.isEmpty) {
+                              return const SizedBox.shrink();
+                            }
+
+                            return Wrap(
                               spacing: 10,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                MyImage(
-                                  image: "assets/images/twitter.svg",
-                                  width: 32,
-                                  height: 32,
-                                ),
-                                MyImage(
-                                  image: "assets/images/ic_snap.svg",
-                                  width: 32,
-                                  height: 32,
-                                ),
-                                MyImage(
-                                  image: "assets/images/instagram.svg",
-                                  width: 32,
-                                  height: 32,
-                                ),
-                                MyImage(
-                                  image: "assets/images/ic_tiktok.svg",
-                                  width: 32,
-                                  height: 32,
-                                ),
-                                MyImage(
-                                  image: "assets/images/youtube.png",
-                                  width: 32,
-                                  height: 32,
-                                ),
-                              ],
-                            ),
+                              alignment: WrapAlignment.center,
+                              children:
+                                  listSocials.map<Widget>((social) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        print("social.link: ${social.link}");
+                                        LinkHelper.openLink(social.link ?? '');
+                                      },
+                                      child: MyImage(
+                                        image: social.icon,
+                                        width: 32,
+                                        height: 32,
+                                      ),
+                                    );
+                                  }).toList(),
+                            );
+                          }),
 
-                            // authItem(
-                            //   title: "remove_account".tr,
-                            //   bgColor: Colors.red,
-                            //   onClick: () {
-                            //     showDialog(
-                            //       context: context,
-                            //       builder:
-                            //           (
-                            //             BuildContext context,
-                            //           ) => CupertinoAlertDialog(
-                            //             title: Text("remove_account".tr),
-                            //             content: Text("remove_account_msg".tr),
-                            //             actions: <Widget>[
-                            //               CupertinoDialogAction(
-                            //                 isDestructiveAction: true,
-                            //                 child: Text("yes".tr),
-                            //                 onPressed: () {
-                            //                   userController.removeAccount();
-                            //                   Navigator.pop(context);
-                            //                 },
-                            //               ),
-                            //               CupertinoDialogAction(
-                            //                 isDefaultAction: true,
-                            //                 child: Text("no".tr),
-                            //                 onPressed: () {
-                            //                   Navigator.pop(context);
-                            //                 },
-                            //               ),
-                            //             ],
-                            //           ),
-                            //     );
-                            //   },
-                            // ),
-                          ],
-                        ),
+                          // authItem(
+                          //   title: "remove_account".tr,
+                          //   bgColor: Colors.red,
+                          //   onClick: () {
+                          //     showDialog(
+                          //       context: context,
+                          //       builder:
+                          //           (
+                          //             BuildContext context,
+                          //           ) => CupertinoAlertDialog(
+                          //             title: Text("remove_account".tr),
+                          //             content: Text("remove_account_msg".tr),
+                          //             actions: <Widget>[
+                          //               CupertinoDialogAction(
+                          //                 isDestructiveAction: true,
+                          //                 child: Text("yes".tr),
+                          //                 onPressed: () {
+                          //                   userController.removeAccount();
+                          //                   Navigator.pop(context);
+                          //                 },
+                          //               ),
+                          //               CupertinoDialogAction(
+                          //                 isDefaultAction: true,
+                          //                 child: Text("no".tr),
+                          //                 onPressed: () {
+                          //                   Navigator.pop(context);
+                          //                 },
+                          //               ),
+                          //             ],
+                          //           ),
+                          //     );
+                          //   },
+                          // ),
+                        ],
                       ),
                     ],
                   ),

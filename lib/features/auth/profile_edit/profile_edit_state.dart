@@ -3,9 +3,9 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class ProfileEditState {
-  var name = TextEditingController(text: "mohamed");
-  var phoneNumber = TextEditingController(text: "+966555555555");
-  var email = TextEditingController(text: "mohamed@tocaan");
+  var name = TextEditingController().obs;
+  var phoneNumber = TextEditingController().obs;
+  var email = TextEditingController().obs;
 
   var companyName = "".obs;
   var companyWorkTime = "".obs;

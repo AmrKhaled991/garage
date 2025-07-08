@@ -1,11 +1,7 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class PagesData extends Decodable<PagesData>{
-  PagesData({
-    this.id,
-    this.title,
-    this.description,});
+class PagesData extends Decodable<PagesData> {
+  PagesData({this.id, this.title, this.description});
 
   PagesData.fromJson(dynamic json) {
     id = json['id'];
@@ -28,5 +24,4 @@ class PagesData extends Decodable<PagesData>{
   PagesData decode(data) {
     return PagesData.fromJson(data);
   }
-
 }

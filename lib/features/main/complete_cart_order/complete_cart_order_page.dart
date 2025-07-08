@@ -8,6 +8,7 @@ import 'package:garage/core/ui/widgets/my_text_form.dart';
 import 'package:garage/features/main/complete_cart_order/complete_cart_order_controller.dart';
 import 'package:garage/features/other/sheet/area_sheet.dart';
 import 'package:garage/routes/app_pages.dart';
+import 'package:garage/routes/arguments.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:garage/utils/utlis.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
   Widget build(BuildContext context) {
     return MyScaffold(
       resizeToAvoidBottomInset: false,
-      title: "استكمال الطلب",
+      title: "complete_order".tr,
       body: ListView(
         shrinkWrap: true,
         padding: const EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 100),
@@ -51,13 +52,14 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
             onTap:
                 () => Utils.showSheet(
                   context,
+                  isScrollable: true,
                   NormalSheet(
                     title: "select_area".tr,
+
                     child: AreaSheet(
                       // singleSelection: widget.stateId != null ? true : false,
                       onSelected: (states) {
-                        state.stateController.text =
-                            states!.first?.id.toString() ?? "0";
+                        state.stateController.value = states;
                       },
                     ),
                   ),
@@ -79,17 +81,21 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
                       height: 1.50,
                     ),
                   ),
-                  const Text(
-                    'القيروان',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Color(0xFFF7F8F9),
-                      fontSize: 18,
-                      fontFamily: 'Zain',
-                      fontWeight: FontWeight.w400,
-                      height: 1.20,
-                    ),
-                  ),
+                  Obx(() {
+                    return Text(
+                      state.stateController.value == null
+                          ? "select_area".tr
+                          : state.stateController.value!.title ?? '',
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(
+                        color: Color(0xFFF7F8F9),
+                        fontSize: 18,
+                        fontFamily: 'Zain',
+                        fontWeight: FontWeight.w400,
+                        height: 1.20,
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -143,37 +149,54 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
         child: MyLoadingButton(
           title: "complete_order".tr,
           onClick: (RoundedLoadingButtonController _controller) {
-            _controller.success();
-            Get.offNamed(Routes.SuccessDialogScreen);
-            if (!controller.validation()) {
-              _controller.error();
-              Timer(const Duration(seconds: 1), () {
-                _controller.reset();
-              });
-              return;
+            if (controller.validation()) {
+              controller.completeOrder(
+                {
+                  "name": state.nameController.text,
+                  "phone": state.phoneController.text,
+                  "country_code": '956',
+                  "region_id": state.stateController.value!.id.toString(),
+                  "street_name": state.streetController.text,
+                  "block_number": state.jadaNumberController.text,
+                  "building_number": state.squareNumberController.text,
+                  "avenue_number": state.squareNumberController.text,
+                  "note": state.notesController.text,
+                },
+                (success, payment) async {
+                  if (success) {
+                    _controller.reset();
+                    print("payment url: ${payment?.url}");
+                    var resultJson = await Get.toNamed(
+                      Routes.WEBVIEW_PAYMENT,
+                      arguments: {MyArguments.URL: payment?.url},
+                    );
+                    if (resultJson != null) {
+                      if (resultJson["key"] == "success") {
+                        _controller.success();
+                        Get.offNamed(Routes.SuccessDialogScreen);
+                        Utils.showSnackBar("payment_success".tr);
+                      } else {
+                        _controller.error();
+                        Utils.showSnackBar("payment_error".tr);
+                      }
+                      Timer(const Duration(seconds: 1), () {
+                        _controller.reset();
+                      });
+                    }
+                  } else {
+                    _controller.error();
+                    Utils.showSnackBar(state.payment.value.message);
+                  }
+
+                  Timer(const Duration(seconds: 1), () {
+                    _controller.reset();
+                  });
+                },
+              );
             }
-
-            controller.completeOrder(
-              {
-                "user_name": state.nameController.text,
-                "phone": state.phoneController.text,
-                // "complaint": state.messageController.text,
-                // "email": state.emailController.text,
-                // "type": "contact",
-              },
-              (success) {
-                if (success) {
-                  Utils.showSnackBar("message_sent".tr);
-                  _controller.success();
-                } else {
-                  _controller.error();
-                }
-
-                Timer(const Duration(seconds: 1), () {
-                  _controller.reset();
-                });
-              },
-            );
+            Timer(const Duration(seconds: 1), () {
+              _controller.reset();
+            });
           },
         ),
       ),

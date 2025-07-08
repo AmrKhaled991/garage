@@ -31,7 +31,6 @@ class IntroPage extends StatelessWidget {
           return Column(
             children: [
               const Spacer(),
-
               SliderView(
                 sliderHeight: 0.5.sh,
                 autoPlay: false,

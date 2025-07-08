@@ -1,7 +1,6 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class CreateAd extends Decodable<CreateAd>{
+class CreateAd extends Decodable<CreateAd> {
   CreateAd({
     this.id,
     this.title,
@@ -26,7 +25,8 @@ class CreateAd extends Decodable<CreateAd>{
     this.subscription,
     this.addations,
     this.attachs,
-    this.address,});
+    this.address,
+  });
 
   CreateAd.fromJson(dynamic json) {
     id = json['id'];
@@ -135,19 +135,15 @@ class CreateAd extends Decodable<CreateAd>{
   CreateAd decode(data) {
     return CreateAd.fromJson(data);
   }
-
 }
 
 class Address {
-  Address({
-    this.id,
-    this.country,
-    this.city,
-    this.state,});
+  Address({this.id, this.country, this.city, this.state});
 
   Address.fromJson(dynamic json) {
     id = json['id'];
-    country = json['country'] != null ? Country.fromJson(json['country']) : null;
+    country =
+        json['country'] != null ? Country.fromJson(json['country']) : null;
     city = json['city'] != null ? City.fromJson(json['city']) : null;
     state = json['state'] != null ? State.fromJson(json['state']) : null;
   }
@@ -170,14 +166,10 @@ class Address {
     }
     return map;
   }
-
 }
 
 class State {
-  State({
-    this.id,
-    this.title,
-    this.cityId,});
+  State({this.id, this.title, this.cityId});
 
   State.fromJson(dynamic json) {
     id = json['id'];
@@ -195,13 +187,10 @@ class State {
     map['city_id'] = cityId;
     return map;
   }
-
 }
 
 class City {
-  City({
-    this.id,
-    this.title,});
+  City({this.id, this.title});
 
   City.fromJson(dynamic json) {
     id = json['id'];
@@ -216,13 +205,10 @@ class City {
     map['title'] = title;
     return map;
   }
-
 }
 
 class Country {
-  Country({
-    this.id,
-    this.title,});
+  Country({this.id, this.title});
 
   Country.fromJson(dynamic json) {
     id = json['id'];
@@ -237,14 +223,10 @@ class Country {
     map['title'] = title;
     return map;
   }
-
 }
 
 class ImageData {
-  ImageData({
-    this.id,
-    this.url,
-    this.mimeType,});
+  ImageData({this.id, this.url, this.mimeType});
 
   ImageData.fromJson(dynamic json) {
     id = json['id'];
@@ -262,5 +244,4 @@ class ImageData {
     map['mime_type'] = mimeType;
     return map;
   }
-
 }

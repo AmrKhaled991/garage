@@ -8,13 +8,11 @@ class SplashController extends GetxController {
   final SplashState state = SplashState();
 
   navigate() {
-    Get.offAllNamed(Routes.WELCOME_PAGE);
-    return;
     if (!preferenceManager.getIntroShown) {
       preferenceManager.setIntroShown();
       Get.offAllNamed(Routes.INTRO);
     } else {
-      Get.offAllNamed(Routes.LOGIN);
+      Get.offAllNamed(Routes.MAIN);
     }
   }
 

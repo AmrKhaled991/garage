@@ -1,4 +1,4 @@
-
+import 'dart:convert';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
@@ -15,9 +15,7 @@ import 'package:garage/routes/arguments.dart';
 import 'package:garage/utils/utlis.dart';
 import '../networking/models/user.dart';
 
-
-class UserController extends GetxController{
-
+class UserController extends GetxController {
   final PreferenceManager preferenceManager = Get.find();
   final AuthRepository authRepository = Get.find();
   final FavoriteRepository favoriteRepository = Get.find();
@@ -25,18 +23,18 @@ class UserController extends GetxController{
   late CartController cartController;
 
   @override
-  void onReady() async{
+  void onReady() async {
     userToken = await getUserUniqueKey();
     cartController = Get.find();
     addressController = Get.find();
 
-    user.listen((user) async{
-      if(user!=null) {
+    user.listen((user) async {
+      if (user != null) {
         isLogged.value = true;
         preferenceManager.setUser(user);
         userToken = user.id.toString();
         print("user logged: ${user.id}");
-      }else{
+      } else {
         isLogged.value = false;
         preferenceManager.setUser(null);
         userToken = await getUserUniqueKey();
@@ -48,28 +46,21 @@ class UserController extends GetxController{
 
     user.value = preferenceManager.getUser;
 
-    selectedArea.listen((area) async{
+    selectedArea.listen((area) async {
       preferenceManager.setLastSelectedArea(area);
     });
 
-    if(user.value != null) {
+    if (user.value != null) {
       fetchProfile();
     }
 
     //send fcm token
     print("FCM token: ${preferenceManager.getFcmToken}");
-    sendFcmToken(preferenceManager.getFcmToken??"");
+    sendFcmToken(preferenceManager.getFcmToken ?? "");
 
     selectedArea.value = preferenceManager.getLastSelectedArea;
 
     super.onReady();
-  }
-
-
-  @override
-  void onInit() {
-    super.onInit();
-
   }
 
   var isLogged = false.obs;
@@ -86,60 +77,97 @@ class UserController extends GetxController{
 
   var selectedArea = Rx<StateData?>(null);
 
-  void loginUser({bool withPhone = false,String? emailOrPhone, String? password, String? phoneCode, Function(bool)? onFinish}) async{
+  void loginUser({
+    bool withPhone = false,
+    String? emailOrPhone,
+    String? password,
+    String? phoneCode,
+    Function(bool)? onFinish,
+  }) async {
     login.value = LoadingState.loading();
-    Map<String,String> data = withPhone?{"country_code":phoneCode??"","phone":emailOrPhone??"","password":password??""}
-        : {"email":emailOrPhone??"","password":password??""};
-    login.value = await authRepository.login(data,withPhone: withPhone);
-    if(login.value.success){
-      if(login.value.key == "needActive"){
-        Get.toNamed(Routes.OTP_VERIFY, arguments: {
-          MyArguments.PHONE_CODE: login.value.data?.countryCode,
-          MyArguments.PHONE: login.value.data?.phone,
-          MyArguments.EMAIL: login.value.data?.email,
-        });
-      }else {
+    Map<String, String> data =
+        withPhone
+            ? {
+              "country_code": phoneCode ?? "",
+              "phone": emailOrPhone ?? "",
+              "password": password ?? "",
+            }
+            : {"email": emailOrPhone ?? "", "password": password ?? ""};
+    login.value = await authRepository.login(data, withPhone: withPhone);
+    if (login.value.success) {
+      if (login.value.key == "needActive") {
+        Get.toNamed(
+          Routes.OTP_VERIFY,
+          arguments: {
+            MyArguments.PHONE_CODE: login.value.data?.countryCode,
+            MyArguments.PHONE: login.value.data?.phone,
+            MyArguments.EMAIL: login.value.data?.email,
+          },
+        );
+      } else {
         setLoggedUser(login.value.data);
         Get.offAllNamed(Routes.MAIN);
       }
-    }else{
+    } else {
       Utils.showSnackBar(login.value.message);
     }
     onFinish?.call(login.value.success);
   }
 
-  logout() async{
+  logout() async {
     user.value = null;
-    sendFcmToken(preferenceManager.getFcmToken??"");
+    sendFcmToken(preferenceManager.getFcmToken ?? "");
     preferenceManager.logout();
     // await FirebaseAuth.instance.signOut();
   }
 
-  void register(Map<String, dynamic> data, Function(bool) onFinish) async{
+  void printMap(Map<String, dynamic> data) {
+    print('halala : ${data['file[0]']}');
+    final prettyJson = const JsonEncoder.withIndent('  ').convert(
+      data.map(
+        (key, value) => MapEntry<String, dynamic>(key, value.toString()),
+      ),
+    );
+    print(prettyJson);
+  }
+
+  void register(Map<String, dynamic> data, Function(bool) onFinish) async {
     login.value = LoadingState.loading();
+    printMap(data);
     login.value = await authRepository.register(data);
 
-    if(login.value.success){
-      if(login.value.key == "needActive"){
-        Get.toNamed(Routes.OTP_VERIFY, arguments: {
-          MyArguments.PHONE_CODE: login.value.data?.countryCode,
-          MyArguments.PHONE: login.value.data?.phone,
-          MyArguments.EMAIL: login.value.data?.email,
-        });
-      }else {
+    if (login.value.success) {
+      if (login.value.key == "needActive") {
+        Get.toNamed(
+          Routes.OTP_VERIFY,
+          arguments: {
+            MyArguments.PHONE_CODE: login.value.data?.countryCode,
+            MyArguments.PHONE: login.value.data?.phone,
+            MyArguments.EMAIL: login.value.data?.email,
+          },
+        );
+      } else {
         setLoggedUser(login.value.data);
-        Get.offAllNamed(Routes.MAIN);
+        Get.offAllNamed(
+          Routes.OTP_VERIFY,
+          arguments: {
+            MyArguments.PHONE_CODE: login.value.data?.countryCode,
+            MyArguments.PHONE: login.value.data?.phone,
+            // //to goto edit profile for company
+            // MyArguments.OTP_TRACK: "editProfile",
+          },
+        );
       }
-    }else{
+    } else {
       Utils.showSnackBar(login.value.message);
     }
     onFinish.call(login.value.success);
   }
 
-  void fetchProfile({Function(bool)? onFinish}) async{
+  void fetchProfile({Function(bool)? onFinish}) async {
     var response = await authRepository.getProfile();
 
-    if(response.success){
+    if (response.success) {
       user.value = response.data;
       // if(user.value?.isVerified == false){
       //   Future.delayed(Duration(seconds: 3),(){
@@ -155,47 +183,72 @@ class UserController extends GetxController{
     onFinish?.call(response.success);
   }
 
-  void resetPassword(Map<String, String> data, Function(bool) onSuccess) async{
+  void resetPassword(Map<String, String> data, Function(bool) onSuccess) async {
     changePassword.value = LoadingState.loading();
     changePassword.value = await authRepository.changePassword(data);
     onSuccess.call(changePassword.value.success);
   }
 
-  void forgetPassword(String phone, Function(bool) onFinish) async{
+  void forgetPassword(String phone, Function(bool) onFinish) async {
     forgetPasswordLoading.value = LoadingState.loading();
     forgetPasswordLoading.value = await authRepository.forgetPassword(phone);
     onFinish.call(forgetPasswordLoading.value.success);
   }
 
-  void forgetPasswordByMobile(String phoneCode, String phone, Function(bool) onFinish) async{
+  void forgetPasswordByMobile(
+    String phoneCode,
+    String phone,
+    Function(bool) onFinish,
+  ) async {
     forgetPasswordLoading.value = LoadingState.loading();
-    forgetPasswordLoading.value = await authRepository.forgetPasswordByMobile(phoneCode,phone);
+    forgetPasswordLoading.value = await authRepository.forgetPasswordByMobile(
+      phone,
+
+      phoneCode,
+    );
     onFinish.call(forgetPasswordLoading.value.success);
   }
 
-
-  void resetPasswordByMobile(String phoneCode,String phone,String code,String password, Function(bool) onFinish) async{
+  void resetPasswordByMobile(
+    String phoneCode,
+    String phone,
+    String code,
+    String password,
+    Function(bool) onFinish,
+  ) async {
     forgetPasswordLoading.value = LoadingState.loading();
-    forgetPasswordLoading.value = await authRepository.resetPasswordByMobile(phoneCode,phone,code,password);
+    forgetPasswordLoading.value = await authRepository.resetPasswordByMobile(
+      phoneCode,
+      phone,
+      code,
+      password,
+    );
+    onFinish.call(forgetPasswordLoading.value.success);
+  }
+
+  void resetPasswordByEmail(
+    String email,
+    String code,
+    String password,
+    Function(bool) onFinish,
+  ) async {
+    forgetPasswordLoading.value = LoadingState.loading();
+    forgetPasswordLoading.value = await authRepository.resetPasswordByEmail(
+      email,
+      code,
+      password,
+    );
     onFinish.call(forgetPasswordLoading.value.success);
     Utils.showSnackBar(forgetPasswordLoading.value.message);
   }
 
-  void resetPasswordByEmail(String email,String code,String password, Function(bool) onFinish) async{
-    forgetPasswordLoading.value = LoadingState.loading();
-    forgetPasswordLoading.value = await authRepository.resetPasswordByEmail(email,code,password);
-    onFinish.call(forgetPasswordLoading.value.success);
-    Utils.showSnackBar(forgetPasswordLoading.value.message);
-  }
-
-
-  void updateProfile(Map<String, dynamic> data, Function(bool) onFinish) async{
+  void updateProfile(Map<String, dynamic> data, Function(bool) onFinish) async {
     updateUser.value = LoadingState.loading();
     updateUser.value = await authRepository.updateProfile(data);
-    if(updateUser.value.success){
+    if (updateUser.value.success) {
       user.value = updateUser.value.data;
       Utils.showSnackBar("success_profile_update".tr);
-    }else{
+    } else {
       Utils.showSnackBar(updateUser.value.message);
     }
     onFinish.call(updateUser.value.success);
@@ -206,27 +259,27 @@ class UserController extends GetxController{
     authRepository.sendFcmToken(token);
   }
 
-  Future<String> getUserUniqueKey() async{
-    var USER_TOKEN = "simulator";
+  Future<String> getUserUniqueKey() async {
+    var userToken = "simulator";
     DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       AndroidDeviceInfo deviceData = await deviceInfoPlugin.androidInfo;
-      USER_TOKEN = "${deviceData.id}_${deviceData.brand}";
+      userToken = "${deviceData.id}_${deviceData.brand}";
     } else if (Platform.isIOS) {
-      try{
+      try {
         IosDeviceInfo deviceData = await deviceInfoPlugin.iosInfo;
-        USER_TOKEN = "${deviceData.model}_${deviceData.identifierForVendor}";
+        userToken = "${deviceData.model}_${deviceData.identifierForVendor}";
       } on PlatformException {
-        USER_TOKEN = "ios_simulator";
+        userToken = "ios_simulator";
       }
     }
-    return USER_TOKEN;
+    return userToken;
   }
 
-
-  void removeAccount({Function? success}) async{
+  void removeAccount({Function? success}) async {
+    print("Removing account for user: ${user.value?.id}");
     var response = await authRepository.removeAccount();
-    if(response.success){
+    if (response.success) {
       logout();
       success?.call();
     }
@@ -234,9 +287,8 @@ class UserController extends GetxController{
 
   void setLoggedUser(User? loggedUser) {
     user.value = loggedUser;
-    preferenceManager.setAccessToken(loggedUser?.token??"");
-    sendFcmToken(preferenceManager.getFcmToken??"");
-    Utils.showSnackBar("login_success".tr,);
+    preferenceManager.setAccessToken(loggedUser?.token ?? "");
+    sendFcmToken(preferenceManager.getFcmToken ?? "");
+    Utils.showSnackBar("login_success".tr);
   }
-
 }

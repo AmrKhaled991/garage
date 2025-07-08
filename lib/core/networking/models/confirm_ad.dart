@@ -1,10 +1,8 @@
 import 'package:garage/core/networking/base/decodable.dart';
 import 'package:garage/core/networking/models/ad.dart';
 
-class ConfirmAd extends Decodable<ConfirmAd>{
-  ConfirmAd({
-    this.ads,
-    this.url,});
+class ConfirmAd extends Decodable<ConfirmAd> {
+  ConfirmAd({this.ads, this.url});
 
   ConfirmAd.fromJson(dynamic json) {
     ads = json['ads'] != null ? AdData.fromJson(json['ads']) : null;
@@ -26,5 +24,4 @@ class ConfirmAd extends Decodable<ConfirmAd>{
   ConfirmAd decode(data) {
     return ConfirmAd.fromJson(data);
   }
-
 }

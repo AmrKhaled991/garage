@@ -3,20 +3,20 @@ import 'package:garage/core/networking/models/clinic.dart';
 import 'package:garage/core/networking/models/doctor.dart';
 import 'package:garage/core/networking/models/medical_condition.dart';
 
-
-class MyReservation extends Decodable<MyReservation>{
+class MyReservation extends Decodable<MyReservation> {
   MyReservation({
-      this.id, 
-      this.price, 
-      this.date, 
-      this.time, 
-      this.serviceName, 
-      this.place, 
-      this.doctor,
-      this.familyMember, 
-      this.isPast, 
-      this.isRateBranch, 
-      this.isRatePlace, });
+    this.id,
+    this.price,
+    this.date,
+    this.time,
+    this.serviceName,
+    this.place,
+    this.doctor,
+    this.familyMember,
+    this.isPast,
+    this.isRateBranch,
+    this.isRatePlace,
+  });
 
   MyReservation.fromJson(dynamic json) {
     id = json['id'];
@@ -89,7 +89,8 @@ class MyReservation extends Decodable<MyReservation>{
     map['discount_amount'] = discountAmount;
     map['medical_conditions_total'] = medicalConditionsTotal;
     if (medicalConditions != null) {
-      map['medical_conditions'] = medicalConditions?.map((v) => v.toJson()).toList();
+      map['medical_conditions'] =
+          medicalConditions?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -98,19 +99,19 @@ class MyReservation extends Decodable<MyReservation>{
   MyReservation decode(json) {
     return MyReservation.fromJson(json);
   }
-
 }
 
 class Branch {
   Branch({
-      this.id, 
-      this.image, 
-      this.name, 
-      this.notes, 
-      this.showPrice, 
-      this.services, 
-      this.hours, 
-      this.rate,});
+    this.id,
+    this.image,
+    this.name,
+    this.notes,
+    this.showPrice,
+    this.services,
+    this.hours,
+    this.rate,
+  });
 
   Branch.fromJson(dynamic json) {
     id = json['id'];
@@ -157,14 +158,10 @@ class Branch {
     map['rate'] = rate;
     return map;
   }
-
 }
 
 class Hours {
-  Hours({
-      this.day, 
-      this.startTime, 
-      this.endTime,});
+  Hours({this.day, this.startTime, this.endTime});
 
   Hours.fromJson(dynamic json) {
     day = json['day'];
@@ -182,14 +179,10 @@ class Hours {
     map['end_time'] = endTime;
     return map;
   }
-
 }
 
 class Services {
-  Services({
-      this.id, 
-      this.name, 
-      this.price,});
+  Services({this.id, this.name, this.price});
 
   Services.fromJson(dynamic json) {
     id = json['id'];
@@ -207,6 +200,4 @@ class Services {
     map['price'] = price;
     return map;
   }
-
-
 }

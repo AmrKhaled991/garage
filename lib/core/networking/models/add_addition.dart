@@ -1,10 +1,7 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class AddAddition extends Decodable{
-  AddAddition({
-    this.order,
-    this.url,});
+class AddAddition extends Decodable {
+  AddAddition({this.order, this.url});
 
   AddAddition.fromJson(dynamic json) {
     order = json['order'] != null ? Order.fromJson(json['order']) : null;
@@ -26,14 +23,10 @@ class AddAddition extends Decodable{
   decode(data) {
     return AddAddition.fromJson(data);
   }
-
 }
 
 class Order {
-  Order({
-    this.id,
-    this.total,
-    this.isPaid,});
+  Order({this.id, this.total, this.isPaid});
 
   Order.fromJson(dynamic json) {
     id = json['id'];
@@ -51,5 +44,4 @@ class Order {
     map['is_paid'] = isPaid;
     return map;
   }
-
 }

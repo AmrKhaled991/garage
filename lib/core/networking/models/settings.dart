@@ -1,7 +1,6 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class Settings extends Decodable<Settings>{
+class Settings extends Decodable<Settings> {
   Settings({
     this.appName,
     this.appDescription,
@@ -12,18 +11,30 @@ class Settings extends Decodable<Settings>{
     this.contactUs,
     this.supportedCountries,
     this.aboutApp,
-    this.supportedPayments,});
+    this.supportedPayments,
+  });
 
   Settings.fromJson(dynamic json) {
-    appName = json['app_name'] != null ? AppName.fromJson(json['app_name']) : null;
-    appDescription = json['app_description'] != null ? AppDescription.fromJson(json['app_description']) : null;
+    appName =
+        json['app_name'] != null ? AppName.fromJson(json['app_name']) : null;
+    appDescription =
+        json['app_description'] != null
+            ? AppDescription.fromJson(json['app_description'])
+            : null;
     address = json['address'];
     other = json['other'] != null ? Other.fromJson(json['other']) : null;
     social = json['social'] != null ? Social.fromJson(json['social']) : null;
     images = json['images'] != null ? Images.fromJson(json['images']) : null;
-    contactUs = json['contact_us'] != null ? ContactUs.fromJson(json['contact_us']) : null;
-    supportedCountries = json['supported_countries'] != null ? json['supported_countries'].cast<String>() : [];
-    aboutApp = json['about_app'] != null ? AboutApp.fromJson(json['about_app']) : null;
+    contactUs =
+        json['contact_us'] != null
+            ? ContactUs.fromJson(json['contact_us'])
+            : null;
+    supportedCountries =
+        json['supported_countries'] != null
+            ? json['supported_countries'].cast<String>()
+            : [];
+    aboutApp =
+        json['about_app'] != null ? AboutApp.fromJson(json['about_app']) : null;
     if (json['supported_payments'] != null) {
       supportedPayments = [];
       json['supported_payments'].forEach((v) {
@@ -41,7 +52,8 @@ class Settings extends Decodable<Settings>{
   List<String>? supportedCountries;
   AboutApp? aboutApp;
   List<SupportedPayments>? supportedPayments;
-  Settings copyWith({  AppName? appName,
+  Settings copyWith({
+    AppName? appName,
     AppDescription? appDescription,
     dynamic address,
     Other? other,
@@ -52,7 +64,8 @@ class Settings extends Decodable<Settings>{
     AboutApp? aboutApp,
     List<dynamic>? appGallery,
     List<SupportedPayments>? supportedPayments,
-  }) => Settings(  appName: appName ?? this.appName,
+  }) => Settings(
+    appName: appName ?? this.appName,
     appDescription: appDescription ?? this.appDescription,
     address: address ?? this.address,
     other: other ?? this.other,
@@ -89,7 +102,8 @@ class Settings extends Decodable<Settings>{
       map['about_app'] = aboutApp?.toJson();
     }
     if (supportedPayments != null) {
-      map['supported_payments'] = supportedPayments?.map((v) => v.toJson()).toList();
+      map['supported_payments'] =
+          supportedPayments?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -98,13 +112,10 @@ class Settings extends Decodable<Settings>{
   Settings decode(data) {
     return Settings.fromJson(data);
   }
-
 }
 
 class SupportedPayments {
-  SupportedPayments({
-    this.key,
-    this.title,});
+  SupportedPayments({this.key, this.title});
 
   SupportedPayments.fromJson(dynamic json) {
     key = json['key'];
@@ -112,24 +123,18 @@ class SupportedPayments {
   }
   String? key;
   String? title;
-  SupportedPayments copyWith({  String? key,
-    String? title,
-  }) => SupportedPayments(  key: key ?? this.key,
-    title: title ?? this.title,
-  );
+  SupportedPayments copyWith({String? key, String? title}) =>
+      SupportedPayments(key: key ?? this.key, title: title ?? this.title);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['key'] = key;
     map['title'] = title;
     return map;
   }
-
 }
 
 class AboutApp {
-  AboutApp({
-    this.androidDownloadUrl,
-    this.iosDownloadUrl,});
+  AboutApp({this.androidDownloadUrl, this.iosDownloadUrl});
 
   AboutApp.fromJson(dynamic json) {
     androidDownloadUrl = json['android_download_url'];
@@ -137,26 +142,21 @@ class AboutApp {
   }
   dynamic androidDownloadUrl;
   dynamic iosDownloadUrl;
-  AboutApp copyWith({  dynamic androidDownloadUrl,
-    dynamic iosDownloadUrl,
-  }) => AboutApp(  androidDownloadUrl: androidDownloadUrl ?? this.androidDownloadUrl,
-    iosDownloadUrl: iosDownloadUrl ?? this.iosDownloadUrl,
-  );
+  AboutApp copyWith({dynamic androidDownloadUrl, dynamic iosDownloadUrl}) =>
+      AboutApp(
+        androidDownloadUrl: androidDownloadUrl ?? this.androidDownloadUrl,
+        iosDownloadUrl: iosDownloadUrl ?? this.iosDownloadUrl,
+      );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['android_download_url'] = androidDownloadUrl;
     map['ios_download_url'] = iosDownloadUrl;
     return map;
   }
-
 }
 
 class ContactUs {
-  ContactUs({
-    this.email,
-    this.whatsapp,
-    this.mobile,
-    this.technicalSupport,});
+  ContactUs({this.email, this.whatsapp, this.mobile, this.technicalSupport});
 
   ContactUs.fromJson(dynamic json) {
     email = json['email'];
@@ -168,11 +168,13 @@ class ContactUs {
   String? whatsapp;
   dynamic mobile;
   dynamic technicalSupport;
-  ContactUs copyWith({  String? email,
+  ContactUs copyWith({
+    String? email,
     String? whatsapp,
     dynamic mobile,
     dynamic technicalSupport,
-  }) => ContactUs(  email: email ?? this.email,
+  }) => ContactUs(
+    email: email ?? this.email,
     whatsapp: whatsapp ?? this.whatsapp,
     mobile: mobile ?? this.mobile,
     technicalSupport: technicalSupport ?? this.technicalSupport,
@@ -185,14 +187,10 @@ class ContactUs {
     map['technical_support'] = technicalSupport;
     return map;
   }
-
 }
 
 class Images {
-  Images({
-    this.logo,
-    this.whiteLogo,
-    this.favicon,});
+  Images({this.logo, this.whiteLogo, this.favicon});
 
   Images.fromJson(dynamic json) {
     logo = json['logo'];
@@ -202,10 +200,8 @@ class Images {
   String? logo;
   String? whiteLogo;
   String? favicon;
-  Images copyWith({  String? logo,
-    String? whiteLogo,
-    String? favicon,
-  }) => Images(  logo: logo ?? this.logo,
+  Images copyWith({String? logo, String? whiteLogo, String? favicon}) => Images(
+    logo: logo ?? this.logo,
     whiteLogo: whiteLogo ?? this.whiteLogo,
     favicon: favicon ?? this.favicon,
   );
@@ -216,7 +212,6 @@ class Images {
     map['favicon'] = favicon;
     return map;
   }
-
 }
 
 class Social {
@@ -226,7 +221,8 @@ class Social {
     this.instagram,
     this.linkedin,
     this.youtube,
-    this.snapchat,});
+    this.snapchat,
+  });
 
   Social.fromJson(dynamic json) {
     facebook = json['facebook'];
@@ -242,13 +238,15 @@ class Social {
   String? linkedin;
   String? youtube;
   String? snapchat;
-  Social copyWith({  String? facebook,
+  Social copyWith({
+    String? facebook,
     String? twitter,
     String? instagram,
     String? linkedin,
     String? youtube,
     String? snapchat,
-  }) => Social(  facebook: facebook ?? this.facebook,
+  }) => Social(
+    facebook: facebook ?? this.facebook,
     twitter: twitter ?? this.twitter,
     instagram: instagram ?? this.instagram,
     linkedin: linkedin ?? this.linkedin,
@@ -265,7 +263,6 @@ class Social {
     map['snapchat'] = snapchat;
     return map;
   }
-
 }
 
 class Other {
@@ -274,13 +271,17 @@ class Other {
     this.terms,
     this.aboutUs,
     this.depositPayment,
-    this.forceUpdate,});
+    this.forceUpdate,
+  });
 
   Other.fromJson(dynamic json) {
     privacyPolicy = json['privacy_policy'];
     terms = json['terms'];
     aboutUs = json['about_us'];
-    depositPayment = json['deposit_payment'] != null ? DepositPayment.fromJson(json['deposit_payment']) : null;
+    depositPayment =
+        json['deposit_payment'] != null
+            ? DepositPayment.fromJson(json['deposit_payment'])
+            : null;
     forceUpdate = json['force_update'];
   }
   String? privacyPolicy;
@@ -288,12 +289,14 @@ class Other {
   String? aboutUs;
   DepositPayment? depositPayment;
   String? forceUpdate;
-  Other copyWith({  String? privacyPolicy,
+  Other copyWith({
+    String? privacyPolicy,
     String? terms,
     String? aboutUs,
     DepositPayment? depositPayment,
     String? forceUpdate,
-  }) => Other(  privacyPolicy: privacyPolicy ?? this.privacyPolicy,
+  }) => Other(
+    privacyPolicy: privacyPolicy ?? this.privacyPolicy,
     terms: terms ?? this.terms,
     aboutUs: aboutUs ?? this.aboutUs,
     depositPayment: depositPayment ?? this.depositPayment,
@@ -310,13 +313,10 @@ class Other {
     map['force_update'] = forceUpdate;
     return map;
   }
-
 }
 
 class DepositPayment {
-  DepositPayment({
-    this.status,
-    this.percentage,});
+  DepositPayment({this.status, this.percentage});
 
   DepositPayment.fromJson(dynamic json) {
     status = json['status'];
@@ -324,24 +324,21 @@ class DepositPayment {
   }
   String? status;
   String? percentage;
-  DepositPayment copyWith({  String? status,
-    String? percentage,
-  }) => DepositPayment(  status: status ?? this.status,
-    percentage: percentage ?? this.percentage,
-  );
+  DepositPayment copyWith({String? status, String? percentage}) =>
+      DepositPayment(
+        status: status ?? this.status,
+        percentage: percentage ?? this.percentage,
+      );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['status'] = status;
     map['percentage'] = percentage;
     return map;
   }
-
 }
 
 class AppDescription {
-  AppDescription({
-    this.en,
-    this.ar,});
+  AppDescription({this.en, this.ar});
 
   AppDescription.fromJson(dynamic json) {
     en = json['en'];
@@ -349,24 +346,18 @@ class AppDescription {
   }
   String? en;
   String? ar;
-  AppDescription copyWith({  String? en,
-    String? ar,
-  }) => AppDescription(  en: en ?? this.en,
-    ar: ar ?? this.ar,
-  );
+  AppDescription copyWith({String? en, String? ar}) =>
+      AppDescription(en: en ?? this.en, ar: ar ?? this.ar);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['en'] = en;
     map['ar'] = ar;
     return map;
   }
-
 }
 
 class AppName {
-  AppName({
-    this.en,
-    this.ar,});
+  AppName({this.en, this.ar});
 
   AppName.fromJson(dynamic json) {
     en = json['en'];
@@ -374,16 +365,12 @@ class AppName {
   }
   String? en;
   String? ar;
-  AppName copyWith({  String? en,
-    String? ar,
-  }) => AppName(  en: en ?? this.en,
-    ar: ar ?? this.ar,
-  );
+  AppName copyWith({String? en, String? ar}) =>
+      AppName(en: en ?? this.en, ar: ar ?? this.ar);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['en'] = en;
     map['ar'] = ar;
     return map;
   }
-
 }

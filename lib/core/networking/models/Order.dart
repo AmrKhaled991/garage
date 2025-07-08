@@ -1,7 +1,6 @@
-
 import 'package:garage/core/networking/base/decodable.dart';
 
-class OrderData extends Decodable<OrderData>{
+class OrderData extends Decodable<OrderData> {
   OrderData({
     this.id,
     this.total,
@@ -15,7 +14,8 @@ class OrderData extends Decodable<OrderData>{
     this.notes,
     this.products,
     this.address,
-    this.vendors,});
+    this.vendors,
+  });
 
   OrderData.fromJson(dynamic json) {
     id = json['id'];
@@ -23,7 +23,10 @@ class OrderData extends Decodable<OrderData>{
     shipping = json['shipping'];
     subtotal = json['subtotal'];
     transaction = json['transaction'];
-    orderStatus = json['order_status'] != null ? OrderStatus.fromJson(json['order_status']) : null;
+    orderStatus =
+        json['order_status'] != null
+            ? OrderStatus.fromJson(json['order_status'])
+            : null;
     isRated = json['is_rated'];
     rate = json['rate'];
     createdAt = json['created_at'];
@@ -34,7 +37,8 @@ class OrderData extends Decodable<OrderData>{
         products?.add(OrderProduct.fromJson(v));
       });
     }
-    address = json['address'] != null ? Address.fromJson(json['address']) : null;
+    address =
+        json['address'] != null ? Address.fromJson(json['address']) : null;
     if (json['vendors'] != null) {
       vendors = [];
       json['vendors'].forEach((v) {
@@ -55,7 +59,8 @@ class OrderData extends Decodable<OrderData>{
   List<OrderProduct>? products;
   Address? address;
   List<Vendors>? vendors;
-  OrderData copyWith({  num? id,
+  OrderData copyWith({
+    num? id,
     String? total,
     String? shipping,
     String? subtotal,
@@ -68,7 +73,8 @@ class OrderData extends Decodable<OrderData>{
     List<OrderProduct>? products,
     Address? address,
     List<Vendors>? vendors,
-  }) => OrderData(  id: id ?? this.id,
+  }) => OrderData(
+    id: id ?? this.id,
     total: total ?? this.total,
     shipping: shipping ?? this.shipping,
     subtotal: subtotal ?? this.subtotal,
@@ -112,16 +118,10 @@ class OrderData extends Decodable<OrderData>{
   OrderData decode(data) {
     return OrderData.fromJson(data);
   }
-
 }
 
 class Vendors {
-  Vendors({
-    this.id,
-    this.image,
-    this.title,
-    this.mobile,
-    this.rate,});
+  Vendors({this.id, this.image, this.title, this.mobile, this.rate});
 
   Vendors.fromJson(dynamic json) {
     id = json['id'];
@@ -135,12 +135,14 @@ class Vendors {
   String? title;
   dynamic mobile;
   dynamic? rate;
-  Vendors copyWith({  num? id,
+  Vendors copyWith({
+    num? id,
     String? image,
     String? title,
     dynamic mobile,
     dynamic? rate,
-  }) => Vendors(  id: id ?? this.id,
+  }) => Vendors(
+    id: id ?? this.id,
     image: image ?? this.image,
     title: title ?? this.title,
     mobile: mobile ?? this.mobile,
@@ -155,7 +157,6 @@ class Vendors {
     map['rate'] = rate;
     return map;
   }
-
 }
 
 class Address {
@@ -175,7 +176,8 @@ class Address {
     this.automatedNumber,
     this.additions,
     this.city,
-    this.country,});
+    this.country,
+  });
 
   Address.fromJson(dynamic json) {
     id = json['id'];
@@ -193,7 +195,8 @@ class Address {
     automatedNumber = json['automated_number'];
     additions = json['additions'];
     city = json['city'] != null ? City.fromJson(json['city']) : null;
-    country = json['country'] != null ? Country.fromJson(json['country']) : null;
+    country =
+        json['country'] != null ? Country.fromJson(json['country']) : null;
   }
   num? id;
   String? email;
@@ -211,7 +214,8 @@ class Address {
   dynamic additions;
   City? city;
   Country? country;
-  Address copyWith({  num? id,
+  Address copyWith({
+    num? id,
     String? email,
     String? mobile,
     String? username,
@@ -227,7 +231,8 @@ class Address {
     dynamic additions,
     City? city,
     Country? country,
-  }) => Address(  id: id ?? this.id,
+  }) => Address(
+    id: id ?? this.id,
     email: email ?? this.email,
     mobile: mobile ?? this.mobile,
     username: username ?? this.username,
@@ -268,13 +273,10 @@ class Address {
     }
     return map;
   }
-
 }
 
 class Country {
-  Country({
-    this.id,
-    this.title,});
+  Country({this.id, this.title});
 
   Country.fromJson(dynamic json) {
     id = json['id'];
@@ -282,24 +284,18 @@ class Country {
   }
   num? id;
   String? title;
-  Country copyWith({  num? id,
-    String? title,
-  }) => Country(  id: id ?? this.id,
-    title: title ?? this.title,
-  );
+  Country copyWith({num? id, String? title}) =>
+      Country(id: id ?? this.id, title: title ?? this.title);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['title'] = title;
     return map;
   }
-
 }
 
 class City {
-  City({
-    this.id,
-    this.title,});
+  City({this.id, this.title});
 
   City.fromJson(dynamic json) {
     id = json['id'];
@@ -307,18 +303,14 @@ class City {
   }
   num? id;
   String? title;
-  City copyWith({  num? id,
-    String? title,
-  }) => City(  id: id ?? this.id,
-    title: title ?? this.title,
-  );
+  City copyWith({num? id, String? title}) =>
+      City(id: id ?? this.id, title: title ?? this.title);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['title'] = title;
     return map;
   }
-
 }
 
 class OrderProduct {
@@ -356,7 +348,8 @@ class OrderProduct {
   String? image;
   String? sku;
   List<dynamic>? addons;
-  OrderProduct copyWith({  String? sellingPrice,
+  OrderProduct copyWith({
+    String? sellingPrice,
     String? qty,
     String? total,
     dynamic notes,
@@ -364,7 +357,8 @@ class OrderProduct {
     String? image,
     String? sku,
     // List<dynamic>? addons,
-  }) => OrderProduct(  sellingPrice: sellingPrice ?? this.sellingPrice,
+  }) => OrderProduct(
+    sellingPrice: sellingPrice ?? this.sellingPrice,
     qty: qty ?? this.qty,
     total: total ?? this.total,
     notes: notes ?? this.notes,
@@ -387,13 +381,10 @@ class OrderProduct {
     // }
     return map;
   }
-
 }
 
 class OrderStatus {
-  OrderStatus({
-    this.flag,
-    this.title,});
+  OrderStatus({this.flag, this.title});
 
   OrderStatus.fromJson(dynamic json) {
     flag = json['flag'];
@@ -401,16 +392,12 @@ class OrderStatus {
   }
   String? flag;
   String? title;
-  OrderStatus copyWith({  String? flag,
-    String? title,
-  }) => OrderStatus(  flag: flag ?? this.flag,
-    title: title ?? this.title,
-  );
+  OrderStatus copyWith({String? flag, String? title}) =>
+      OrderStatus(flag: flag ?? this.flag, title: title ?? this.title);
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['flag'] = flag;
     map['title'] = title;
     return map;
   }
-
 }

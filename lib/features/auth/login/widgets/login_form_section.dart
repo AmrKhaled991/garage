@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
 import 'package:garage/core/ui/custom_rich_text.dart';
-import 'package:garage/core/ui/widgets/custom_country_code_and_flag.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
 import 'package:garage/features/auth/login/login_controller.dart';
 import 'package:garage/routes/app_pages.dart';
@@ -67,9 +66,8 @@ class loginFormSection extends StatelessWidget {
                   emailOrPhone: state.phoneOrEmail.value.text,
                   password: state.password.value.text,
                   onFinish: (success) async {
-                    _controller.success();
-                    Get.offAllNamed(Routes.MAIN);
                     if (success) {
+                      _controller.success();
                     } else {
                       _controller.error();
                     }
