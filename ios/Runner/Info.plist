@@ -4,7 +4,8 @@
 	<dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 <string>We need access to your photo library to upload images.</string>
-
+<key>NSLocationAlwaysUsageDescription</key>
+<string>We need your location always</string>
 		<key>ITSAppUsesNonExemptEncryption</key>
 		<false/>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

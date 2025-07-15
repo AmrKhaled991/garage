@@ -40,7 +40,7 @@ class MainController extends GetxController {
     packageInfo.value = info;
   }
 
-  var language = 'en'.obs;
+  var language = 'ar'.obs;
   var pages = LoadingState<List<PagesData>?>().obs;
   var socials = LoadingState<List<GarageSocials>?>().obs;
 
@@ -57,13 +57,14 @@ class MainController extends GetxController {
   }
 
   void toggleLanguage() {
+    language.value = (language.value == "ar") ? "en" : "ar";
+
     Get.updateLocale(Locale(language.value));
     Get.reload<MainController>(force: true);
     Get.reload<UserController>(force: true);
     Get.reload<HomeController>(force: true);
     Get.reload<AllChatsController>(force: true);
     Get.reload<MyOrdersController>(force: true);
-    language.value = (language.value == "en") ? "ar" : "en";
   }
 
   void fetchSettings() async {

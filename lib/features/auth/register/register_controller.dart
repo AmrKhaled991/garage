@@ -227,21 +227,6 @@ class RegisterController extends GetxController {
     } else if (state.commercialRegistrationNumber.text.isBlank == true) {
       Utils.showSnackBar("error_crn".tr);
       return false;
-    } else if (state.twitter.text.isBlank == true) {
-      Utils.showSnackBar("error_twitter".tr);
-      return false;
-    } else if (state.instagram.text.isBlank == true) {
-      Utils.showSnackBar("error_instagram".tr);
-      return false;
-    } else if (state.tiktok.text.isBlank == true) {
-      Utils.showSnackBar("error_tiktok".tr);
-      return false;
-    } else if (state.snapchat.text.isBlank == true) {
-      Utils.showSnackBar("error_snapchat".tr);
-      return false;
-    } else if (state.youtube.text.isBlank == true) {
-      Utils.showSnackBar("error_youtube".tr);
-      return false;
     } else if (getMapToJson().isEmpty) {
       Utils.showSnackBar("error_time_slots".tr);
       return false;

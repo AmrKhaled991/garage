@@ -56,6 +56,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage>
           return Future.value(false);
         }
       },
+      
       child: MyScaffold(
         onWillPop: () {
           if (currentPage == 0) {
@@ -77,6 +78,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage>
               ),
               Expanded(
                 child: PageView(
+                  
                   controller: pageController,
                   children: [
                     CompanyProfileEditView1(),
