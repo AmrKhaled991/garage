@@ -488,5 +488,13 @@ const Map<String, String> ar_EG = {
   "file_error": "يرجى تحديد الملف",
   "Notifications": "الاشعارات",
   "all_chats": "كل الدردشات",
+
+  'Add Car': 'أضف سيارة',
+
   "no_messages": "لا يوجد رسائل",
+  "no_orders": "لا يوجد طلبات",
+  "no_chats": "لا يوجد دردشات",
+  "success_add_price_request": "تم اضافه طلب سعر بنجاح",
+  "success_add_product_to_cart": "تم اضافه المنتج للسلة بنجاح",
+
 };

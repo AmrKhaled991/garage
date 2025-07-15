@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/controllers/cart_controller.dart';
 import 'package:get/get.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/theme/styles.dart';
@@ -41,7 +42,7 @@ class MyScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // CartController cartController = Get.find();
+    CartController cartController = Get.find();
 
     Widget? _leading() {
       if (withMenu) {
@@ -141,7 +142,14 @@ class MyScaffold extends StatelessWidget {
                                 ? trailingWidget
                                 : Obx(
                                   () => CartButton(
-                                    // itemCount: cartController.cartCount.value!=null? cartController.cartCount.value : 0,
+                                    itemCount:
+                                        cartController
+                                            .cart
+                                            .value
+                                            .data
+                                            ?.items
+                                            ?.length ??
+                                        0,
                                   ),
                                 ),
                         leading: _leading(),

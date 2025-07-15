@@ -62,6 +62,7 @@ class ProfileEditController extends GetxController {
       "country_code": "965",
       "phone": state.phoneNumber.value.text,
       "image": state.selectedAvatarImage.value,
+      "_method": "PUT",
     };
     return data;
   }

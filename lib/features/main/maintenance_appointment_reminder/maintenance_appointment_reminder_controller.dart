@@ -48,6 +48,7 @@ class MaintenanceAppointmentReminderController extends GetxController {
     if (state.reminderRequest.value.success == true) {
       success(true);
     } else {
+      success(false);
       Utils.showSnackBar(state.reminderRequest.value.message);
     }
   }
@@ -68,9 +69,8 @@ class MaintenanceAppointmentReminderController extends GetxController {
     } else if (state.hour.value.isBlank == true) {
       Utils.showSnackBar("hour_error".tr);
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 
   void resetForm() {

@@ -494,4 +494,9 @@ const Map<String, String> en_US = {
   "Delete": "Delete",
   "all_chats": "All Chats",
   "no_messages": "No Messages",
+  'Add Car': 'Add Car',
+  "no_orders": "No Orders",
+  "no_chats": "No Chats",
+  "success_add_price_request": "Success add price request",
+"success_add_product_to_cart": "Success add product to cart",
 };

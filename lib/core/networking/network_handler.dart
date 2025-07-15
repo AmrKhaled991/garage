@@ -138,7 +138,7 @@ class NetworkHandler extends GetConnect {
       } else {
         if (response?.body["key"] == "unauthenticated") {
           if (Get.currentRoute != Routes.LOGIN) {
-            Get.toNamed(Routes.LOGIN);
+            // Get.toNamed(Routes.LOGIN);
             Get.find<UserController>().logout();
           }
         } else if (response?.body["key"] == "needActive") {

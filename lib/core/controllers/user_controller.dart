@@ -148,7 +148,7 @@ class UserController extends GetxController {
         );
       } else {
         setLoggedUser(login.value.data);
-        Get.offAllNamed(
+        Get.toNamed(
           Routes.OTP_VERIFY,
           arguments: {
             MyArguments.PHONE_CODE: login.value.data?.countryCode,

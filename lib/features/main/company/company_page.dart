@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/ui/LoadingWidget.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/sliver_app_bar_delegate.dart';
@@ -22,6 +23,7 @@ class _CompanyPageState extends State<CompanyPage>
     with TickerProviderStateMixin {
   late TabController tabController;
   final CompanyController controller = Get.find<CompanyController>();
+  final UserController userController = Get.find<UserController>();
   final state = Get.find<CompanyController>().state;
 
   @override

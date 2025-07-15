@@ -107,44 +107,49 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SliverToBoxAdapter(
-              child: TextHeaderWidget(
-                title: "recently_viewed".tr,
-                child: Obx(() {
-                  var carList = state.userCars.value.data;
-                  return LoadingWidget(
-                    loadingState: state.userCars.value,
-                    child: GridView.builder(
-                      itemCount:
-                          (carList == null || carList.isEmpty)
-                              ? 1
-                              : carList.length + 1,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                            childAspectRatio: 2.5,
-                          ),
+              child: Visibility(
+                visible: userController.isLogged.value,
+                child: TextHeaderWidget(
+                  title: "recently_viewed".tr,
+                  child: Obx(() {
+                    var carList = state.userCars.value.data;
+                    return LoadingWidget(
+                      loadingState: state.userCars.value,
+                      child: GridView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
 
-                      itemBuilder: (context, index) {
-                        return carList?.length != index
-                            ? UserCarWidget(userCar: carList![index])
-                            : AddContainer(
-                              title: 'أضف سيارة',
-                              onTap: () {
-                                if (!userController.isLogged.value) {
-                                  Get.toNamed(Routes.LOGIN);
-                                  return;
-                                }
-                                Get.toNamed(Routes.SelectTheBrandPageKey);
-                              },
-                            );
-                      },
-                    ),
-                  );
-                }),
+                        itemCount:
+                            (carList == null || carList.isEmpty)
+                                ? 1
+                                : carList.length + 1,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              childAspectRatio: 2.5,
+                            ),
+
+                        itemBuilder: (context, index) {
+                          return carList?.length != index
+                              ? UserCarWidget(userCar: carList![index])
+                              : AddContainer(
+                                title: 'أضف سيارة',
+                                onTap: () {
+                                  if (!userController.isLogged.value) {
+                                    Get.toNamed(Routes.LOGIN);
+                                    return;
+                                  }
+                                  Get.toNamed(Routes.SelectTheBrandPageKey);
+                                },
+                              );
+                        },
+                      ),
+                    );
+                  }),
+                ),
               ),
             ),
             SliverToBoxAdapter(
@@ -164,6 +169,7 @@ class HomePage extends StatelessWidget {
                         child: SizedBox(
                           width: Get.width,
                           child: GridView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             gridDelegate:

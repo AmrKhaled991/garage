@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage/core/controllers/cart_controller.dart';
+import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/networking/models/provider_details_response/product_model.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/theme/styles.dart';
@@ -43,23 +44,26 @@ class ProductItemCard extends StatelessWidget {
                 Positioned(
                   right: 8,
                   bottom: 8,
-                  child: IconButton(
-                    onPressed: () {
-                      cartController.addToCart(
-                        productModel!.id!,
-                        1,
-                        onFinish: (value) {
-                          if (value)
-                            Utils.showSnackBar(
-                              "item_added_to_cart_successfully".tr,
-                            );
-                        },
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.add_circle_rounded,
-                      color: colorPrimary,
-                      size: 30,
+                  child: Visibility(
+                    visible: Get.find<UserController>().isLogged.value,
+                    child: IconButton(
+                      onPressed: () {
+                        cartController.addToCart(
+                          productModel!.id!,
+                          1,
+                          onFinish: (value) {
+                            if (value)
+                              Utils.showSnackBar(
+                                "item_added_to_cart_successfully".tr,
+                              );
+                          },
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.add_circle_rounded,
+                        color: colorPrimary,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),
