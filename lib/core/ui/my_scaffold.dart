@@ -20,6 +20,7 @@ class MyScaffold extends StatelessWidget {
   Widget? fab;
   Color? backgroundColor;
   final bool? resizeToAvoidBottomInset;
+  final Function? onWillPop;
 
   // final MainDrawerPageController mainNavigationController = Get.find();
 
@@ -37,7 +38,7 @@ class MyScaffold extends StatelessWidget {
     this.withBar = true,
     this.withBG = false,
     this.backgroundColor = colorPrimary,
-    this.resizeToAvoidBottomInset,
+    this.resizeToAvoidBottomInset, this.onWillPop,
   });
 
   @override
@@ -63,7 +64,7 @@ class MyScaffold extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.back();
+              onWillPop != null ? onWillPop!() :    Get.back();
                 },
                 child: const Icon(
                   Icons.arrow_back_ios_rounded,

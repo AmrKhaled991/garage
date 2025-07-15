@@ -66,6 +66,7 @@ class _SliderViewState extends State<SliderView> {
       autoPlayInterval: const Duration(seconds: 4),
       autoPlayCurve: Curves.fastOutSlowIn,
       autoPlayAnimationDuration: const Duration(milliseconds: 800),
+      
       onPageChanged: (index, reason) {
         _current.value = index;
         widget.onPageChanged?.call(index);
