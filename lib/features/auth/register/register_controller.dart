@@ -70,7 +70,7 @@ class RegisterController extends GetxController {
       'sunday': 'الاحد',
       'monday': 'الاثنين',
       'tuesday': 'الثلاثاء',
-      'wednesday': 'الأربعاء',
+      'wednesday': 'الاربعاء',
       'thursday': 'الخميس',
       'friday': 'الجمعة',
     };
@@ -147,7 +147,6 @@ class RegisterController extends GetxController {
       "email": state.email.text,
       "password": state.password.text,
       "password_confirmation": state.passwordConfirm.text,
-      ...getMapToJson(),
       "image": state.selectedCompanyImage.value,
       "category_id": state.workItem.value?.id,
       "description": state.description.text,
@@ -163,6 +162,7 @@ class RegisterController extends GetxController {
       'lat': state.lat.value,
       'lng': state.lng.value,
       'map_desc': state.mapDesc.value ?? state.mapDescGoogleDetails.text,
+      ...getMapToJson(),
       'video': state.video.value,
     };
     // Main Image
@@ -199,5 +199,64 @@ class RegisterController extends GetxController {
     if (item.id != null) {
       state.workItem.value = item;
     }
+  }
+
+  bool validateWorkForm() {
+    if (state.phoneNumber.text.isBlank == true) {
+      Utils.showSnackBar("error_phone".tr);
+      return false;
+    } else if (state.workItem.value?.id == null) {
+      Utils.showSnackBar("error_category".tr);
+      return false;
+    } else if (state.description.text.isBlank == true) {
+      Utils.showSnackBar("error_description".tr);
+      return false;
+    } else if ((state.mapDesc.value ?? state.mapDescGoogleDetails.text)
+        .isEmpty) {
+      Utils.showSnackBar("error_map_desc".tr);
+      return false;
+    } else if (state.whatsapp.text.isBlank == true) {
+      Utils.showSnackBar("error_whatsapp".tr);
+      return false;
+    } else if (state.phoneNumber.text.isBlank == true) {
+      Utils.showSnackBar("error_phone".tr);
+      return false;
+    } else if (state.website.text.isBlank == true) {
+      Utils.showSnackBar("error_website".tr);
+      return false;
+    } else if (state.commercialRegistrationNumber.text.isBlank == true) {
+      Utils.showSnackBar("error_crn".tr);
+      return false;
+    } else if (state.twitter.text.isBlank == true) {
+      Utils.showSnackBar("error_twitter".tr);
+      return false;
+    } else if (state.instagram.text.isBlank == true) {
+      Utils.showSnackBar("error_instagram".tr);
+      return false;
+    } else if (state.tiktok.text.isBlank == true) {
+      Utils.showSnackBar("error_tiktok".tr);
+      return false;
+    } else if (state.snapchat.text.isBlank == true) {
+      Utils.showSnackBar("error_snapchat".tr);
+      return false;
+    } else if (state.youtube.text.isBlank == true) {
+      Utils.showSnackBar("error_youtube".tr);
+      return false;
+    } else if (getMapToJson().isEmpty) {
+      Utils.showSnackBar("error_time_slots".tr);
+      return false;
+    }
+    return true;
+  }
+
+  bool validateAssetForm() {
+    if (state.selectedCompanyImage.value == null) {
+      Utils.showSnackBar("error_image".tr);
+      return false;
+    } else if (state.galleryImages.value.isEmpty) {
+      Utils.showSnackBar("error_gallery".tr);
+      return false;
+    }
+    return true;
   }
 }

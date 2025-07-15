@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:garage/core/networking/models/my_order/my_order.dart';
 import 'package:garage/core/ui/LoadingWidget.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
+import 'package:garage/features/main/common/empty_widget.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,8 @@ class MyOrdersPage extends StatelessWidget {
       // const Center(child: EmptyWidget(title: "ليس لديك طلبات")),
       Obx(() {
         return LoadingWidget(
+          emptyWidget: Center(child: EmptyWidget(title: "no_orders".tr)),
+          isEmpty: controller.state.orders.value.data?.isEmpty == true,
           loadingState: controller.state.orders.value,
           child: SmartRefresher(
             header: const WaterDropHeader(),

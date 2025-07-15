@@ -116,7 +116,6 @@ class _CompanyProfileEditView2State extends State<CompanyProfileEditView2> {
             title: "company_gallery".tr,
             child: AddContainer(
               title: "company_gallery_hint".tr,
-              padding: const EdgeInsets.symmetric(vertical: 24),
               onTap: () {
                 state.galleryImages.isEmpty
                     ? loadAssets("upload_images")
@@ -143,7 +142,6 @@ class _CompanyProfileEditView2State extends State<CompanyProfileEditView2> {
             title: "upload_video".tr,
             child: AddContainer(
               title: "upload_video_hint".tr,
-              padding: const EdgeInsets.symmetric(vertical: 24),
               onTap: () {
                 state.video.value == null
                     ? loadAssets("upload_video")

@@ -488,5 +488,26 @@ const Map<String, String> ar_EG = {
   "file_error": "يرجى تحديد الملف",
   "Notifications": "الاشعارات",
   "all_chats": "كل الدردشات",
+
+  'Add Car': 'أضف سيارة',
+
   "no_messages": "لا يوجد رسائل",
+  "no_orders": "لا يوجد طلبات",
+  "no_chats": "لا يوجد دردشات",
+  "success_add_price_request": "تم اضافه طلب سعر بنجاح",
+  "success_add_product_to_cart": "تم اضافه المنتج للسلة بنجاح",
+
+  "error_category": "يرجى اختيار التصنيف",
+  "error_map_desc": "وصف الموقع مطلوب",
+  "error_whatsapp": "رقم الواتساب مطلوب",
+  "error_website": "الموقع الإلكتروني مطلوب",
+  "error_crn": "رقم السجل التجاري مطلوب",
+  "error_twitter": "رابط x مطلوب",
+  "error_instagram": "رابط انستغرام مطلوب",
+  "error_tiktok": "رابط تيك توك مطلوب",
+  "error_snapchat": "رابط سناب شات مطلوب",
+  "error_youtube": "رابط قناة اليوتيوب مطلوب",
+  "error_time_slots": "يرجى إضافة توقيت واحد على الأقل",
+  "error_image": "صورة الشركة مطلوبة",
+  "error_gallery": "يجب إضافة صورة واحدة على الأقل لمعرض الاعمال" ,
 };

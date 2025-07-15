@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/networking/models/provider_response/provider_response.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/my_loading_widget.dart';
@@ -85,26 +86,30 @@ class CompanyItemCard extends StatelessWidget {
                   if (showChat)
                     Obx(() {
                       final controller = Get.find<CompanyController>();
-                      return InkWell(
-                        onTap: () {
-                          print("element:111  $id");
+                      final userController = Get.find<UserController>();
+                      return Visibility(
+                        visible: userController.isLogged.value,
+                        child: InkWell(
+                          onTap: () {
+                            print("element:111  $id");
 
-                          controller.createRoom((success, roomId) {
-                            if (success == true) {
-                              Get.toNamed(Routes.CHAT, arguments: roomId);
-                            }
-                          });
-                        },
-                        child:
-                            controller.createRoomLoading.value == true
-                                ? Lottie.asset('assets/lottie/loading.json')
-                                : const Center(
-                                  child: Icon(
-                                    Icons.chat,
-                                    color: Colors.white,
-                                    size: 24,
+                            controller.createRoom((success, roomId) {
+                              if (success == true) {
+                                Get.toNamed(Routes.CHAT, arguments: roomId);
+                              }
+                            });
+                          },
+                          child:
+                              controller.createRoomLoading.value == true
+                                  ? Lottie.asset('assets/lottie/loading.json')
+                                  : const Center(
+                                    child: Icon(
+                                      Icons.chat,
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
                                   ),
-                                ),
+                        ),
                       );
                     }),
                 ],

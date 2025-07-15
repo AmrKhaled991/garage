@@ -54,19 +54,17 @@ class AddPriceRequestController extends GetxController {
     };
     final mainImage = state.selectedAsset.value;
     if (mainImage != null) {
-      print("mainImage121313123: $mainImage");
       final file = await mainImage.file;
       if (file != null) {
-        print("file111111: $file");
         body['files[0]'] = MultipartFile(file, filename: 'file[0].jpg');
-        print("file111111: ${body['files[0]']}");
       }
     }
 
     state.submitAddPrice.value = LoadingState.loading();
     state.submitAddPrice.value = await _mainRepository.storePrice(body: body);
+    onFinish?.call(state.submitAddPrice.value.success);
     if (state.submitAddPrice.value.success) {
-      onFinish?.call(state.submitAddPrice.value.success);
+      Utils.showSnackBar("success_add_price_request".tr);
     } else {
       Utils.showSnackBar(state.submitAddPrice.value.message);
     }
@@ -83,6 +81,12 @@ class AddPriceRequestController extends GetxController {
   }
 
   void removeAttachment() {
+    state.selectedAsset.value = null;
+  }
+
+  restForm() {
+    state.description.clear();
+    state.quantity.clear();
     state.selectedAsset.value = null;
   }
 }

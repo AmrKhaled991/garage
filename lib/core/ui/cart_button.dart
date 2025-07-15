@@ -88,7 +88,7 @@ class CartButtonState extends State<CartButton>
           ],
         ),
         onPressed: () {
-          // Get.toNamed(Routes.CART);
+          Get.toNamed(Routes.CART);
         },
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage/core/controllers/cart_controller.dart';
+import 'package:garage/core/controllers/user_controller.dart';
 import 'package:garage/core/networking/models/provider_details_response/product_model.dart';
 import 'package:garage/core/ui/MyButton.dart';
 import 'package:garage/core/ui/MyLoadingButton.dart';
@@ -20,6 +21,7 @@ class ProductDetailsPage extends StatelessWidget {
     final ProductDetailsController logic = Get.put(ProductDetailsController());
     final cartController = Get.find<CartController>();
     return MyScaffold(
+      withCart: Get.find<UserController>().isLogged.value,
       title: "product_details".tr,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -97,9 +99,13 @@ class ProductDetailsPage extends StatelessWidget {
           ],
         ),
       ),
-      fab: AddToCartWithQuantity(
-        productModel: productModel,
-        cartController: cartController,
+      fab: Visibility(
+        visible: Get.find<UserController>().isLogged.value,
+
+        child: AddToCartWithQuantity(
+          productModel: productModel,
+          cartController: cartController,
+        ),
       ),
     );
   }

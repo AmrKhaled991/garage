@@ -145,35 +145,55 @@ class CartItemCard extends StatelessWidget {
                     spacing: 8,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        cartItem.product?.name ?? 'شركة جراج أونلاين للصيانه',
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 8,
+                            children: [
+                              Text(
+                                cartItem.product?.name ??
+                                    'شركة جراج أونلاين للصيانه',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Zain',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                cartItem.product?.description ??
+                                    'مركز تغيير زيوت و صيانه سيارات',
+                                style: const TextStyle(
+                                  color: Color(0xFFCCCAC7),
+                                  fontSize: 12,
+                                  fontFamily: 'Zain',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Text(
+                                '${cartItem.product?.price ?? 0} رد.ك',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontFamily: 'Almarai',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
 
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Zain',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        cartItem.product?.description ??
-                            'مركز تغيير زيوت و صيانه سيارات',
-
-                        style: const TextStyle(
-                          color: Color(0xFFCCCAC7),
-                          fontSize: 12,
-                          fontFamily: 'Zain',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        '${cartItem.product?.price ?? 0} رد.ك',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontFamily: 'Almarai',
-                          fontWeight: FontWeight.w700,
-                        ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              Get.find<CartController>().removeFromCart(
+                                cartItem.product?.id.toString() ?? '',
+                              );
+                            },
+                          ),
+                        ],
                       ),
                       ItemCounter(
                         itemId: cartItem.product?.id ?? 0,
