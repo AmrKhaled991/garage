@@ -31,9 +31,23 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _initLocationServices() async {
-    final status = await Permission.location.request();
+    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      debugPrint("Location services are disabled.");
+      return;
+    }
 
-    if (!status.isGranted) {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        debugPrint("Permission denied");
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      debugPrint("Permission denied forever");
       openAppSettings();
       return;
     }
@@ -116,24 +130,40 @@ class _MapScreenState extends State<MapScreen> {
               ? Stack(
                 children: [
                   GoogleMap(
+                    onCameraMove: (position) {
+                      setState(() {
+                        _userLatLng = position.target;
+                        _userAddress = null;
+                      });
+                    },
+                    onCameraIdle: () async {
+                      if (_userLatLng != null) {
+                        final address = await _getAddressFromLatLng(
+                          _userLatLng!,
+                        );
+                        setState(() {
+                          _userAddress = address;
+                        });
+                      }
+                    },
                     zoomControlsEnabled: false,
-                    onTap: _handleMapTap,
-                    markers:
-                        _userLatLng != null
-                            ? {
-                              Marker(
-                                markerId: const MarkerId('selected-location'),
-                                position: _userLatLng!,
-                              ),
-                            }
-                            : {},
+
                     onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
                       target: _userLatLng ?? const LatLng(29.3759, 47.9774),
                       zoom: 11.0,
                     ),
-                    myLocationEnabled: true,
-                    myLocationButtonEnabled: true,
+                  ),
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: Center(
+                        child: Icon(
+                          Icons.location_on,
+                          size: 40,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
                   ),
                   Positioned(
                     bottom: 30,

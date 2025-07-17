@@ -289,13 +289,18 @@ class _WeeklyTimeSelectorState extends State<WeeklyTimeSelector> {
                           ),
                         ),
 
-                        Text(
-                          day.day ?? "",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                        Flexible(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              day.day ?? "",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.right,
+                            ),
                           ),
-                          textAlign: TextAlign.right,
                         ),
                       ],
                     ),

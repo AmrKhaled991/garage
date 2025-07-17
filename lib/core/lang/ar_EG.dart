@@ -476,7 +476,7 @@ const Map<String, String> ar_EG = {
   "hour_error": 'يرجى ادخال الساعة',
 
   'error_description': 'يرجى ادخال الوصف',
-  "cart_empty": 'عذرا لا يوجد في السلة العناصر',
+  "cart_empty": ' لا يوجد عناصر في السلة',
 
   "cost:": "التكلفه:",
   "kwt_dinar": "دينار كويتي",
@@ -509,5 +509,5 @@ const Map<String, String> ar_EG = {
   "error_youtube": "رابط قناة اليوتيوب مطلوب",
   "error_time_slots": "يرجى إضافة توقيت واحد على الأقل",
   "error_image": "صورة الشركة مطلوبة",
-  "error_gallery": "يجب إضافة صورة واحدة على الأقل لمعرض الاعمال" ,
+  "error_gallery": "يجب إضافة صورة واحدة على الأقل لمعرض الاعمال",
 };
