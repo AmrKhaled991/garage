@@ -512,5 +512,6 @@ const Map<String, String> en_US = {
   "error_time_slots": "Please add at least one time slot",
   "error_image": "Company image is required",
   "error_gallery":
-  "At least one gallery image is required for the company gallery",
+      "At least one gallery image is required for the company gallery",
+  "?": "?",
 };

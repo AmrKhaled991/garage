@@ -29,7 +29,7 @@ class CustomExistSheet extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          "${"are_you_sure".tr}$title?",
+          "${"are_you_sure".tr}$title " + "?".tr,
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,

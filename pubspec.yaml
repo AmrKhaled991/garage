@@ -92,6 +92,7 @@ dependencies:
   geocoding: ^4.0.0
   webview_flutter: ^4.13.0
   pusher_channels_flutter: ^2.5.0
+  flutter_local_notifications: ^19.3.1
 
 dev_dependencies:
 

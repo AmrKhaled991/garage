@@ -136,7 +136,7 @@ class HomePage extends StatelessWidget {
                           return carList?.length != index
                               ? UserCarWidget(userCar: carList![index])
                               : AddContainer(
-                                title: 'أضف سيارة',
+                                title: 'Add Car',
                                 onTap: () {
                                   if (!userController.isLogged.value) {
                                     Get.toNamed(Routes.LOGIN);

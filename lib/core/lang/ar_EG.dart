@@ -510,4 +510,6 @@ const Map<String, String> ar_EG = {
   "error_time_slots": "يرجى إضافة توقيت واحد على الأقل",
   "error_image": "صورة الشركة مطلوبة",
   "error_gallery": "يجب إضافة صورة واحدة على الأقل لمعرض الاعمال",
+
+   "?": "؟",
 };
