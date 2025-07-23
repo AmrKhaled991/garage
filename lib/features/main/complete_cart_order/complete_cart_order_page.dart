@@ -5,6 +5,7 @@ import 'package:garage/core/ui/MyLoadingButton.dart';
 import 'package:garage/core/ui/my_scaffold.dart';
 import 'package:garage/core/ui/sheet/normal_sheet.dart';
 import 'package:garage/core/ui/widgets/my_text_form.dart';
+import 'package:garage/features/auth/success_dialog_screen/success_dialog_screen.dart';
 import 'package:garage/features/main/complete_cart_order/complete_cart_order_controller.dart';
 import 'package:garage/features/other/sheet/area_sheet.dart';
 import 'package:garage/routes/app_pages.dart';
@@ -109,8 +110,8 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
           const SizedBox(height: 16),
           MyTextForm(
             controller: state.squareNumberController,
-            hint: "message".tr,
-            textInputType: TextInputType.text,
+            hint: "square_number".tr,
+            textInputType: TextInputType.number,
           ),
           const SizedBox(height: 16),
 
@@ -171,9 +172,30 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
                       arguments: {MyArguments.URL: payment?.url},
                     );
                     if (resultJson != null) {
-                      if (resultJson["key"] == "success") {
+                      if (resultJson["key"] == "success" ||
+                          resultJson["message"].toLowerCase().contains(
+                            "success",
+                          )) {
                         _controller.success();
-                        Get.offNamed(Routes.SuccessDialogScreen);
+                        showDialog(
+                          context: context,
+                          builder:
+                              (_) => WillPopScope(
+                                onWillPop: () async {
+                                  Get.offAllNamed(Routes.MAIN);
+                                  return false;
+                                },
+                                child: AlertDialog(
+                                  contentPadding: const EdgeInsets.all(0),
+                                  content: SuccessDialogScreen(
+                                    title: "success_order".tr,
+                                    subtitle: "success_order_delivery".tr,
+                                    buttonText: "home_page".tr,
+                                    onTap: () => Get.offAllNamed(Routes.MAIN),
+                                  ),
+                                ),
+                              ),
+                        );
                         Utils.showSnackBar("payment_success".tr);
                       } else {
                         _controller.error();

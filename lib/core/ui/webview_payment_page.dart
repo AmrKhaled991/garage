@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:garage/routes/app_pages.dart';
 import 'package:garage/routes/arguments.dart';
 import 'package:garage/theme/styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +26,20 @@ class _WebviewPaymentPageState extends State<WebviewPaymentPage> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   WebViewController? _webViewController;
+  Map<String, dynamic>? decodeToJson(String html) {
+    // Decode the raw string (could be single or double encoded)
+
+    try {
+      dynamic result = jsonDecode(html);
+      if (result is String) {
+        result = jsonDecode(result);
+      }
+
+      return result;
+    } catch (e) {
+      return {"message": html};
+    }
+  }
 
   @override
   void initState() {
@@ -62,13 +77,17 @@ class _WebviewPaymentPageState extends State<WebviewPaymentPage> {
                 try {
                   Map<String, dynamic>? json =
                       (Platform.isIOS)
-                          ? jsonDecode(html)
-                          : jsonDecode(jsonDecode(html));
+                          ? decodeToJson(html)
+                          : decodeToJson(html);
                   print("finished url: $url \n json: $json");
-                  if (json != null && json.containsKey("key")) {
-                    print("json.key: ${json["key"]}");
+                  String message = json?["message"];
+                  String firstLine = message.split('\n').first.trim();
+
+                  if (firstLine.toLowerCase().contains("success") ||
+                      firstLine.toLowerCase().contains("failed") ||
+                      json != null && json.containsKey("key")) {
                     Get.back(result: json);
-                  }
+                  } else {}
                 } catch (e) {
                   print("parsing json error");
                   e.printError();
@@ -90,22 +109,28 @@ Page resource error:
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CupertinoNavigationBar(
-        middle: Text("payment".tr, style: MyTextStyle.normalStyle),
-        border: const Border.fromBorderSide(BorderSide.none),
-        backgroundColor: Colors.white,
-      ),
-      backgroundColor: colorOffWhite,
-      body: PopScope(
-        canPop: false,
-        onPopInvoked: (didPop) {
-          if (didPop) {
-            return;
-          }
-          Get.back();
-        },
-        child: WebViewWidget(controller: _webViewController!),
+    return WillPopScope(
+      onWillPop: () async {
+        Get.toNamed(Routes.HOME);
+        return false;
+      },
+      child: Scaffold(
+        appBar: CupertinoNavigationBar(
+          middle: Text("payment".tr, style: MyTextStyle.normalStyle),
+          border: const Border.fromBorderSide(BorderSide.none),
+          backgroundColor: Colors.white,
+        ),
+        backgroundColor: colorOffWhite,
+        body: PopScope(
+          canPop: false,
+          onPopInvoked: (didPop) {
+            if (didPop) {
+              return;
+            }
+            Get.back();
+          },
+          child: WebViewWidget(controller: _webViewController!),
+        ),
       ),
     );
   }

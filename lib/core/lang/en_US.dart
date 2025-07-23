@@ -464,7 +464,7 @@ const Map<String, String> en_US = {
   "street_error": "please enter the street",
   "square_error": 'please enter the square',
   "jada_error": 'please enter the jada',
-
+  "square_number": "Square Number",
   'category_error': "please select a category",
   'category_service': "please select a service",
   'error_quantity': 'please enter the quantity',
@@ -486,7 +486,7 @@ const Map<String, String> en_US = {
   "company_error": "Please select a company",
   "description_error": 'please enter the description',
   "file_error": 'please select a file',
-
+  "price_error": 'please enter the price',
   "Notifications": "Notifications",
   "Select_all": "Select All",
   "Mark_as_read": "Mark as read",
@@ -514,4 +514,9 @@ const Map<String, String> en_US = {
   "error_gallery":
       "At least one gallery image is required for the company gallery",
   "?": "?",
+
+  "success_order": "Your request has been sent successfully.",
+  "success_order_delivery":
+      "Your order has been sent successfully and is awaiting delivery.",
+  "home_page": "Back to Home Page",
 };

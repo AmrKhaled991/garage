@@ -510,6 +510,11 @@ const Map<String, String> ar_EG = {
   "error_time_slots": "يرجى إضافة توقيت واحد على الأقل",
   "error_image": "صورة الشركة مطلوبة",
   "error_gallery": "يجب إضافة صورة واحدة على الأقل لمعرض الاعمال",
+  "price_error": 'please enter the price',
 
-   "?": "؟",
+  "?": "؟",
+  "square_number": "رقم القطعة",
+  "success_order": "تم ارسال طلبك بنجاح",
+  "success_order_delivery": "تم ارسال طلبك بنجاح في انتظار التوصيل",
+  "home_page": "العودة الى الصفحة الرئيسية",
 };

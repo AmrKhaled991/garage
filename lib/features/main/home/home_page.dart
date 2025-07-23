@@ -115,38 +115,60 @@ class HomePage extends StatelessWidget {
                     var carList = state.userCars.value.data;
                     return LoadingWidget(
                       loadingState: state.userCars.value,
-                      child: GridView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child:
+                          carList == null || carList.isNotEmpty == true
+                              ? GridView.builder(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
 
-                        itemCount:
-                            (carList == null || carList.isEmpty)
-                                ? 1
-                                : carList.length + 1,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 16,
-                              mainAxisSpacing: 16,
-                              childAspectRatio: 2.3,
-                            ),
+                                itemCount:
+                                    (carList == null || carList.isEmpty)
+                                        ? 1
+                                        : carList.length + 1,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 16,
+                                      mainAxisSpacing: 16,
+                                      childAspectRatio: 2.3,
+                                    ),
 
-                        itemBuilder: (context, index) {
-                          return carList?.length != index
-                              ? UserCarWidget(userCar: carList![index])
-                              : AddContainer(
-                                title: 'Add Car',
-                                onTap: () {
-                                  if (!userController.isLogged.value) {
-                                    Get.toNamed(Routes.LOGIN);
-                                    return;
-                                  }
-                                  Get.toNamed(Routes.SelectTheBrandPageKey);
+                                itemBuilder: (context, index) {
+                                  return carList?.length != index
+                                      ? UserCarWidget(userCar: carList![index])
+                                      : AddContainer(
+                                        title: 'Add Car',
+                                        onTap: () {
+                                          if (!userController.isLogged.value) {
+                                            Get.toNamed(Routes.LOGIN);
+                                            return;
+                                          }
+                                          Get.toNamed(
+                                            Routes.SelectTheBrandPageKey,
+                                          );
+                                        },
+                                      );
                                 },
-                              );
-                        },
-                      ),
+                              )
+                              : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
+
+                                child: AddContainer(
+                                  title: 'Add Car',
+                                  onTap: () {
+                                    if (!userController.isLogged.value) {
+                                      Get.toNamed(Routes.LOGIN);
+                                      return;
+                                    }
+                                    Get.toNamed(Routes.SelectTheBrandPageKey);
+                                  },
+                                ),
+                              ),
                     );
                   }),
                 ),

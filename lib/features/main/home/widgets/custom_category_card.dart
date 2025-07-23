@@ -24,22 +24,27 @@ class CustomCategoryCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
         decoration: MyshapesStyle.PrimaryDecoration,
-        child: Column(
-          children: [
-            MyImage(image: image, width: 40),
-            const SizedBox(height: 24),
-            Text(
-              text.tr,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontFamily: 'Zain',
-                fontWeight: FontWeight.w400,
-                height: 1.50,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MyImage(image: image, width: 40),
+              const SizedBox(height: 16),
+              FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  text.tr,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontFamily: 'Zain',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

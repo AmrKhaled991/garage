@@ -24,7 +24,6 @@ class CartPage extends StatelessWidget {
       title: "cart".tr,
       body: Center(
         child: GetBuilder<CartController>(
-          init: CartController(),
           initState: (_) {
             Get.find<CartController>().getCartItems(false);
           },
@@ -39,7 +38,7 @@ class CartPage extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 onRefresh:
                     () => {
-                      controller.getCartItems(true),
+                      controller.getCartItems(false),
                       _refreshController.refreshCompleted(),
                     },
                 child: ListView.separated(

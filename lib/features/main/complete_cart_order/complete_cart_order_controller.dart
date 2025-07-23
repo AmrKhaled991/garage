@@ -31,7 +31,7 @@ class CompleteCartOrderController extends GetxController {
       Utils.showSnackBar("error_phone".tr);
       return false;
     } else if (state.stateController.value == null) {
-      Utils.showSnackBar("state_error".tr);
+      Utils.showSnackBar("Area_error".tr);
       return false;
     } else if (state.streetController.text.isEmpty) {
       Utils.showSnackBar("street_error".tr);
