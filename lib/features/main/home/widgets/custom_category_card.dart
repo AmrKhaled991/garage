@@ -30,17 +30,16 @@ class CustomCategoryCard extends StatelessWidget {
             children: [
               MyImage(image: image, width: 40),
               const SizedBox(height: 16),
-              FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  text.tr,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: 'Zain',
-                    fontWeight: FontWeight.w400,
-                  ),
+              Text(
+                text.tr,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontFamily: 'Zain',
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],
