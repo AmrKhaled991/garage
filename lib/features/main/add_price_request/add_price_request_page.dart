@@ -125,25 +125,27 @@ class AddPriceRequestPage extends StatelessWidget {
         child: MyLoadingButton(
           title: "add".tr,
           onClick: (p0) {
-            if (controller.validations()) {
-              controller.storePriceRequest(
-                onFinish: (status) {
-                  if (status) {
-                    p0.success();
-                    Get.find<PriceRequestController>().state.pagingController
-                        .refresh();
-                  } else {
-                    p0.error();
-                  }
-                },
-              );
-            } else {
+            if (!controller.validations()) {
               p0.error();
+              Future.delayed(const Duration(seconds: 1), () {
+                p0.reset();
+              });
             }
-            Future.delayed(const Duration(seconds: 1), () {
-              p0.reset();
-              Get.back();
-            });
+            controller.storePriceRequest(
+              onFinish: (status) {
+                if (status) {
+                  p0.success();
+                  Get.find<PriceRequestController>().state.pagingController
+                      .refresh();
+                  controller.restForm();
+                } else {
+                  p0.error();
+                }
+                Future.delayed(const Duration(seconds: 1), () {
+                  p0.reset();
+                });
+              },
+            );
           },
         ),
       ),

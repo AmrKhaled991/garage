@@ -24,8 +24,9 @@ class AllChatsPage extends StatelessWidget {
       title: "all_chats".tr,
       body: Obx(() {
         return LoadingWidget(
+          isEmpty: controller.state.rooms.value.data?.rooms?.isEmpty == true,
           loadingState: controller.state.rooms.value,
-          emptyWidget: EmptyWidget(title: "no_chats".tr),
+          emptyWidget: Center(child: EmptyWidget(title: "no_chats".tr)),
           child: SmartRefresher(
             controller: refreshController,
             header: const WaterDropHeader(),

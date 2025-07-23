@@ -91,9 +91,9 @@ class _ContactUsPageState extends State<ContactUsPage> {
 
               controller.contactUs(
                 {
-                  "user_name": state.nameController.text,
+                  "name": state.nameController.text,
                   "phone": state.phoneController.text,
-                  "complaint": state.messageController.text,
+                  "message": state.messageController.text,
                   "email": state.emailController.text,
                   "type": "contact",
                 },

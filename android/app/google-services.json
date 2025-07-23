@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "274736852768",
+    "project_id": "garage-6c04c",
+    "storage_bucket": "garage-6c04c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274736852768:android:d1d07319146597b0e0b145",
+        "android_client_info": {
+          "package_name": "com.tocaan.garage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCEPpnVjKuMbUzRfjiom-i_wIeWSPKwSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

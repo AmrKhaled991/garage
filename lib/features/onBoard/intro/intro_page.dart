@@ -1,26 +1,36 @@
-import 'package:garage/core/controllers/main_controller.dart';
-import 'package:garage/core/ui/LoadingWidget.dart';
-import 'package:garage/core/ui/MyButton.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import 'package:garage/core/controllers/main_controller.dart';
+import 'package:garage/core/ui/LoadingWidget.dart';
+import 'package:garage/core/ui/MyButton.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/core/ui/widgets/slider_view.dart';
 import 'package:garage/routes/app_pages.dart';
 import 'package:garage/theme/styles.dart';
+
 import 'intro_controller.dart';
 
-class IntroPage extends StatelessWidget {
+// ignore: must_be_immutable
+class IntroPage extends StatefulWidget {
+  const IntroPage({Key? key}) : super(key: key);
+
+  @override
+  State<IntroPage> createState() => _IntroPageState();
+}
+
+class _IntroPageState extends State<IntroPage> {
   final controller = Get.find<IntroController>();
+  var isLastPage = false;
+
   final state = Get.find<IntroController>().state;
+
   MainController mainController = Get.find();
 
   var sliderController = CarouselSliderController();
-
-  var isLastPage = false;
-
-  IntroPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +47,8 @@ class IntroPage extends StatelessWidget {
                 controller: sliderController,
                 indicatorColor: colorPrimary,
                 onPageChanged: (index) {
-                  isLastPage = index == 1;
+                  isLastPage = index == state.intros.value!.data!.length - 1;
+                  setState(() {});
                 },
                 items:
                     state.intros.value?.data?.map((e) {
@@ -72,7 +83,7 @@ class IntroPage extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            'next'.tr,
+                            isLastPage ? 'skip'.tr : 'next'.tr,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
@@ -83,7 +94,9 @@ class IntroPage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            sliderController.nextPage();
+                            isLastPage
+                                ? Get.offAllNamed(Routes.MAIN)
+                                : sliderController.nextPage();
                           },
                         ),
                       ),

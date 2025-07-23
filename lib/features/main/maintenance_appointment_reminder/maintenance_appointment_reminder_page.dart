@@ -133,7 +133,11 @@ class _MaintenanceAppointmentReminderPageState
                         title: "add".tr,
                         onClick: (status) {
                           if (controller.validations() == false) {
-                            status.reset();
+                            status.error();
+                            Future.delayed(
+                              const Duration(seconds: 1),
+                              () => status.reset(),
+                            );
                             return;
                           }
                           controller.storeReminder((success) {
@@ -151,6 +155,10 @@ class _MaintenanceAppointmentReminderPageState
                                 () => status.reset(),
                               );
                             }
+                            Future.delayed(
+                              const Duration(seconds: 1),
+                              () => status.reset(),
+                            );
                           });
                         },
                       ),

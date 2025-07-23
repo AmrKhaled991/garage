@@ -99,6 +99,7 @@ class CartController extends GetxController {
     onFinish?.call(addToCartLoading.value.success);
     if (addToCartLoading.value.success) {
       getCartItems(true);
+      Utils.showSnackBar("success_add_product_to_cart".tr);
     } else {
       Utils.showSnackBar(addToCartLoading.value.message);
     }

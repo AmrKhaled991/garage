@@ -66,9 +66,9 @@ class _CompleteCartOrderPageState extends State<CompleteCartOrderPage> {
                 ),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-              margin: const EdgeInsets.all(8),
               decoration: MyshapesStyle.PrimaryDecoration,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "select_area".tr,

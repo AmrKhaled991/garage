@@ -53,8 +53,6 @@ class CompleteCartOrderController extends GetxController {
   ) async {
     state.payment.value = LoadingState.loading();
     state.payment.value = await ordersRepository.payOrder(data);
-    if (state.payment.value.success) {
-      onFinish.call(state.payment.value.success, state.payment.value.data);
-    }
+    onFinish.call(state.payment.value.success, state.payment.value.data);
   }
 }

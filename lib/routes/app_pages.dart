@@ -32,6 +32,7 @@ import 'package:garage/features/main/add_price_request/add_price_request_binding
 import 'package:garage/features/main/add_price_request/add_price_request_page.dart';
 import 'package:garage/features/main/adress/address_binding.dart';
 import 'package:garage/features/main/adress/address_page.dart';
+import 'package:garage/features/main/cart/cart_Page.dart';
 import 'package:garage/features/main/cart/cart_binding.dart';
 import 'package:garage/features/main/category/category_Page.dart';
 import 'package:garage/features/main/category/category_binding.dart';
@@ -180,6 +181,11 @@ class AppPages {
       name: Routes.TERMS,
       page: () => TermsPage(),
       binding: TermsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: Routes.CART,
+      page: () => CartPage(),
       transition: Transition.cupertino,
     ),
 

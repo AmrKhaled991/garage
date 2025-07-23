@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage/core/controllers/cart_controller.dart';
 import 'package:get/get.dart';
 import 'package:garage/core/ui/my_image.dart';
 import 'package:garage/theme/styles.dart';
@@ -19,6 +20,7 @@ class MyScaffold extends StatelessWidget {
   Widget? fab;
   Color? backgroundColor;
   final bool? resizeToAvoidBottomInset;
+  final Function? onWillPop;
 
   // final MainDrawerPageController mainNavigationController = Get.find();
 
@@ -36,12 +38,12 @@ class MyScaffold extends StatelessWidget {
     this.withBar = true,
     this.withBG = false,
     this.backgroundColor = colorPrimary,
-    this.resizeToAvoidBottomInset,
+    this.resizeToAvoidBottomInset, this.onWillPop,
   });
 
   @override
   Widget build(BuildContext context) {
-    // CartController cartController = Get.find();
+    CartController cartController = Get.find();
 
     Widget? _leading() {
       if (withMenu) {
@@ -62,7 +64,7 @@ class MyScaffold extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.back();
+              onWillPop != null ? onWillPop!() :    Get.back();
                 },
                 child: const Icon(
                   Icons.arrow_back_ios_rounded,
@@ -141,7 +143,14 @@ class MyScaffold extends StatelessWidget {
                                 ? trailingWidget
                                 : Obx(
                                   () => CartButton(
-                                    // itemCount: cartController.cartCount.value!=null? cartController.cartCount.value : 0,
+                                    itemCount:
+                                        cartController
+                                            .cart
+                                            .value
+                                            .data
+                                            ?.items
+                                            ?.length ??
+                                        0,
                                   ),
                                 ),
                         leading: _leading(),

@@ -43,67 +43,97 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return MyScaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25.0),
-              child: CompanyProfileEditIndicator(currentPage: currentPage),
-            ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                children: [
-                  CompanyProfileEditView1(),
-                  const CompanyProfileEditView2(),
-                ],
+    return WillPopScope(
+      onWillPop: () {
+        if (currentPage == 0) {
+          Get.back();
+          return Future.value(true);
+        } else {
+          pageController.previousPage(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.linear,
+          );
+          return Future.value(false);
+        }
+      },
+      
+      child: MyScaffold(
+        onWillPop: () {
+          if (currentPage == 0) {
+            Get.back();
+          } else {
+            pageController.previousPage(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.linear,
+            );
+          }
+        },
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 25.0),
+                child: CompanyProfileEditIndicator(currentPage: currentPage),
               ),
-            ),
-            const SizedBox(height: 100),
-          ],
+              Expanded(
+                child: PageView(
+                  
+                  controller: pageController,
+                  children: [
+                    CompanyProfileEditView1(),
+                    const CompanyProfileEditView2(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 100),
+            ],
+          ),
         ),
-      ),
-      fab: Container(
-        padding: const EdgeInsets.all(16.0),
-        child:
-            currentPage == 0
-                ? MyButton(
-                  title: "next".tr,
-                  onClick: () {
-                    pageController.nextPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.linear,
-                    );
-                  },
-                )
-                : MyLoadingButton(
-                  title: "done".tr,
-                  onClick: (RoundedLoadingButtonController _controller) async {
-                    if (!controller.validations()) {
-                      _controller.error();
-                      Timer(const Duration(seconds: 1), () {
-                        _controller.reset();
-                      });
-                      return;
-                    }
-                    var data = await controller.getRegisterData();
-                    userController.register(data, (success) async {
-                      {
-                        if (success) {
-                          _controller.success();
-                          Get.delete<RegisterController>();
-                        } else {
-                          _controller.error();
-                        }
+        fab: Container(
+          padding: const EdgeInsets.all(16.0),
+          child:
+              currentPage == 0
+                  ? MyButton(
+                    title: "next".tr,
+                    onClick: () {
+                      if (!controller.validateWorkForm()) return;
+                      pageController.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.linear,
+                      );
+                    },
+                  )
+                  : MyLoadingButton(
+                    title: "done".tr,
+                    onClick: (
+                      RoundedLoadingButtonController _controller,
+                    ) async {
+                      if (!controller.validations() ||
+                          !controller.validateAssetForm()) {
+                        _controller.error();
                         Timer(const Duration(seconds: 1), () {
                           _controller.reset();
                         });
+                        return;
                       }
-                    });
-                  },
-                ),
+                      var data = await controller.getRegisterData();
+                      userController.register(data, (success) async {
+                        {
+                          if (success) {
+                            _controller.success();
+                            Get.delete<RegisterController>();
+                          } else {
+                            _controller.error();
+                          }
+                          Timer(const Duration(seconds: 1), () {
+                            _controller.reset();
+                          });
+                        }
+                      });
+                    },
+                  ),
+        ),
       ),
     );
   }

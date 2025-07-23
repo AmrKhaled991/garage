@@ -45,7 +45,7 @@ class loginFormSection extends StatelessWidget {
             Get.toNamed(Routes.FORGET_PASSWORD);
           },
         ),
-        const AspectRatio(aspectRatio: 375 / 133, child: SizedBox()),
+        SizedBox(height: Get.height * 0.1),
         Obx(() {
           return IgnorePointer(
             ignoring: !controller.isReady,

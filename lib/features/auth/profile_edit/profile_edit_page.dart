@@ -138,6 +138,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       onFinish: (success) async {
                         if (success) {
                           _controller.success();
+                          userController.fetchProfile();
                         } else {
                           _controller.error();
                         }

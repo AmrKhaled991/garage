@@ -35,7 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           children: <Widget>[
             const SizedBox(height: 30),
-
             UserTypeSelector(controller: controller),
             const SizedBox(height: 30),
             userRegisterView(),
@@ -56,7 +55,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   if (userType == 1) {
                     var data = await controller.getRegisterData();
-
                     userController.register(data, (success) async {
                       if (success) {
                         _controller.success();

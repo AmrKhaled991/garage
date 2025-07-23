@@ -103,15 +103,17 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
 
             Obx(() {
               var enable = controller.enableResend.value;
-              return TextButton(
-                onPressed: () {
-                  if (enable) {
-                    controller.resendCode();
-                  }
-                },
-                child: Text(
-                  "resend_code".tr,
-                  style: MyTextStyle.myWhiteBoldLargeTitle.copyWith(),
+              return Center(
+                child: TextButton(
+                  onPressed: () {
+                    if (enable) {
+                      controller.resendCode();
+                    }
+                  },
+                  child: Text(
+                    "resend_code".tr,
+                    style: MyTextStyle.myWhiteBoldLargeTitle.copyWith(),
+                  ),
                 ),
               );
             }),
@@ -120,6 +122,8 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                 visible: controller.enableResend.value == false,
                 child: Obx(() {
                   return Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "resend_code_after".tr,
